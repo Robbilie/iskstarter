@@ -7,7 +7,7 @@
 
 		static login (code) {
 			return CRESTUtil.getTokens({ grant_type: "code", code })
-				.then(({ accessToken }) => CRESTUtil.getInfo(accessToken))
+				.then(data => console.log(data) || CRESTUtil.getInfo(data.accessToken))
 				.then(({ id, name }) => ({ id, name }));
 		}
 

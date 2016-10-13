@@ -71,8 +71,9 @@
 							return reject(err);
 						try {
 							var res = JSON.parse(body);
+							if(res.error)
+								throw new Error(res.error);
 							console.log("#### SCOPES", res.Scopes);
-							console.log(res);
 							return resolve({
 								id: 		res.CharacterID,
 								name: 		res.CharacterName,
