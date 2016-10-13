@@ -11,12 +11,16 @@
         <script src="/static/js/bg.js"></script>
     </head>
     <body>
-    <div id="window">
-        <div id="blur"></div>
-        <div class="content center">
-            <h2><span class="thinblock">Welcome </span><strong><%= JSON.stringify(user) %></strong></h2>
-        </div>
-    </div>
+        <nav>
+            <% if (user.id) { %>
+                <img src="https://imageserver.eveonline.com/Character/<%= user.id %>_32.jpg">
+                <span><%= user.name %></span>
+                <span><%= user.balance %></span>
+                <a href="/logout/">Logout</a>
+            <% } else { %>
+                <a href="/login/">Login</a>
+            <% } %>
+        </nav>
     </body>
 </html>
 
