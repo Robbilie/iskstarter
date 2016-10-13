@@ -30,7 +30,7 @@
 										toName: 	$.ownerName1,
 										refID: 		$.refID - 0,
 										amount: 	(($.amount - 0) * (100 - config.site.tax) | 0) / 100,
-										reason: 	$.reason.replace("DESC:").trim(),
+										reason: 	$.reason.replace("DESC:", "").trim(),
 										timestamp: 	new Date($.date + "Z").getTime()
 									}));
 
