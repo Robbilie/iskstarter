@@ -21,6 +21,23 @@
 							let e = new Date(result.eveapi.currentTime[0] + "Z");
 							if(!result.eveapi.error) {
 								console.log(JSON.stringify(result.eveapi.result[0].rowset[0].row || []));
+								(result.eveapi.result[0].rowset[0].row || [])
+									.filter(({ $ }) => $.ownerName2 == "ISKstarter")
+									.map(({ $ }) => ({
+										fromID: 	$.ownerID2 - 0,
+										fromName: 	$.ownerName2,
+										toID: 		$.ownerID1 - 0,
+										toName: 	$.ownerName1,
+										refID: 		$.refID - 0,
+										amount: 	$.amount - 0,
+										reason: 	$.reason,
+										timestamp: 	new Date($.date + "Z").getTime()
+									}))
+									.map(e => DBUtil
+										.getCollection("transactions")
+										.then(collection => collection.update({ refID: e.refID }, { $setOnInsert: e }, { upsert: true }))
+										.catch(e => console.log(e))
+									);
 							} else {
 								console.log(result.eveapi.error);
 							}
