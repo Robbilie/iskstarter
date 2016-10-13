@@ -13,7 +13,7 @@
 
 	const { CRESTUtil } = require("util/");
 
-	const user 			= async (req) => (req.session.user ? {
+	const user 			= async (req) => (req.session.user ? console.log(req.session.user) || {
 		id: 		req.session.user.id,
 		name: 		req.session.user.name,
 		balance: 	await WalletController.balance(req.session.user.id)
