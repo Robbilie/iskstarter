@@ -43,6 +43,8 @@
 							return reject(err);
 						try {
 							let res 			= JSON.parse(body);
+							if(res.error)
+								throw new Error(res.error);
 							let accessToken 	= res.access_token;
 							let refreshToken 	= res.refresh_token;
 							let accessUntil		= new Date().getTime() + (res.expires_in * 1000);
