@@ -21,13 +21,13 @@
 
 	module.exports = Router(m)
 		.get("/",
-			async (req, res) => res.render("index", { user: await user(), campaigns: [] }))
+			async (req, res) => res.render("index", { user: await user(req), campaigns: [] }))
 		.get("/campaigns/",
-			async (req, res) => res.render("campaigns", { user: await user(), campaigns: [] }))
+			async (req, res) => res.render("campaigns", { user: await user(req), campaigns: [] }))
 		.post("/campaigns/",
 			async (req, res) => CampaignController.create())
 		.get("/campaigns/:id/",
-			async (req, res) => res.render("campaign", { user: await user() }))
+			async (req, res) => res.render("campaign", { user: await user(req) }))
 		.get("/login/",
 			async (req, res) => res.redirect(CRESTUtil.generateLoginUrl([], "/")))
 		.get("/login/callback/",
@@ -35,6 +35,6 @@
 		.get("/logout/",
 			async (req, res) => !(delete req.session.user) || res.redirect("/"))
 		.get("/profile/",
-			async (req, res) => res.render("me", { user: await user() }))
+			async (req, res) => res.render("me", { user: await user(req) }))
 		.get("/profile/:id/",
-			async (req, res) => res.render("profile", { user: await user() }));
+			async (req, res) => res.render("profile", { user: await user(req) }));
