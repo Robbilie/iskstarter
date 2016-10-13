@@ -43,6 +43,7 @@
 							return reject(err);
 						try {
 							let res 			= JSON.parse(body);
+							console.log(res, data);
 							if(res.error)
 								throw new Error(res.error);
 							let accessToken 	= res.access_token;
