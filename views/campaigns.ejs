@@ -13,12 +13,12 @@
     <body>
         <nav>
             <% if (user.id) { %>
-            <img src="https://imageserver.eveonline.com/Character/<%= user.id %>_32.jpg">
-            <span><%= user.name %></span>
-            <span><%= user.balance %></span>
-            <a href="/logout/">Logout</a>
+                <img src="https://imageserver.eveonline.com/Character/<%= user.id %>_32.jpg">
+                <span><%= user.name %></span>
+                <span><%= user.balance %></span>
+                <a href="/logout/">Logout</a>
             <% } else { %>
-            <a href="/login/">Login</a>
+                <a href="/login/">Login</a>
             <% } %>
         </nav>
         <form method="POST">
@@ -34,15 +34,13 @@
             <br>
             <input required="true" type="number" name="goal" />
             <br>
-            <span>If the Date inputs do not offer a calendar, please enter the date in the shown scheme in UTC time. If there is a calendar widget you can enter the time in local time.</span>
-            <br>
             <label>Start Date:</label>
             <br>
-            <input required="true" type="datetime-local" name="start" placeholder="yyyy-mm-ddThh:mm:ss" />
+            <input required="true" type="text" name="start" placeholder="yyyy-mm-dd" />
             <br>
             <label>End Date:</label>
             <br>
-            <input required="true" type="datetime-local" name="end" placeholder="yyyy-mm-ddThh:mm:ss" />
+            <input required="true" type="text" name="end" placeholder="yyyy-mm-dd" />
             <br>
             <button>Submit</button>
         </form>

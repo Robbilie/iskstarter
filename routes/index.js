@@ -43,11 +43,12 @@
 					let campaign = await CampaignController.create(
 						req.body.name,
 						req.body.description,
-						req.body.goal,
-						req.body.start,
-						req.body.end,
+						req.body.goal - 0,
+						new Date(req.body.start),
+						new Date(req.body.end),
 						await user(req)
 					);
+					console.log(campaign);
 					res.redirect("/campaigns/" + campaign._id + "/");
 				} catch (e) {
 					res.redirect("/campaigns/?error=Error");

@@ -8,7 +8,7 @@
 		static create (name, description, goal, start, end, owner) {
 			if(!name || !description || !goal || !start || !end || !owner)
 				return Promise.reject("not all vals set");
-			return DBUtil.getCollection("entities").then(collection => collection.insert({
+			const data = {
 				name: name.trim(),
 				description,
 				type: "campaign",
@@ -17,7 +17,8 @@
 					start,
 					end
 				}
-			}));
+			};
+			return DBUtil.getCollection("entities").then(collection => collection.insertOne(data)).then(doc => doc.result.ok ? data : null);
 		}
 
 		static find (id) {
