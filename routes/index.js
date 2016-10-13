@@ -47,7 +47,7 @@
 						req.body.end,
 						await user(req)
 					);
-					res.redireact("/campaigns/" + campaign._id + "/");
+					res.redirect("/campaigns/" + campaign._id + "/");
 				} catch (e) {
 					res.redirect("/campaigns/?error=Error");
 				}
