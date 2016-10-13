@@ -6,7 +6,9 @@
 	class CharacterController {
 
 		static login (code) {
-			return CRESTUtil.getTokens({ grant_type: "code", code }).then(({ accessToken }) => CRESTUtil.getInfo(accessToken)).then(({ id, name}) => ({ id, name }));
+			return CRESTUtil.getTokens({ grant_type: "code", code })
+				.then(({ accessToken }) => CRESTUtil.getInfo(accessToken))
+				.then(({ id, name }) => ({ id, name }));
 		}
 
 	}

@@ -72,6 +72,7 @@
 						try {
 							var res = JSON.parse(body);
 							console.log("#### SCOPES", res.Scopes);
+							console.log(res);
 							return resolve({
 								id: 		res.CharacterID,
 								name: 		res.CharacterName,
