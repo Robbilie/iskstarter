@@ -16,7 +16,8 @@
 				data: {
 					goal,
 					start,
-					end
+					end,
+					owner
 				}
 			};
 			return DBUtil.getCollection("entities").then(collection => collection.insertOne(data)).then(doc => doc.result.ok ? data : null);
