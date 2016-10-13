@@ -6,11 +6,7 @@
 	class CharacterController {
 
 		static login (code) {
-			return (async () => {
-				let { accessToken } = await CRESTUtil.getTokens({ grant_type: "code", code });
-				let { id, name } = await CRESTUtil.getInfo(accessToken);
-				return { id, name };
-			})();
+			return CRESTUtil.getTokens({ grant_type: "code", code }).then(({ accessToken }) => CRESTUtil.getInfo(accessToken)).then(({ id, name}) => ({ id, name }));
 		}
 
 	}
