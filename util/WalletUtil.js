@@ -34,8 +34,8 @@
 										timestamp: 	new Date($.date + "Z").getTime()
 									}));
 
-								const transactionCollection = await DBUtil.getCollection("transactions");
-								const entityCollection = await DBUtil.getCollection("entities");
+								const transactionCollection 	= await DBUtil.getCollection("transactions");
+								const entityCollection 			= await DBUtil.getCollection("entities");
 
 								await Promise.all(transactions.map(transaction => transactionCollection.update({ refID: transaction.refID }, { $setOnInsert: transaction }, { upsert: true })));
 
@@ -43,13 +43,14 @@
 									let entity = await entityCollection.findOne({ _id: DBUtil.to_id(transaction.reason) });
 									if(entity) {
 										await transactionCollection.update({ toRefID: transaction.refID }, { $setOnInsert: {
-											fromID: transaction.toID,
-											fromName: transaction.toName,
-											toID: entity._id,
-											toName: entity.name,
-											toRefID: transaction.refID,
-											amount: transaction.amount,
-											reason: "[donation]"
+											fromID: 	transaction.toID,
+											fromName: 	transaction.toName,
+											toID: 		entity._id,
+											toName: 	entity.name,
+											toRefID: 	transaction.refID,
+											amount: 	transaction.amount,
+											reason: 	"[donation]",
+											timestamp: 	transaction.timestamp
 										} }, { upsert: true });
 									}
 								}));
