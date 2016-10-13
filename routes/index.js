@@ -19,15 +19,44 @@
 		balance: 	await WalletController.balance(req.session.user.id)
 	} : {});
 
+	const loggedIn 		= async (req) => !!(await user(req)).id;
+
 	module.exports = Router(m)
 		.get("/",
-			async (req, res) => res.render("index", { user: await user(req), campaigns: [], error: req.query.error || "" }))
+			async (req, res) => res.render("index", {
+				user: 		await user(req),
+				campaigns: 	[],
+				error: 		req.query.error || ""
+			}))
 		.get("/campaigns/",
-			async (req, res) => res.render("campaigns", { user: await user(req), campaigns: [] }))
+			async (req, res) => res.render("campaigns", {
+				user: 	await user(req),
+				campaigns: 	[],
+				error: 		req.query.error || ""
+			}))
 		.post("/campaigns/",
-			async (req, res) => CampaignController.create())
+			async (req, res) => {
+				try {
+					if (!(await loggedIn(req)))
+						throw new Error("not logged in");
+					let campaign = await CampaignController.create(
+						req.body.name,
+						req.body.description,
+						req.body.goal,
+						req.body.start,
+						req.body.end,
+						await user(req)
+					);
+					res.redireact("/campaigns/" + campaign._id + "/");
+				} catch (e) {
+					res.redirect("/campaigns/?error=Error");
+				}
+			})
 		.get("/campaigns/:id/",
-			async (req, res) => res.render("campaign", { user: await user(req) }))
+			async (req, res) => res.render("campaign", {
+				user: 		await user(req),
+				campaign: 	await CampaignController.find(req.params.id)
+			}))
 		.get("/login/",
 			async (req, res) => res.redirect(await CRESTUtil.generateLoginUrl([], "/")))
 		.get("/login/callback/",
