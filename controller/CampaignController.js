@@ -1,7 +1,8 @@
 
 	"use strict";
 
-	const { DBUtil } = require("util/");
+	const { DBUtil } 			= require("util/");
+	const { WalletController } 	= require("controller/");
 
 	class CampaignController {
 
