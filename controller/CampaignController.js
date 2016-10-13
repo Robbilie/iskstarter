@@ -6,7 +6,7 @@
 
 	class CampaignController {
 
-		static create (name, description, goal, start, end, owner) {
+		static create (name, description, header, goal, start, end, owner) {
 			if(!name || !description || !goal || !start || !end || !owner)
 				return Promise.reject("not all vals set");
 			const data = {
@@ -14,6 +14,7 @@
 				description,
 				type: "campaign",
 				data: {
+					header,
 					goal,
 					start,
 					end,

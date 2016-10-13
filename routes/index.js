@@ -43,6 +43,7 @@
 					let campaign = await CampaignController.create(
 						req.body.name,
 						req.body.description,
+						req.body.header,
 						req.body.goal - 0,
 						new Date(req.body.start),
 						new Date(req.body.end),
