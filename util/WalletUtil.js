@@ -29,7 +29,7 @@
 										toID: 		$.ownerID1 - 0,
 										toName: 	$.ownerName1,
 										refID: 		$.refID - 0,
-										amount: 	(($.amount - 0) * (100 - config.site.tax) | 0) / 100,
+										amount: 	Math.floor(($.amount - 0) * (100 - config.site.tax)) / 100,
 										reason: 	$.reason.replace("DESC:", "").trim(),
 										timestamp: 	new Date($.date + "Z").getTime()
 									}));
