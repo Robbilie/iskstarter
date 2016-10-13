@@ -10,7 +10,7 @@
 	class WalletUtil {
 
 		static loadUpdates () {
-			request(`${ccp.api.url}/Corp/WalletJournal.xml.aspx?keyID=${ccp.keyID}&vCode=${ccp.vCode}`, (error, response, body) => {
+			request(`${config.ccp.api.url}/Corp/WalletJournal.xml.aspx?keyID=${config.ccp.keyID}&vCode=${config.ccp.vCode}`, (error, response, body) => {
 				if (!error && response.statusCode == 200) {
 					parseString(body, (parseError, result) => {
 						if(parseError || !result.eveapi) {
@@ -20,7 +20,7 @@
 							let d = new Date(result.eveapi.cachedUntil[0] + "Z");
 							let e = new Date(result.eveapi.currentTime[0] + "Z");
 							if(!result.eveapi.error) {
-								console.log(JSON.stringify(result.eveapi.result[0].rowset[0].row));
+								console.log(JSON.stringify(result.eveapi.result[0].rowset[0].row || []));
 							} else {
 								console.log(result.eveapi.error);
 							}
@@ -28,7 +28,7 @@
 						}
 					});
 				} else {
-					console.log(error);
+					console.log(error || response.statusCode || response);
 					return setTimeout(() => WalletUtil.startUpdater(), 5 * 1000);
 				}
 			});
