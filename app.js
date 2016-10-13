@@ -6,7 +6,6 @@
 
 	const http 						= require("http");
 	const express 					= require("express");
-	const { Router } 				= require("express");
 	const cookieParser 				= require("cookie-parser");
 	const bodyParser 				= require("body-parser");
 	const expressSession 			= require("express-session");
@@ -14,14 +13,9 @@
 
 	const config 					= require("config/");
 
-	const routes = Router({ mergeParams: true })
-		.get("/", async (req, res) => res.render("index"))
-		.get("/campaigns/", async (req, res) => res.render("campaigns"))
-		.post("/campaigns/", async (req, res) => {})
-		.get("/campaigns/:id/", async (req, res) => res.render("campaign"))
-		.get("/login/", async (req, res) => {})
-		.get("/profile/", async (req, res) => res.render("me"))
-		.get("/profile/:id/", async (req, res) => res.render("profile"));
+	const { WalletUtil } 			= require("util/");
+
+	WalletUtil.startUpdater();
 
 	const app = express()
 		.enable("trust proxy")
@@ -43,8 +37,21 @@
 			saveUninitialized: true,
 			key: 		config.cookies.name
 		}))
-		.use(routes);
+		.use(require("routes/"));
 
 	const server = http
 		.createServer(app)
 		.listen(config.site.port);
+
+	/* REPL */
+
+	const repl = require("repl");
+	const r = repl.start({
+		prompt: 'Node.js via stdin> ',
+		input: process.stdin,
+		output: process.stdout,
+		useGlobal: true,
+		replMode: repl.REPL_MODE_SLOPPY
+	});
+	r.context.app = app;
+	r.context.server = server;
