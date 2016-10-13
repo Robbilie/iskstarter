@@ -24,7 +24,7 @@
 			);
 		}
 
-		// { 'grant_type' : 'code', 'code': "asdasdasdad" }
+		// { 'grant_type' : 'authorization_code', 'code': "asdasdasdad" }
 		static getTokens (data) {
 			return new Promise((resolve, reject) => {
 				request(
@@ -43,7 +43,6 @@
 							return reject(err);
 						try {
 							let res 			= JSON.parse(body);
-							console.log(res, data);
 							if(res.error)
 								throw new Error(res.error);
 							let accessToken 	= res.access_token;
@@ -91,6 +90,7 @@
 			});
 		}
 
+		/*
 		static getEndpoint (options) {
 			return new Promise((resolve, reject) => {
 				var params = {
@@ -122,6 +122,7 @@
 				}).on("error", e => reject(e));
 			});
 		}
+		*/
 
 	}
 	module.exports = CRESTUtil;

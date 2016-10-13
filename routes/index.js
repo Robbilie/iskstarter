@@ -21,7 +21,7 @@
 
 	module.exports = Router(m)
 		.get("/",
-			async (req, res) => res.render("index", { user: await user(req), campaigns: [] }))
+			async (req, res) => res.render("index", { user: await user(req), campaigns: [], error: req.query.error || "" }))
 		.get("/campaigns/",
 			async (req, res) => res.render("campaigns", { user: await user(req), campaigns: [] }))
 		.post("/campaigns/",
@@ -31,7 +31,14 @@
 		.get("/login/",
 			async (req, res) => res.redirect(await CRESTUtil.generateLoginUrl([], "/")))
 		.get("/login/callback/",
-			async (req, res) => !(req.session.user = await CharacterController.login(req.query.code)) || res.redirect("/"))
+			async (req, res) => {
+				try {
+					req.session.user = await CharacterController.login(req.query.code);
+					res.redirect("/");
+				} catch (e) {
+					res.redirect("/?error=Something+went+wrong.");
+				}
+			})
 		.get("/logout/",
 			async (req, res) => !(delete req.session.user) || res.redirect("/"))
 		.get("/profile/",

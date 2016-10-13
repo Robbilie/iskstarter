@@ -7,10 +7,9 @@
 
 		static login (code) {
 			return Promise.resolve()
-				.then(() => CRESTUtil.getTokens({ grant_type: "code", code }))
+				.then(() => CRESTUtil.getTokens({ grant_type: "authorization_code", code }))
 				.then(({ accessToken }) => CRESTUtil.getInfo(accessToken))
-				.then(({ id, name }) => ({ id, name }))
-				.catch(e => console.log(e));
+				.then(({ id, name }) => ({ id, name }));
 		}
 
 	}
