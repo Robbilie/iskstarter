@@ -39,7 +39,7 @@
 
 								await Promise.all(transactions.map(transaction => transactionCollection.update({ refID: transaction.refID }, { $setOnInsert: transaction }, { upsert: true })));
 
-								await Promise.all(transactions.filter(transaction => transaction.reason != "").map(async (transaction) => {
+								await Promise.all(transactions.filter(transaction => transaction.reason.length == 24).map(async (transaction) => {
 									let entity = await entityCollection.findOne({ _id: DBUtil.to_id(transaction.reason) });
 									if(entity) {
 										await transactionCollection.update({ toRefID: transaction.refID }, { $setOnInsert: {
