@@ -36,6 +36,7 @@
 			}))
 		.post("/campaigns/",
 			async (req, res) => {
+				console.log(req.body);
 				try {
 					if (!(await loggedIn(req)))
 						throw new Error("not logged in");

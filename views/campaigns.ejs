@@ -34,13 +34,15 @@
             <br>
             <input required="true" type="number" name="goal" />
             <br>
+            <span>If the Date inputs do not offer a calendar, please enter the date in the shown scheme in UTC time. If there is a calendar widget you can enter the time in local time.</span>
+            <br>
             <label>Start Date:</label>
             <br>
-            <input required="true" type="datetime" name="start" />
+            <input required="true" type="datetime-local" name="start" placeholder="yyyy-mm-ddThh:mm:ss" />
             <br>
             <label>End Date:</label>
             <br>
-            <input required="true" type="datetime" name="end" />
+            <input required="true" type="datetime-local" name="end" placeholder="yyyy-mm-ddThh:mm:ss" />
             <br>
             <button>Submit</button>
         </form>
