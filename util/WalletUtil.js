@@ -9,11 +9,13 @@
 	class WalletUtil {
 
 		static loadUpdates () {
+			request(``, async () => {
 
+			});
 		}
 
 		static startUpdater () {
-
+			WalletUtil.loadUpdates();
 		}
 
 	}

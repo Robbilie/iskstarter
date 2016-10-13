@@ -12,9 +12,9 @@
 	} = require("controller/");
 
 	const user 			= async (req) => (req.session.user ? {
-		id: req.session.user.id,
-		name: req.session.user.name,
-		balance: await WalletController.balance(req.session.user.id)()
+		id: 		req.session.user.id,
+		name: 		req.session.user.name,
+		balance: 	await WalletController.balance(req.session.user.id)()
 	} : {});
 
 	module.exports = Router(m)
@@ -27,7 +27,11 @@
 		.get("/campaigns/:id/",
 			async (req, res) => res.render("campaign", { user: await user() }))
 		.get("/login/",
+			async (req, res) => res.redirect("ccp"))
+		.get("/login/callback/",
 			async (req, res) => CharacterController.login()())
+		.get("/logout/",
+			async (req, res) => !(delete req.session.user) || res.redirect("/"))
 		.get("/profile/",
 			async (req, res) => res.render("me", { user: await user() }))
 		.get("/profile/:id/",
