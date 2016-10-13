@@ -32,6 +32,13 @@
 				}));
 		}
 
+		static delete (id) {
+			return DBUtil.getCollection("entities")
+				.then(collection => collection.delete({ _id: DBUtil.to_id(id) }))
+				.then(() => DBUtil.getCollection("transactions"))
+				.then(collection => collection.delete({ toID: DBUtil.to_id(id) }));
+		}
+
 	}
 
 	module.exports = CampaignController;
