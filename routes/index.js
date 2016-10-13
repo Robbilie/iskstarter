@@ -29,7 +29,7 @@
 		.get("/campaigns/:id/",
 			async (req, res) => res.render("campaign", { user: await user(req) }))
 		.get("/login/",
-			async (req, res) => res.redirect(CRESTUtil.generateLoginUrl([], "/")))
+			async (req, res) => res.redirect(await CRESTUtil.generateLoginUrl([], "/")))
 		.get("/login/callback/",
 			async (req, res) => !(req.session.user = await CharacterController.login(req.query.code)) || res.redirect("/"))
 		.get("/logout/",
