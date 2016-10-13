@@ -26,7 +26,7 @@
 			return DBUtil.getCollection("entities")
 				.then(collection => collection.findOne({ _id: DBUtil.to_id(id) }))
 				.then(async campaign => Object.assign(campaign, {
-					wallet: await WalletController.balance(DBUtil.to_id(req.params.id))
+					wallet: await WalletController.balance(DBUtil.to_id(id))
 				}));
 		}
 
