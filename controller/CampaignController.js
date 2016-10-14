@@ -12,7 +12,7 @@
 				return Promise.reject("not all vals set");
 			const data = {
 				name: name.trim(),
-				description,
+				description: description.replace(/script|SCRIPT|[\w]+="|[\w]+='/g, ""),
 				type: "campaign",
 				data: {
 					header,
@@ -22,7 +22,7 @@
 					owner
 				}
 			};
-			return DBUtil.getCollection("entities").then(collection => collection.insertOne(data)).then(doc => doc.result.ok ? data : null);
+			return DBUtil.getCollection("entities").then(collection => collection.insertOne(data)).then(doc => doc.result.ok ? data : Promise.reject("something went wrong"));
 		}
 
 		static find (id) {

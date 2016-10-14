@@ -1,0 +1,10 @@
+<nav>
+    <% if (data.user.id) { %>
+        <img src="https://imageserver.eveonline.com/Character/<%= data.user.id %>_32.jpg">
+        <span><%= data.user.name %></span>
+        <span><%= data.user.balance %></span>
+        <a href="/logout/">Logout</a>
+    <% } else { %>
+        <a href="/login/">Login</a>
+    <% } %>
+</nav>

@@ -11,16 +11,7 @@
         <script src="/static/js/bg.js"></script>
     </head>
     <body>
-        <nav>
-            <% if (data.user.id) { %>
-                <img src="https://imageserver.eveonline.com/Character/<%= data.user.id %>_32.jpg">
-                <span><%= data.user.name %></span>
-                <span><%= data.user.balance %></span>
-                <a href="/logout/">Logout</a>
-            <% } else { %>
-                <a href="/login/">Login</a>
-            <% } %>
-        </nav>
+        <% include nav.ejs %>
         <a href="/campaigns/">Campaigns</a>
     </body>
 </html>
