@@ -11,7 +11,7 @@
 			if(!name || !description || !goal || !start || !end || !owner)
 				return Promise.reject("not all vals set");
 			const data = {
-				name: name.trim(),
+				name: name.trim().replace(/script|SCRIPT|[\w]+="|[\w]+='/g, ""),
 				description: description.replace(/script|SCRIPT|[\w]+="|[\w]+='/g, ""),
 				type: "campaign",
 				data: {
