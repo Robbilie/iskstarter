@@ -47,7 +47,11 @@
 								await Promise.all(transactions.map(transaction => transactionCollection.update({ refID: transaction.refID }, { $setOnInsert: transaction }, { upsert: true })));
 
 								await Promise.all(transactions.filter(transaction => transaction.reason.length == 24).map(async (transaction) => {
-									let entity = await entityCollection.findOne({ _id: DBUtil.to_id(transaction.reason) });
+									let entity = await entityCollection.findOne({
+										_id: DBUtil.to_id(transaction.reason),
+										"data.start": { $lt: transaction.timestamp },
+										"data.end": { $gt: transaction.timestamp }
+									});
 									if(entity) {
 										await transactionCollection.update({ toRefID: transaction.refID }, { $setOnInsert: {
 											fromID: 	transaction.toID,

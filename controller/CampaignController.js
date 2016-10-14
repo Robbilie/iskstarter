@@ -40,6 +40,12 @@
 				.then(collection => collection.delete({ toID: DBUtil.to_id(id) }));
 		}
 
+		static donate (id, amount, owner) {
+			if(amount > owner.balance)
+				return Promise.reject("not enough money");
+
+		}
+
 	}
 
 	module.exports = CampaignController;
