@@ -7,6 +7,10 @@
 	const config 			= require("config/");
 	const { DBUtil } 		= require("util/");
 
+	const storage = {
+		next: new Date()
+	};
+
 	class WalletUtil {
 
 		static loadUpdates () {
@@ -19,6 +23,9 @@
 						} else {
 							let d = new Date(result.eveapi.cachedUntil[0] + "Z");
 							let e = new Date(result.eveapi.currentTime[0] + "Z");
+
+							storage.next = d;
+
 							if(!result.eveapi.error) {
 
 								let transactions = (result.eveapi.result[0].rowset[0].row || [])
@@ -70,6 +77,10 @@
 
 		static startUpdater () {
 			WalletUtil.loadUpdates();
+		}
+
+		static next () {
+			return Promise.resolve(storage.next);
 		}
 
 	}

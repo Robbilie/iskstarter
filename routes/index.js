@@ -11,7 +11,7 @@
 		CharacterController
 	} = require("controller/");
 
-	const { CRESTUtil } = require("util/");
+	const { CRESTUtil, WalletUtil } = require("util/");
 
 	const user 			= async (req) => (req.session.user ? console.log(req.session.user) || {
 		id: 		req.session.user.id,
@@ -26,13 +26,15 @@
 			async (req, res) => res.render("index", {
 				user: 		await user(req),
 				campaigns: 	[],
-				error: 		req.query.error || ""
+				error: 		req.query.error || "",
+				next: 		await WalletUtil.next()
 			}))
 		.get("/campaigns/",
 			async (req, res) => res.render("campaigns", {
 				user: 	await user(req),
 				campaigns: 	[],
-				error: 		req.query.error || ""
+				error: 		req.query.error || "",
+				next: 		await WalletUtil.next()
 			}))
 		.post("/campaigns/",
 			async (req, res) => {
