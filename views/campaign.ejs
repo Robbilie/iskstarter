@@ -6,7 +6,18 @@
     </head>
     <body>
         <% include nav.ejs %>
+        <h1><%= campaign.name %></h1>
+        <div><%= campaign.description %></div>
+        <div>
+            <label>Creator:</label>
+            <img src="https://imageserver.eveonline.com/Character/<%= campaign.data.owner.id %>_32.jpg">
+            <span><%= campaign.data.owner.name %></span>
+        </div>
         <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
+        <% if(campaign.data.start < Date.now() && Date.now() < campaign.data.end) { %>
+            <label>Donation Key:</label>
+            <pre><%= campaign._id %></pre>
+        <% } %>
         <pre><%= JSON.stringify(campaign, null, 2) %></pre>
         <% include footer.ejs %>
     </body>
