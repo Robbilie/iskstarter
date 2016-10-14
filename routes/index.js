@@ -30,7 +30,7 @@
 	module.exports = Router(m)
 		.get("/",
 			async (req, res) => res.render("index", {
-				campaigns: 	[],
+				campaigns: 	await CampaignController.page(),
 				data: 		await data(req)
 			}))
 		.get("/campaigns/",
