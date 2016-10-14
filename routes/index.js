@@ -54,8 +54,8 @@
 						req.body.description,
 						req.body.header,
 						req.body.goal - 0,
-						new Date(req.body.start),
-						new Date(req.body.end),
+						new Date(req.body.start).getTime(),
+						new Date(req.body.end).getTime(),
 						await user(req)
 					);
 					console.log(campaign);
