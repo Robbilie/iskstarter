@@ -12,6 +12,7 @@
     </head>
     <body>
         <% include nav.ejs %>
+        <progress max="<%= campaign.data.goal %>" value="<%= wallet %>"></progress>
         <pre><%= JSON.stringify(campaign, null, 2) %></pre>
         <% include footer.ejs %>
     </body>
