@@ -34,6 +34,12 @@
             <br>
             <button>Submit</button>
         </form>
+        <div>
+            <% for(let campaigns in campaigns) { %>
+                <h4><%= campaign.name %></h4>
+                <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
+            <% } %>
+        </div>
         <% include footer.ejs %>
     </body>
 </html>
