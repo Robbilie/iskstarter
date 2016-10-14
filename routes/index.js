@@ -92,6 +92,10 @@
 		.get("/logout/",
 			async (req, res) => !(delete req.session.user) || res.redirect("/"))
 		.get("/profile/",
-			async (req, res) => res.render("me", { user: await user(req) }))
+			async (req, res) => res.render("me", {
+				data: await data(req)
+			}))
 		.get("/profile/:id/",
-			async (req, res) => res.render("profile", { user: await user(req) }));
+			async (req, res) => res.render("profile", {
+				data: await data(req)
+			}));
