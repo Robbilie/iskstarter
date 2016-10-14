@@ -35,7 +35,7 @@
             <button>Submit</button>
         </form>
         <div>
-            <% for(let campaign in campaigns) { %>
+            <% for(let campaign in campaigns) { console.log(campaign)%>
                 <div>
                     <h4><%= campaign.name %></h4>
                     <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
