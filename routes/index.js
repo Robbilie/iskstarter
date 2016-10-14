@@ -35,7 +35,12 @@
 			}))
 		.get("/campaigns/",
 			async (req, res) => res.render("campaigns", {
-				campaigns: 	[],
+				campaigns: 	await CampaignController.page(),
+				data: 		await data(req)
+			}))
+		.get("/campaigns/page/:page/",
+			async (req, res) => res.render("campaigns", {
+				campaigns: 	await CampaignController.page(req.params.page - 0),
 				data: 		await data(req)
 			}))
 		.post("/campaigns/",
