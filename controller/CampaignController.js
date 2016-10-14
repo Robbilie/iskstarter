@@ -41,12 +41,12 @@
 				}))));
 		}
 
-		static delete (id) {
+		static remove (id) {
 			return Promise.resolve()
 				.then(() => DBUtil.getCollection("entities"))
-				.then(collection => collection.delete({ _id: DBUtil.to_id(id) }))
+				.then(collection => collection.remove({ _id: DBUtil.to_id(id) }))
 				.then(() => DBUtil.getCollection("transactions"))
-				.then(collection => collection.delete({ toID: DBUtil.to_id(id) }));
+				.then(collection => collection.remove({ toID: DBUtil.to_id(id) }));
 		}
 
 		static donate (id, amount, owner) {
@@ -76,7 +76,7 @@
 					if(doc.result.ok) {
 						let balance = await WalletController.balance(owner.id)
 						if(balance < 0) {
-							await collection.delete({ _id: data._id });
+							await collection.remove({ _id: data._id });
 							throw new Error("not enough money");
 						}
 					} else {
