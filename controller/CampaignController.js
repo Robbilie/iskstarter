@@ -3,6 +3,7 @@
 
 	const { DBUtil } 			= require("util/");
 	const { WalletController } 	= require("controller/");
+	const { ObjectID } 			= require("mongodb");
 
 	class CampaignController {
 
@@ -43,7 +44,32 @@
 		static donate (id, amount, owner) {
 			if(amount > owner.balance)
 				return Promise.reject("not enough money");
-
+			return DBUtil.getCollection("entities")
+				.then(collection => collection.findOne({ _id: DBUtil.to_id(id) }))
+				.then(entity => entity ? entity : Promise.reject("no such entity"))
+				.then(async entity => {
+					let collection = await DBUtil.getCollection("transactions");
+					let data = {
+						fromID: 	owner.id,
+						fromName: 	owner.name,
+						toID: 		entity._id,
+						toName: 	entity.name,
+						refID: 		new ObjectID(),
+						amount: 	amount,
+						reason: 	"[donation]",
+						timestamp: 	Date.now()
+					};
+					let doc = await collection.insert(data);
+					if(doc.result.ok) {
+						let balance = await WalletController.balance(owner.id)
+						if(balance < 0) {
+							await collection.delete({ _id: data._id });
+							throw new Error("not enough money");
+						}
+					} else {
+						throw new Error("Something went wrong");
+					}
+				});
 		}
 
 	}

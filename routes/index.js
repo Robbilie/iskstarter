@@ -62,6 +62,11 @@
 				user: 		await user(req),
 				campaign: 	await CampaignController.find(req.params.id)
 			}))
+		.post("/campaigns/:id/donate/",
+			async (req, res) => {
+				await CampaignController.donate(req.params.id, req.body.amount, await user(req));
+				res.redirect("/campaigns/" + req.params.id + "/");
+			})
 		.get("/login/",
 			async (req, res) => res.redirect(await CRESTUtil.generateLoginUrl([], "/")))
 		.get("/login/callback/",
