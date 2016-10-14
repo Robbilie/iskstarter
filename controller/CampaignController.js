@@ -52,11 +52,12 @@
 		static donate (id, amount, owner) {
 			if(amount > owner.balance)
 				return Promise.reject("not enough money");
+			const now = Date.now();
 			return DBUtil.getCollection("entities")
 				.then(collection => collection.findOne({
 					_id: DBUtil.to_id(id),
-					"data.start": { $lt: Date.now() },
-					"data.end": { $gt: Date.now() }
+					"data.start": { $lt: now },
+					"data.end": { $gt: now }
 				}))
 				.then(entity => entity ? entity : Promise.reject("no such entity"))
 				.then(async entity => {
@@ -69,7 +70,7 @@
 						refID: 		new ObjectID(),
 						amount: 	amount,
 						reason: 	"[donation]",
-						timestamp: 	Date.now()
+						timestamp: 	now
 					};
 					let doc = await collection.insert(data);
 					if(doc.result.ok) {
