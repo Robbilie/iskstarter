@@ -36,8 +36,10 @@
         </form>
         <div>
             <% for(let campaigns in campaigns) { %>
-                <h4><%= campaign.name %></h4>
-                <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
+                <div>
+                    <h4><%= campaign.name %></h4>
+                    <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
+                </div>
             <% } %>
         </div>
         <% include footer.ejs %>
