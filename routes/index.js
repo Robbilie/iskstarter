@@ -74,7 +74,7 @@
 		.post("/campaigns/:id/donate/",
 			async (req, res) => {
 				try {
-					await CampaignController.donate(req.params.id, req.body.amount, await user(req));
+					await CampaignController.donate(req.params.id, Math.max(req.body.amount - 0, 0), await user(req));
 					res.redirect("/campaigns/" + req.params.id + "/");
 				} catch (e) {
 					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
