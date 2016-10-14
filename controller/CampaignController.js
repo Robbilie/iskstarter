@@ -53,7 +53,11 @@
 			if(amount > owner.balance)
 				return Promise.reject("not enough money");
 			return DBUtil.getCollection("entities")
-				.then(collection => collection.findOne({ _id: DBUtil.to_id(id) }))
+				.then(collection => collection.findOne({
+					_id: DBUtil.to_id(id),
+					"data.start": { $lt: Date.now() },
+					"data.end": { $gt: Date.now() }
+				}))
 				.then(entity => entity ? entity : Promise.reject("no such entity"))
 				.then(async entity => {
 					let collection = await DBUtil.getCollection("transactions");
