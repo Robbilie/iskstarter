@@ -8,12 +8,14 @@
         <% include nav.ejs %>
         <a href="/campaigns/">Campaigns</a>
         <div>
-            <% for(let campaign in campaigns) { %>
             <div>
-                <h4><%= campaign.name %></h4>
-                <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
+                <% campaigns.forEach(function (campaign) { %>
+                <div>
+                    <h4><%= campaign.name %></h4>
+                    <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
+                </div>
+                <% }) %>
             </div>
-            <% } %>
         </div>
         <a href="/campaigns/">More…</a>
         <% include footer.ejs %>

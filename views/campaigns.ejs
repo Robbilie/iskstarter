@@ -35,14 +35,12 @@
             <button>Submit</button>
         </form>
         <div>
-            <% for(let id in campaigns) {
-                let campaign = campaigns[id];
-            %>
+            <% campaigns.forEach(function (campaign) { %>
                 <div>
                     <h4><%= campaign.name %></h4>
                     <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
                 </div>
-            <% } %>
+            <% }) %>
         </div>
         <% if(page > 1) { %>
             <a href="/campaigns/page/<%= page - 1 %>/">Previous</a>
