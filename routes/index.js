@@ -98,4 +98,8 @@
 		.get("/profile/:id/",
 			async (req, res) => res.render("profile", {
 				data: await data(req)
+			}))
+		.get("/disclaimer/",
+			async (req, res) => res.render("disclaimer", {
+				data: await data(req)
 			}));
