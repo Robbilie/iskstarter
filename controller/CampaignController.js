@@ -16,9 +16,9 @@
 				type: "campaign",
 				data: {
 					header,
-					goal,
-					start,
-					end,
+					goal: goal - 0,
+					start: new Date(start).getTime(),
+					end: new Date(end).getTime(),
 					owner
 				}
 			};
