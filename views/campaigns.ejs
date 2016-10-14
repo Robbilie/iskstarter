@@ -34,12 +34,7 @@
             <button>Submit</button>
         </form>
         <div>
-            <% campaigns.forEach(function (campaign) { %>
-                <div>
-                    <h4><%= campaign.name %></h4>
-                    <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
-                </div>
-            <% }) %>
+            <% include campaignlist.ejs %>
         </div>
         <% if(page > 1) { %>
             <a href="/campaigns/page/<%= page - 1 %>/">Previous</a>
