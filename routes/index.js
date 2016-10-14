@@ -19,22 +19,24 @@
 		balance: 	await WalletController.balance(req.session.user.id)
 	} : {});
 
+	const data 			= async (req) => ({
+		user: 		await user(req),
+		error: 		req.query.error || "",
+		next: 		await WalletUtil.next()
+	});
+
 	const loggedIn 		= async (req) => !!(await user(req)).id;
 
 	module.exports = Router(m)
 		.get("/",
 			async (req, res) => res.render("index", {
-				user: 		await user(req),
 				campaigns: 	[],
-				error: 		req.query.error || "",
-				next: 		await WalletUtil.next()
+				data: 		await data(req)
 			}))
 		.get("/campaigns/",
 			async (req, res) => res.render("campaigns", {
-				user: 	await user(req),
 				campaigns: 	[],
-				error: 		req.query.error || "",
-				next: 		await WalletUtil.next()
+				data: 		await data(req)
 			}))
 		.post("/campaigns/",
 			async (req, res) => {
@@ -54,18 +56,22 @@
 					console.log(campaign);
 					res.redirect("/campaigns/" + campaign._id + "/");
 				} catch (e) {
-					res.redirect("/campaigns/?error=Error");
+					res.redirect("/campaigns/?error=" + (e.message || e));
 				}
 			})
 		.get("/campaigns/:id/",
 			async (req, res) => res.render("campaign", {
-				user: 		await user(req),
-				campaign: 	await CampaignController.find(req.params.id)
+				campaign: 	await CampaignController.find(req.params.id),
+				data: 		await data(req)
 			}))
 		.post("/campaigns/:id/donate/",
 			async (req, res) => {
-				await CampaignController.donate(req.params.id, req.body.amount, await user(req));
-				res.redirect("/campaigns/" + req.params.id + "/");
+				try {
+					await CampaignController.donate(req.params.id, req.body.amount, await user(req));
+					res.redirect("/campaigns/" + req.params.id + "/");
+				} catch (e) {
+					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
+				}
 			})
 		.get("/login/",
 			async (req, res) => res.redirect(await CRESTUtil.generateLoginUrl([], "/")))
@@ -75,7 +81,7 @@
 					req.session.user = await CharacterController.login(req.query.code);
 					res.redirect("/");
 				} catch (e) {
-					res.redirect("/?error=Something+went+wrong.");
+					res.redirect("/?error=" + (e.message || e));
 				}
 			})
 		.get("/logout/",
