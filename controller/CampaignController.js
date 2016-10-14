@@ -27,7 +27,7 @@
 
 		static find (id) {
 			return DBUtil.getCollection("entities")
-				.then(collection => collection.findOne({ _id: DBUtil.to_id(id) }))
+				.then(collection => collection.findOne({ _id: DBUtil.to_id(id), type: "campaign" }))
 				.then(async campaign => Object.assign(campaign, {
 					wallet: await WalletController.balance(campaign._id)
 				}));
