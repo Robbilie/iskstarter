@@ -42,6 +42,12 @@
                 </div>
             <% } %>
         </div>
+        <% if(page > 1) { %>
+            <a href="/campaigns/page/<%= page - 1 %>/">Previous</a>
+        <% } %>
+        <% if(campaigns.length == 100) { %>
+            <a href="/campaigns/page/<%= page + 1 %>/">Next</a>
+        <% } %>
         <% include footer.ejs %>
     </body>
 </html>
