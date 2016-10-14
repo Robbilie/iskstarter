@@ -8,7 +8,7 @@
         <% include nav.ejs %>
         <a href="/campaigns/">Campaigns</a>
         <div>
-            <% for(let campaigns in campaigns) { %>
+            <% for(let campaign in campaigns) { %>
             <div>
                 <h4><%= campaign.name %></h4>
                 <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
