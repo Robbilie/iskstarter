@@ -8,7 +8,7 @@
 	class CampaignController {
 
 		static create (name, description, header, goal, start, end, owner) {
-			if(!name || !description || !goal || !start || !end || !owner)
+			if(!name || !description || !header || !goal || !start || !end || !owner)
 				return Promise.reject("not all vals set");
 			const data = {
 				name: name.trim().replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
@@ -22,7 +22,9 @@
 					owner
 				}
 			};
-			return DBUtil.getCollection("entities").then(collection => collection.insertOne(data)).then(doc => doc.result.ok ? data : Promise.reject("something went wrong"));
+			return DBUtil.getCollection("entities")
+				.then(collection => collection.insertOne(data))
+				.then(doc => doc.result.ok ? data : Promise.reject("something went wrong"));
 		}
 
 		static find (id) {
@@ -74,7 +76,7 @@
 					};
 					let doc = await collection.insert(data);
 					if(doc.result.ok) {
-						let balance = await WalletController.balance(owner.id)
+						let balance = await WalletController.balance(owner.id);
 						if(balance < 0) {
 							await collection.remove({ _id: data._id });
 							throw new Error("not enough money");
