@@ -22,9 +22,22 @@ nav {
     position: relative;
 }
 
+nav::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    width: 1%;
+}
+
 .logo, .links {
     display: inline-block;
     width: 100%;
+}
+
+.left-nav {
+    vertical-align: middle;
+    display: inline-block;
 }
 
 .right-nav {
@@ -40,11 +53,17 @@ nav {
     top: 5px;
     left: 5px;
     bottom: 5px;
+    height: 40px;
 }
 
 .right-nav > div {
     position: relative;
     margin-left: 50px;
+}
+
+.right-nav > div > span {
+    display: inline-block;
+    width: 100%;
 }
 
 a {
