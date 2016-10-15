@@ -38,6 +38,8 @@ nav::after {
 .left-nav {
     vertical-align: middle;
     display: inline-block;
+    padding: 5px;
+    padding-left: 20px;
 }
 
 .right-nav {
