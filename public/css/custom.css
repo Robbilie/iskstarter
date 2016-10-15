@@ -51,6 +51,18 @@ nav::after {
     text-align: right;
 }
 
+.right-nav::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 1px;
+}
+
+.right-nav > span {
+    vertical-align: middle;
+    display: inline-block;
+}
+
 .right-nav > img {
     position: absolute;
     top: 5px;
