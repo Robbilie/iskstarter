@@ -46,19 +46,20 @@ nav::after {
     top: 0;
     bottom: 0;
     padding: 5px;
+    text-align: right;
 }
 
 .right-nav > img {
     position: absolute;
     top: 5px;
-    left: 5px;
+    right: 5px;
     bottom: 5px;
     height: 40px;
 }
 
 .right-nav > div {
     position: relative;
-    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .right-nav > div > span {
