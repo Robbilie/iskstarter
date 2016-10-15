@@ -5,6 +5,7 @@
 
 	class WalletController {
 
+		/*
 		static all () {
 			return DBUtil.getCollection("transactions")
 				.then(collection =>
@@ -36,6 +37,7 @@
 					]).toArray()
 				);
 		}
+		*/
 
 		static balance (id) {
 			return DBUtil.getCollection("transactions")

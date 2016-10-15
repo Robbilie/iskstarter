@@ -14,7 +14,7 @@
 		static generateLoginUrl (scopes, state) {
 			return Promise.resolve(
 				config.crest.login.url + "/oauth/authorize" +
-				"?" + unescape(querystring.stringify({
+				"?" + decodeURI(querystring.stringify({
 					response_type: 	"code",
 					redirect_uri: 	config.site.url + config.crest.callBack,
 					client_id: 		config.crest.clientID,
@@ -24,7 +24,7 @@
 			);
 		}
 
-		// { 'grant_type' : 'authorization_code', 'code': "asdasdasdad" }
+		// { 'grant_type' : 'authorization_code', 'code': "code" }
 		static getTokens (data) {
 			return new Promise((resolve, reject) => {
 				request(
@@ -38,7 +38,7 @@
 						},
 						form: data
 					},
-					(err, reqres, body) => {
+					(err, _, body) => {
 						if(err)
 							return reject(err);
 						try {
@@ -68,7 +68,7 @@
 							"Authorization": 	"Bearer " + accessToken
 						}
 					},
-					(err, reqres, body) => {
+					(err, _, body) => {
 						if(err)
 							return reject(err);
 						try {
@@ -110,7 +110,7 @@
 					params.headers["Content-Length"] = options.data.length;
 				if(options.accept)
 					params.headers["Accept"] = options.accept;
-				request(params, (err, reqres, body) => {
+				request(params, (err, _, body) => {
 					if(err)
 						return reject(err);
 					try {

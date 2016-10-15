@@ -9,7 +9,7 @@
 
 		static create (name, description, header, goal, start, end, owner) {
 			if(!name || !description || !header || !goal || !start || !end || !owner)
-				return Promise.reject("not all vals set");
+				return Promise.reject("not all fields set");
 			const data = {
 				name: name.trim().replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
 				description: description.replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
