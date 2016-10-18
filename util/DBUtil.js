@@ -12,7 +12,7 @@
 
 		static getConnection (field, db) {
 			if(!storage[field])
-				storage[field] = MongoClient.connect(`mongodb://${config.database.host}:${config.database.port}/${db}`).catch(e => !(delete storage[field]) || DBUtil.getConnection(field, db));
+				storage[field] = MongoClient.connect(`mongodb://${config.database.host}:${config.database.port}/${db}`).catch(e => delete storage[field]);
 			return storage[field];
 		}
 
