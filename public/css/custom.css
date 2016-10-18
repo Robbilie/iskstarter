@@ -101,6 +101,10 @@ footer {
 
 .campaign-list {
 	display: flex;
+	flex-wrap: wrap;
+	max-width: 900px;
+	width: 100%;
+	margin: auto;
 }
 
 .campaign-list > div {
