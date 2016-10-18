@@ -11,7 +11,7 @@ html, body {
     height: 100%;
     width: 100%;
     font-family: "Roboto", sans-serif;
-    text-shadow: 0 0 2px rgba(0,0,0,.5);
+    text-shadow: 0 0 2px rgba(0,0,0,.25);
 }
 
 nav {
@@ -98,3 +98,17 @@ footer {
 	border: 2px solid red;
 	display: none;
 }
+
+.campaign-list {
+
+}
+
+.campaign-list > div {
+	width: 30%;
+}
+
+.campaign-list > div:nth-child(n * 3 + 2) {
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
