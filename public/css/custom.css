@@ -100,14 +100,14 @@ footer {
 }
 
 .campaign-list {
-
+	display: flex;
 }
 
 .campaign-list > div {
 	width: 30%;
 }
 
-.campaign-list > div:nth-child(n * 3 + 2) {
+.campaign-list > div:nth-child(3n+2) {
 	margin-left: 5%;
 	margin-right: 5%;
 }
