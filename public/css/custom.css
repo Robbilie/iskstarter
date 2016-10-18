@@ -11,7 +11,7 @@ html, body {
     height: 100%;
     width: 100%;
     font-family: "Roboto", sans-serif;
-    text-shadow: 0 0 4px rgba(0,0,0,.5);
+    text-shadow: 0 0 2px rgba(0,0,0,.5);
 }
 
 nav {
@@ -92,4 +92,5 @@ a {
 
 .debug {
 	border: 2px solid red;
+	display: none;
 }
