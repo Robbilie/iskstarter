@@ -1,16 +1,28 @@
 <nav>
-    <div>
-        <% if (data.user.id) { %>
-            <img src="https://imageserver.eveonline.com/Character/<%= data.user.id %>_32.jpg">
-            <span><%= data.user.name %></span>
-            <span><%= data.user.balance %></span>
-            <a href="/logout/">Logout</a>
-        <% } else { %>
-            <a href="/login/">Login</a>
-        <% } %>
+    <div class="left-nav">
+        <span class="logo">
+            <a href="/">
+                <b>isk</b>
+                <span>starter</span>
+            </a>
+        </span>
+        <span class="links">
+            <a href="/">home</a>
+            <a href="/campaigns/">campaigns</a>
+            <% if (data.user.id) { %>
+                <a href="/logout/">log out</a>
+            <% } %>
+        </span>
     </div>
-    <div>
-        <a href="/">Home</a>
-        <a href="/campaigns/">Campaigns</a>
+    <div class="right-nav">
+        <% if (data.user.id) { %>
+            <div>
+                <span><%= data.user.name %></span>
+                <span class="balance"><%= data.user.balance.toLocaleString() %> ISK</span>
+            </div>
+            <img src="https://imageserver.eveonline.com/Character/<%= data.user.id %>_64.jpg">
+        <% } else { %>
+            <a href="/login/">log in</a>
+        <% } %>
     </div>
 </nav>

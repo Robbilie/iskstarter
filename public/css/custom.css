@@ -1,8 +1,92 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
-	nav {
-		border: 1px solid black;
-	}
+*, *::before, *::after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
 
-	.debug {
-		border: 2px solid red;
-	}
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: "Roboto", sans-serif;
+}
+
+nav {
+	display: block;
+    width: 100%;
+    height: 50px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+    overflow: hidden;
+    position: relative;
+}
+
+nav::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    width: 1%;
+}
+
+.logo, .links {
+    display: inline-block;
+    width: 100%;
+}
+
+.left-nav {
+    vertical-align: middle;
+    display: inline-block;
+    padding: 5px;
+    padding-left: 20px;
+}
+
+.right-nav {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 5px;
+    text-align: right;
+}
+
+.right-nav::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 1px;
+    height: 100%;
+}
+
+.right-nav > span {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.right-nav > img {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+    height: 40px;
+}
+
+.right-nav > div {
+    position: relative;
+    margin-right: 50px;
+}
+
+.right-nav > div > span {
+    display: inline-block;
+    width: 100%;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.debug {
+	border: 2px solid red;
+}
