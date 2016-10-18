@@ -65,13 +65,14 @@ nav::after {
     display: inline-block;
 }
 
-.right-nav > img {
+.right-nav > div > img {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    bottom: 5px;
-    height: 40px;
+    top: 0;
+    left: 100%;
+    bottom: 0;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+    margin-left: 10px;
+    height: 100%;
 }
 
 .right-nav > div {

@@ -13,8 +13,8 @@
             <div>
                 <b><%= data.user.name %></b>
                 <span class="balance"><%= data.user.balance.toLocaleString() %> ISK</span>
+                <img src="https://imageserver.eveonline.com/Character/<%= data.user.id %>_64.jpg">
             </div>
-            <img src="https://imageserver.eveonline.com/Character/<%= data.user.id %>_64.jpg">
         <% } else { %>
             <a href="/login/">log in</a>
         <% } %>
