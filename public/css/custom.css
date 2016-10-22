@@ -194,3 +194,11 @@ footer {
 	border: 1px solid #2c7ea5;
 	box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.61) inset;
 }
+
+input[type="text"] {
+	background-color: rgba(255,255,255,.5);
+	border: 1px solid white;
+	padding: 4px;
+	width: 100%;
+	display: block;
+}
