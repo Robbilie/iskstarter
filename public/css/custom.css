@@ -181,11 +181,16 @@ footer {
 .progress {
 	width: 100%;
 	border: 1px solid white;
-	background-color: gray;
-	box-shadow: 0 0 5px 0 rgba(0,0,0,.25) inset;
+	background-color: #b1b1b1;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4) inset;
 	height: 15px;
+	overflow: hidden;
 }
 
 .percentage {
-
+	height: 100%;
+	position: relative;
+	background-color: #2199d2;
+	border: 1px solid #2c7ea5;
+	box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.61) inset;
 }
