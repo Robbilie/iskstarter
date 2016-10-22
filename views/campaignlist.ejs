@@ -1,9 +1,11 @@
 <% campaigns.forEach(function (campaign) { %>
     <div class="campaign header">
         <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
-        <a href="/campaigns/<%= campaign._id %>/"><h4><%= campaign.name %></h4></a>
-        <div class="progress">
-            <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
+        <div class="list-content">
+            <a href="/campaigns/<%= campaign._id %>/"><h4><%= campaign.name %></h4></a>
+            <div class="progress">
+                <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
+            </div>
         </div>
     </div>
 <% }) %>

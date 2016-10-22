@@ -234,3 +234,7 @@ button {
 	max-width: 500px;
 	margin: auto;
 }
+
+.campaign {
+	min-height: initial;
+}
