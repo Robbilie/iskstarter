@@ -78,6 +78,7 @@ nav::after {
 .character {
     position: relative;
     margin-right: 50px;
+	float: right;
 }
 
 .character > span {
@@ -163,4 +164,27 @@ footer {
 .description {
 	background-color: white;
 	padding: 10px;
+}
+
+.details {
+	width: 100%;
+	max-width: 350px;
+	float: right;
+	margin: 10px;
+	padding: 10px;
+	background-color: rgba(255,255,255,.75);
+	position: relative;
+	border: 1px solid rgba(255,255,255,1);
+}
+
+.progress {
+	width: 100%;
+	border: 1px solid white;
+	background-color: gray;
+	box-shadow: 0 0 5px 0 rgba(0,0,0,.25) inset;
+	height: 15px;
+}
+
+.percentage {
+
 }
