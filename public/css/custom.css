@@ -106,7 +106,7 @@ footer {
 	flex-wrap: wrap;
 	max-width: 900px;
 	width: 100%;
-	margin: 20px auto 20px auto;
+	margin: 20px auto;
 }
 
 .campaign-list > div {
@@ -232,7 +232,7 @@ button {
 .create-form {
 	width: 100%;
 	max-width: 500px;
-	margin: auto;
+	margin: 20px auto;
 }
 
 .campaign {
@@ -254,5 +254,9 @@ button {
 	background-color: rgba(255,255,255,.25);
 	padding: 4px;
 	display: inline-block;
-	margin: 15px 0px;
+	margin: 15px 0;
+}
+
+label > span {
+	cursor: pointer;
 }
