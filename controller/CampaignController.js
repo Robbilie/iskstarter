@@ -17,8 +17,11 @@
 					header.trim() == "" ||
 				!goal ||
 					goal == 0 ||
+					Number.isNaN(goal) ||
 				!start ||
+					Number.isNaN(start) ||
 				!end ||
+					Number.isNaN(end) ||
 				!owner
 			)
 				return Promise.reject("not all fields set");
@@ -69,6 +72,8 @@
 		static donate (id, amount, owner) {
 			if(amount == 0)
 				return Promise.resolve();
+			if(Number.isNaN(amount))
+				return Promise.reject("something went wrong");
 			if(amount > owner.balance)
 				return Promise.reject("not enough money");
 			const now = Date.now();
