@@ -19,7 +19,10 @@
 					goal,
 					start,
 					end,
-					owner
+					owner: {
+						id: 	owner.id,
+						name: 	ownder.name
+					}
 				}
 			};
 			return DBUtil.getCollection("entities")
