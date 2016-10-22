@@ -6,37 +6,39 @@
     </head>
     <body>
         <% include nav.ejs %>
-        <label class="collapsible">
-            <input type="checkbox">
-            <span>create new campaign</span>
-            <form method="POST">
-                <label>Name:</label>
-                <br>
-                <input required type="text" name="name" />
-                <br>
-                <label>Description:</label>
-                <br>
-                <textarea required name="description"></textarea>
-                <br>
-                <label>Header Image URL:</label>
-                <br>
-                <input required type="text" name="header" />
-                <br>
-                <label>Goal:</label>
-                <br>
-                <input required type="number" name="goal" />
-                <br>
-                <label>Start Date:</label>
-                <br>
-                <input required type="text" name="start" placeholder="yyyy-mm-dd" />
-                <br>
-                <label>End Date:</label>
-                <br>
-                <input required type="text" name="end" placeholder="yyyy-mm-dd" />
-                <br>
-                <button>Submit</button>
-            </form>
-        </label>
+        <div class="create-form">
+            <label class="collapsible">
+                <input type="checkbox">
+                <span class="center full-width-block">create new campaign</span>
+                <form method="POST">
+                    <label>Name:</label>
+                    <br>
+                    <input required type="text" name="name" />
+                    <br>
+                    <label>Description:</label>
+                    <br>
+                    <textarea required name="description"></textarea>
+                    <br>
+                    <label>Header Image URL:</label>
+                    <br>
+                    <input required type="text" name="header" />
+                    <br>
+                    <label>Goal:</label>
+                    <br>
+                    <input required type="number" name="goal" />
+                    <br>
+                    <label>Start Date:</label>
+                    <br>
+                    <input required type="text" name="start" placeholder="yyyy-mm-dd" />
+                    <br>
+                    <label>End Date:</label>
+                    <br>
+                    <input required type="text" name="end" placeholder="yyyy-mm-dd" />
+                    <br>
+                    <button>Submit</button>
+                </form>
+            </label>
+        </div>
         <div class="campaign-list">
             <% include campaignlist.ejs %>
         </div>
