@@ -211,6 +211,7 @@ input[type="text"], input[type="number"], button {
 
 .collapsible {
 	display: block;
+	position: relative;
 }
 
 .collapsible > input[type="checkbox"] {
@@ -233,6 +234,16 @@ button {
 	width: 100%;
 	max-width: 500px;
 	margin: 20px auto;
+}
+
+.create-form::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255,255,255,.25);
 }
 
 .campaign {

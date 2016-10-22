@@ -6,36 +6,36 @@
     </head>
     <body>
         <% include nav.ejs %>
-        <div class="create-form">
+        <div class="create-form header">
             <label class="collapsible">
                 <input type="checkbox">
                 <span class="center full-width-block">create new campaign</span>
                 <form method="POST">
-                    <label>Name:</label>
+                    <label>name</label>
                     <br>
                     <input required type="text" name="name" />
                     <br>
-                    <label>Description:</label>
+                    <label>description</label>
                     <br>
                     <textarea required name="description"></textarea>
                     <br>
-                    <label>Header Image URL:</label>
+                    <label>header image url</label>
                     <br>
                     <input required type="text" name="header" />
                     <br>
-                    <label>Goal:</label>
+                    <label>goal</label>
                     <br>
                     <input required type="number" name="goal" />
                     <br>
-                    <label>Start Date:</label>
+                    <label>start date</label>
                     <br>
                     <input required type="text" name="start" placeholder="yyyy-mm-dd" />
                     <br>
-                    <label>End Date:</label>
+                    <label>end date</label>
                     <br>
                     <input required type="text" name="end" placeholder="yyyy-mm-dd" />
                     <br>
-                    <button>Submit</button>
+                    <button>submit</button>
                 </form>
             </label>
         </div>
