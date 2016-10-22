@@ -31,7 +31,7 @@
                     <br>
                     <% if(campaign.data.start < Date.now() && Date.now() < campaign.data.end) { %>
                         <label>donation key</label>
-                        <input><%= campaign._id %></input>
+                        <input value="<%= campaign._id %>" />
 
                         <% if (data.user.id && data.user.balance > 0) { %>
                             <form method="POST" action="./donate/">
