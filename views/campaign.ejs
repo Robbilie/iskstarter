@@ -6,6 +6,42 @@
     </head>
     <body>
         <% include nav.ejs %>
+
+        <div class="container">
+            <div class="header">
+                <div class="details">
+                    <% if(campaign.data.owner) { %>
+                        <div class="character">
+                            <b><%= campaign.data.owner.name %></b>
+                            <img src="https://imageserver.eveonline.com/Character/<%= campaign.data.owner.id %>_64.jpg">
+                        </div>
+                    <% } %>
+                    <div class="date">
+                        <% if(Date.now() > campaign.data.end) { %>
+                            Ended <%= (new Date(campaign.data.end)).toGMTString() %>.
+                        <% } else if (Date.now() < campaign.data.start) { %>
+                            Starts <%= (new Date(campaign.data.end)).toGMTString() %>.
+                        <% } else { %>
+                            <%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %> days left.
+                        <% } %>
+                    </div>
+                    <div class="progress">
+                        <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="title">
+                    <h1><%= campaign.name %></h1>
+                </div>
+                <div class="description">
+                    <%= campaign.description %>
+                </div>
+            </div>
+        </div>
+
+
+        <!--
         <h1><%= campaign.name %></h1>
         <div><%= campaign.description %></div>
 
@@ -32,6 +68,7 @@
         <% } %>
 
         <pre class="debug"><%= JSON.stringify(campaign, null, 2) %></pre>
+        -->
         <% include footer.ejs %>
     </body>
 </html>

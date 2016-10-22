@@ -65,7 +65,7 @@ nav::after {
     display: inline-block;
 }
 
-.right-nav > div > img {
+.character > img {
     position: absolute;
     top: 0;
     left: 100%;
@@ -75,12 +75,12 @@ nav::after {
     height: 100%;
 }
 
-.right-nav > div {
+.character {
     position: relative;
     margin-right: 50px;
 }
 
-.right-nav > div > span {
+.character > span {
     display: inline-block;
     width: 100%;
 }

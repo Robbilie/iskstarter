@@ -10,7 +10,7 @@
     </div>
     <div class="right-nav">
         <% if (data.user.id) { %>
-            <div>
+            <div class="character">
                 <b><%= data.user.name %></b>
                 <span class="balance"><%= data.user.balance.toLocaleString() %> ISK</span>
                 <img src="https://imageserver.eveonline.com/Character/<%= data.user.id %>_64.jpg">
