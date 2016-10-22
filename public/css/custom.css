@@ -106,7 +106,7 @@ footer {
 	flex-wrap: wrap;
 	max-width: 900px;
 	width: 100%;
-	margin: auto;
+	margin: 20px auto 20px auto;
 }
 
 .campaign-list > div {
@@ -248,4 +248,11 @@ button {
 
 .list-content {
 	position: relative;
+}
+
+.list-content h4 {
+	background-color: rgba(255,255,255,.25);
+	padding: 4px;
+	display: inline-block;
+	margin: 15px 0px;
 }
