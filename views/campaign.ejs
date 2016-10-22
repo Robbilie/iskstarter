@@ -17,6 +17,7 @@
                             <b><%= campaign.data.owner.name %></b>
                             <img src="https://imageserver.eveonline.com/Character/<%= campaign.data.owner.id %>_64.jpg">
                         </div>
+                        <br>
                     <% } %>
                     <div class="date">
                         <% if(Date.now() > campaign.data.end) { %>
@@ -24,7 +25,7 @@
                         <% } else if (Date.now() < campaign.data.start) { %>
                             Starts <%= (new Date(campaign.data.end)).toGMTString() %>.
                         <% } else { %>
-                            <%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %> days left.
+                            <b><%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %></b> days left.
                         <% } %>
                     </div>
                     <br>
