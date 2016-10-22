@@ -36,14 +36,14 @@
                         <br>
 
                         <% if (data.user.id && data.user.balance > 0) { %>
-                            <div class="donate">
+                            <label class="donate">
                                 <input type="checkbox">
-                                <label>donate</label>
+                                <span>donate</span>
                                 <form method="POST" action="./donate/">
                                     <input type="number" name="amount" max="<%= data.user.balance %>" min="0" required />
-                                    <button>Donate</button>
+                                    <button>donate</button>
                                 </form>
-                            </div>
+                            </label>
                         <% } %>
                     <% } %>
                     <div class="progress">
