@@ -203,6 +203,10 @@ input[type="text"], input[type="number"] {
 	display: block;
 }
 
+.donate {
+	display: block;
+}
+
 .donate > input[type="checkbox"] {
 	display: none;
 }
