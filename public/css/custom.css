@@ -150,7 +150,7 @@ footer {
 
 .content {
 	position: relative;
-	margin: -100px 100px 20px 100px;
+	margin: -100px 10% 20px 10%;
 	box-shadow: 0 0 10px 0 rgba(0,0,0,.25);
 }
 
