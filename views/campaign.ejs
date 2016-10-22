@@ -8,7 +8,8 @@
         <% include nav.ejs %>
 
         <div class="container">
-            <div class="header" style="background-image: url(<%= campaign.data.header %>)">
+            <div class="header">
+                <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
                 <div class="details">
                     <% if(campaign.data.owner) { %>
                         <div class="character">
