@@ -36,7 +36,7 @@
 					end,
 					owner: {
 						id: 	owner.id,
-						name: 	ownder.name
+						name: 	owner.name
 					}
 				}
 			};
