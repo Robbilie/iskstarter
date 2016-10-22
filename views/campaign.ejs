@@ -40,7 +40,7 @@
                                 <input type="checkbox">
                                 <span>donate</span>
                                 <form method="POST" action="./donate/">
-                                    <input type="number" name="amount" max="<%= data.user.balance %>" min="0" required />
+                                    <input type="number" name="amount" value="0" max="<%= data.user.balance %>" min="0" required />
                                     <button>donate</button>
                                 </form>
                             </label>

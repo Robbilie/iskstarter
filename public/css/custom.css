@@ -195,7 +195,7 @@ footer {
 	box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.61) inset;
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"], input[type="number"], button {
 	background-color: rgba(255,255,255,.5);
 	border: 1px solid white;
 	padding: 4px;
@@ -217,4 +217,8 @@ input[type="text"], input[type="number"] {
 
 .donate > input[type="checkbox"]:not(:checked) + span + form {
 	display: none;
+}
+
+button {
+
 }
