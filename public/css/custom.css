@@ -79,6 +79,7 @@ nav::after {
     position: relative;
     margin-right: 50px;
 	float: right;
+	text-align: right;
 }
 
 .character > span {

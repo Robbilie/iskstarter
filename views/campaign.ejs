@@ -13,6 +13,7 @@
                 <div class="details">
                     <% if(campaign.data.owner) { %>
                         <div class="character">
+                            <span>creator</span>
                             <b><%= campaign.data.owner.name %></b>
                             <img src="https://imageserver.eveonline.com/Character/<%= campaign.data.owner.id %>_64.jpg">
                         </div>
@@ -26,6 +27,7 @@
                             <%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %> days left.
                         <% } %>
                     </div>
+                    <br>
                     <div class="progress">
                         <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
                     </div>
