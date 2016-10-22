@@ -260,7 +260,7 @@ button {
 }
 
 .campaign .header-image {
-	background-size: contain;
+	background-size: cover;
 }
 
 .list-content {
