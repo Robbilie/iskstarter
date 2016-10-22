@@ -1,6 +1,8 @@
 <% campaigns.forEach(function (campaign) { %>
     <div>
         <a href="/campaigns/<%= campaign._id %>/"><h4><%= campaign.name %></h4></a>
-        <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
+        <div class="progress">
+            <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
+        </div>
     </div>
 <% }) %>
