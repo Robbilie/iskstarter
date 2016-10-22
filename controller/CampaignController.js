@@ -55,6 +55,8 @@
 		}
 
 		static donate (id, amount, owner) {
+			if(amount == 0)
+				return Promise.resolve();
 			if(amount > owner.balance)
 				return Promise.reject("not enough money");
 			const now = Date.now();
