@@ -130,12 +130,6 @@ footer {
 .header {
 	position: relative;
 	min-height: 400px;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
 	background: #2c2d44;
 	background-image: -moz-linear-gradient(45deg, #3f3251 2%, #002025 100%);
 	background-image: -webkit-linear-gradient(45deg, #3f3251 2%, #002025 100%);
