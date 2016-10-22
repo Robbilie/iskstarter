@@ -8,7 +8,19 @@
 	class CampaignController {
 
 		static create (name, description, header, goal, start, end, owner) {
-			if(!name || !description || !header || !goal || !start || !end || !owner)
+			if(
+				!name ||
+					name.trim() == "" ||
+				!description ||
+					description.trim() == "" ||
+				!header ||
+					header.trim() == "" ||
+				!goal ||
+					goal == 0 ||
+				!start ||
+				!end ||
+				!owner
+			)
 				return Promise.reject("not all fields set");
 			const data = {
 				name: name.trim().replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
