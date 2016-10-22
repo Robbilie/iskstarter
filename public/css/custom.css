@@ -201,7 +201,7 @@ footer {
 	box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.61) inset;
 }
 
-input[type="text"], input[type="number"], button {
+input[type="text"], input[type="number"], button, textarea {
 	background-color: rgba(255,255,255,.5);
 	border: 1px solid white;
 	padding: 4px;
@@ -234,6 +234,10 @@ button {
 	width: 100%;
 	max-width: 500px;
 	margin: 20px auto;
+	min-height: initial;
+	padding: 10px;
+	border: 1px solid white;
+	box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
 }
 
 .create-form::before {
