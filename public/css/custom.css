@@ -127,6 +127,7 @@ footer {
 }
 
 .header {
+	position: relative;
 	min-height: 400px;
 }
 
