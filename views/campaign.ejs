@@ -29,6 +29,17 @@
                         <% } %>
                     </div>
                     <br>
+                    <% if(campaign.data.start < Date.now() && Date.now() < campaign.data.end) { %>
+                        <label>donation key</label>
+                        <input><%= campaign._id %></input>
+
+                        <% if (data.user.id && data.user.balance > 0) { %>
+                            <form method="POST" action="./donate/">
+                                <input type="number" name="amount" max="<%= data.user.balance %>" min="0" required />
+                                <button>Donate</button>
+                            </form>
+                        <% } %>
+                    <% } %>
                     <div class="progress">
                         <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
                     </div>
