@@ -203,19 +203,19 @@ input[type="text"], input[type="number"], button {
 	display: block;
 }
 
-.donate {
+.collapsible {
 	display: block;
 }
 
-.donate > input[type="checkbox"] {
+.collapsible > input[type="checkbox"] {
 	display: none;
 }
 
-.donate > input[type="checkbox"]:checked + span {
+.collapsible > input[type="checkbox"]:checked + span {
 	display: none;
 }
 
-.donate > input[type="checkbox"]:not(:checked) + span + form {
+.collapsible > input[type="checkbox"]:not(:checked) + span + form {
 	display: none;
 }
 
