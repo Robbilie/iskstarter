@@ -2,7 +2,10 @@
 	"use strict";
 
 	const { DBUtil } 			= require("util/");
-	const { WalletController } 	= require("controller/");
+	const {
+		WalletController,
+		CharacterController
+	} 	= require("controller/");
 	const { ObjectID } 			= require("mongodb");
 
 	class CampaignController {
@@ -40,7 +43,8 @@
 					}
 				}
 			};
-			return DBUtil.getCollection("entities")
+			return CharacterController.isBanned(owner)
+				.then(isBanned => isBanned ? Promise.reject("You are banned from creating new campaigns") : DBUtil.getCollection("entities"))
 				.then(collection => collection.insertOne(data))
 				.then(doc => doc.result.ok ? data : Promise.reject("something went wrong"));
 		}
