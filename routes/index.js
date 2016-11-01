@@ -68,10 +68,18 @@
 				}
 			})
 		.get("/campaigns/:id/",
-			async (req, res) => res.render("campaign", {
-				campaign: 	await CampaignController.find(req.params.id),
-				data: 		await data(req)
-			}))
+			async (req, res) => {
+				try {
+					res.render("campaign", {
+						campaign: 	await CampaignController.find(req.params.id),
+						data: 		await data(req)
+					});
+				} catch (error) {
+					res.render("error", {
+						data: 		Object.assign(await data(req), { error })
+					});
+				}
+			})
 		.post("/campaigns/:id/donate/",
 			async (req, res) => {
 				try {
