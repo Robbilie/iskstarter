@@ -5,16 +5,16 @@
             <a href="/campaigns/<%= campaign._id %>/"><h4><%= campaign.name %></h4></a>
             <br>
             <span>
-            <% if(Date.now() > campaign.data.end) { %>
-            Ended <%= (new Date(campaign.data.end)).toGMTString() %>.
-            <% } else if (Date.now() < campaign.data.start) { %>
-            Starts <%= (new Date(campaign.data.end)).toGMTString() %>.
-            <% } else { %>
-            <b><%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %></b> days left.
-            <% } %>
+                <% if(Date.now() > campaign.data.end) { %>
+                    Ended <%= (new Date(campaign.data.end)).toGMTString() %>.
+                <% } else if (Date.now() < campaign.data.start) { %>
+                    Starts <%= (new Date(campaign.data.end)).toGMTString() %>.
+                <% } else { %>
+                    <b><%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %></b> days left.
+                <% } %>
             </span>
             <br>
-            <span><b><%= campaign.wallet %> ISK</b> of <%= campaign.data.goal %> ISK</span>
+            <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
             <br>
             <div class="progress">
                 <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
