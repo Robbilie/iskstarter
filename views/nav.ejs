@@ -20,4 +20,7 @@
             <a href="/login/">log in</a>
         <% } %>
     </div>
+    <% if(data.error != "") { %>
+        <div class="error"><%= data.error %></div>
+    <% } %>
 </nav>
