@@ -62,36 +62,6 @@
                 </div>
             </div>
         </div>
-
-
-        <!--
-        <h1><%= campaign.name %></h1>
-        <div><%= campaign.description %></div>
-
-        <% if(campaign.data.owner) { %>
-            <div>
-                <label>Creator:</label>
-                <img src="https://imageserver.eveonline.com/Character/<%= campaign.data.owner.id %>_32.jpg">
-                <span><%= campaign.data.owner.name %></span>
-            </div>
-        <% } %>
-
-        <progress max="<%= campaign.data.goal %>" value="<%= campaign.wallet %>"></progress>
-
-        <% if(campaign.data.start < Date.now() && Date.now() < campaign.data.end) { %>
-            <label>Donation Key:</label>
-            <pre><%= campaign._id %></pre>
-
-            <% if (data.user.id && data.user.balance > 0) { %>
-                <form method="POST" action="./donate/">
-                    <input type="number" name="amount" max="<%= data.user.balance %>" min="0" required />
-                    <button>Donate</button>
-                </form>
-            <% } %>
-        <% } %>
-
-        <pre class="debug"><%= JSON.stringify(campaign, null, 2) %></pre>
-        -->
         <% include footer.ejs %>
     </body>
 </html>
