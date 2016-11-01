@@ -27,7 +27,7 @@
     <br>
     <input required type="text" name="end" placeholder="yyyy-mm-dd" value="<%= formData.data.end %>" />
     <br>
-    <% if(formData.owner) { %>
+    <% if(formData.data.owner) { %>
         <label>owner id</label>
         <br>
         <input required type="text" name="owner.id" value="<%= formData.data.owner.id %>" />
