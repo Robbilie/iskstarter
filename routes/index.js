@@ -95,7 +95,7 @@
 						{ id: req.body.ownerID, name: req.body.ownerName },
 						await user(req)
 					);
-					res.redirect("/campaign/" + req.params.id + "/");
+					res.redirect("/campaigns/" + req.params.id + "/");
 				} catch (error) {
 					res.render("error", {
 						data: 		Object.assign(await data(req), { error })
