@@ -344,6 +344,10 @@ label > span, .ptn {
 	margin-top: 0;
 }
 
+.container.box label {
+	box-shadow: none;
+}
+
 .total-donated {
 	font-size: 15px;
 	opacity: .5;
