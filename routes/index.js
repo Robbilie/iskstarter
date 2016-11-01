@@ -96,10 +96,8 @@
 						await user(req)
 					);
 					res.redirect("/campaigns/" + req.params.id + "/");
-				} catch (error) {
-					res.render("error", {
-						data: 		Object.assign(await data(req), { error })
-					});
+				} catch (e) {
+					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
 				}
 			})
 		.post("/campaigns/:id/donate/",
