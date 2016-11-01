@@ -338,3 +338,8 @@ label > span {
 .container > ul > li:first-child {
 	margin-top: 0;
 }
+
+.total-donated {
+	font-size: 15px;
+	opacity: .5;
+}
