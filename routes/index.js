@@ -105,4 +105,8 @@
 		.get("/disclaimer/",
 			async (req, res) => res.render("disclaimer", {
 				data: await data(req)
+			}))
+		.get("/artwork/",
+			async (req, res) => res.render("artwork", {
+				data: await data(req)
 			}));
