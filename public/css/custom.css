@@ -269,13 +269,25 @@ button {
 
 .list-content {
 	position: relative;
+	height: 100%;
+	margin-bottom: 20px;
+}
+
+.list-content * {
+	background-color: rgba(255,255,255,.5);
 }
 
 .list-content h4 {
-	background-color: rgba(255,255,255,.5);
 	padding: 4px;
 	display: inline-block;
 	margin: 15px 0;
+}
+
+.list-content .progress {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 label > span {
