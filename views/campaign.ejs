@@ -6,7 +6,15 @@
     </head>
     <body>
         <% include nav.ejs %>
-
+        <% if (data.user.id && data.user.isAdmin) { %>
+            <div class="create-form header box">
+                <label class="collapsible">
+                    <input type="checkbox">
+                    <span class="hidden-hl center full-width-block">adjust this campaign</span>
+                    <% include campaignform.ejs %>
+                </label>
+            </div>
+        <% } %>
         <div class="container">
             <div class="header box">
                 <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
@@ -62,11 +70,6 @@
                 </div>
             </div>
         </div>
-        <% if(data.user.isAdmin) { %>
-            <div class="create-form header box">
-                <% include campaignform.ejs %>
-            </div>
-        <% } %>
         <% include footer.ejs %>
     </body>
 </html>
