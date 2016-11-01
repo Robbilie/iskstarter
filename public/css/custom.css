@@ -136,6 +136,10 @@ footer {
 	margin-top: 20px;
 }
 
+.container * {
+	box-shadow: 0 0 10px 0 rgba(0,0,0,0.25);
+}
+
 .header {
 	position: relative;
 	min-height: 400px;
