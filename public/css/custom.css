@@ -348,3 +348,7 @@ label > span {
 	font-size: 15px;
 	opacity: .5;
 }
+
+.break-all {
+	word-break: break-all;
+}
