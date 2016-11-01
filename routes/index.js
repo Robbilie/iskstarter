@@ -35,7 +35,7 @@
 			}))
 		.get("/campaigns/",
 			async (req, res) => res.render("campaigns", {
-				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, ),
+				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }),
 				data: 		await data(req),
 				page: 1
 			}))

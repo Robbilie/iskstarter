@@ -1,0 +1,6 @@
+- Total Donated
+- Admin Page
+- upcoming campaigns
+- past campaigns
+- profile page
+ - your campaigns
