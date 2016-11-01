@@ -7,7 +7,7 @@
             </a>
         </span>
         <span class="links"><a href="/">home</a><span> | </span><a href="/campaigns/">campaigns</a><% if (data.user.id) { %><span> | </span><a href="/logout/">log out</a><% } %></span>
-        <span class="total-donated"><%= total.toLocaleString().slice(1) %> ISK total donated</span>
+        <span class="total-donated"><%= data.total.toLocaleString().slice(1) %> ISK total donated</span>
     </div>
     <div class="right-nav">
         <% if (data.user.id) { %>
