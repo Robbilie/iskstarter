@@ -11,33 +11,7 @@
                 <label class="collapsible">
                     <input type="checkbox">
                     <span class="hidden-hl center full-width-block">create new campaign</span>
-                    <form class="hidden-ctn" method="POST">
-                        <label>name</label>
-                        <br>
-                        <input required type="text" name="name" />
-                        <br>
-                        <label>description</label>
-                        <br>
-                        <textarea required name="description"></textarea>
-                        <br>
-                        <label>header image url</label>
-                        <br>
-                        <input required type="text" name="header" />
-                        <br>
-                        <label>goal</label>
-                        <br>
-                        <input required type="number" name="goal" />
-                        <br>
-                        <label>start date</label>
-                        <br>
-                        <input required type="text" name="start" placeholder="yyyy-mm-dd" />
-                        <br>
-                        <label>end date</label>
-                        <br>
-                        <input required type="text" name="end" placeholder="yyyy-mm-dd" />
-                        <br>
-                        <button>submit</button>
-                    </form>
+                    <% include campaignform.ejs %>
                 </label>
             </div>
         <% } %>

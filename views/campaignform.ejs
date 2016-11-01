@@ -1,0 +1,41 @@
+<% var formData = typeof(campaign) != "undefined" ? campaign : { name: "", description: "", data: { header: "", goal: 0, start: 0, end: 0 } }; %>
+<form class="hidden-ctn" method="POST">
+    <% if(formData._id) { %>
+        <input type="hidden" name="_id" value="<%= formData._id %>" />
+    <% } %>
+    <label>name</label>
+    <br>
+    <input required type="text" name="name" value="<%= formData.name %>" />
+    <br>
+    <label>description</label>
+    <br>
+    <textarea required name="description" value="<%= formData.description %>"></textarea>
+    <br>
+    <label>header image url</label>
+    <br>
+    <input required type="text" name="header" value="<%= formData.data.header %>" />
+    <br>
+    <label>goal</label>
+    <br>
+    <input required type="number" name="goal" value="<%= formData.data.goal %>" />
+    <br>
+    <label>start date</label>
+    <br>
+    <input required type="text" name="start" placeholder="yyyy-mm-dd" value="<%= formData.data.start %>" />
+    <br>
+    <label>end date</label>
+    <br>
+    <input required type="text" name="end" placeholder="yyyy-mm-dd" value="<%= formData.data.end %>" />
+    <br>
+    <% if(formData.owner) { %>
+        <label>owner id</label>
+        <br>
+        <input required type="text" name="owner.id" value="<%= formData.data.owner.id %>" />
+        <br>
+        <label>owner name</label>
+        <br>
+        <input required type="text" name="owner.name" value="<%= formData.data.owner.name %>" />
+        <br>
+    <% } %>
+    <button>submit</button>
+</form>
