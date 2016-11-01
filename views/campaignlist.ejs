@@ -1,5 +1,5 @@
 <% campaigns.forEach(function (campaign) { %>
-    <div class="campaign header">
+    <div class="campaign header box">
         <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
         <div class="list-content">
             <a href="/campaigns/<%= campaign._id %>/"><h4><%= campaign.name %></h4></a>
