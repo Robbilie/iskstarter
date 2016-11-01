@@ -28,7 +28,12 @@
 
 							if(!result.eveapi.error) {
 
-								let transactions = (result.eveapi.result[0].rowset[0].row || [])
+								const transactionCollection 	= await DBUtil.getCollection("transactions");
+								const entityCollection 			= await DBUtil.getCollection("entities");
+
+								// pay ins
+
+								let payIns = (result.eveapi.result[0].rowset[0].row || [])
 									.filter(({ $ }) => $.ownerName2 == "ISKstarter")
 									.map(({ $ }) => ({
 										fromID: 	$.ownerID2 - 0,
@@ -41,12 +46,9 @@
 										timestamp: 	new Date($.date + "Z").getTime()
 									}));
 
-								const transactionCollection 	= await DBUtil.getCollection("transactions");
-								const entityCollection 			= await DBUtil.getCollection("entities");
+								await Promise.all(payIns.map(transaction => transactionCollection.update({ refID: transaction.refID }, { $setOnInsert: transaction }, { upsert: true })));
 
-								await Promise.all(transactions.map(transaction => transactionCollection.update({ refID: transaction.refID }, { $setOnInsert: transaction }, { upsert: true })));
-
-								await Promise.all(transactions.filter(transaction => transaction.reason.length == 24).map(async (transaction) => {
+								await Promise.all(payIns.filter(transaction => transaction.reason.length == 24).map(async (transaction) => {
 									let entity = await entityCollection.findOne({
 										_id: DBUtil.to_id(transaction.reason),
 										"data.start": { $lt: transaction.timestamp },
@@ -63,6 +65,30 @@
 											reason: 	"[donation]",
 											timestamp: 	transaction.timestamp
 										} }, { upsert: true });
+									}
+								}));
+
+								// pay outs
+
+								let payOuts = (result.eveapi.result[0].rowset[0].row || [])
+									.filter(({ $ }) => $.ownerName1 == "ISKstarter" && $.reason != "")
+									.map(({ $ }) => ({
+										fromID: 	1,
+										fromName: 	"EVE System",
+										toID: 		$.ownerID1 - 0,
+										toName: 	$.ownerName1,
+										refID: 		$.refID - 0,
+										amount: 	Math.abs($.amount - 0),
+										reason: 	$.reason.replace("DESC:", "").trim(),
+										timestamp: 	new Date($.date + "Z").getTime()
+									}));
+
+								await Promise.all(payOuts.map(async transaction => {
+									let entity = await entityCollection.findOne({
+										_id: DBUtil.to_id(transaction.reason)
+									});
+									if(entity) {
+										await transactionCollection.update({ refID: transaction.refID }, { $setOnInsert: transaction }, { upsert: true });
 									}
 								}));
 

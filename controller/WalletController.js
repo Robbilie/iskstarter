@@ -52,7 +52,7 @@
 						{ $project: { wallet: { $subtract: ["$walletIn", "$walletOut"] } } }
 					]).toArray()
 				)
-				.then(array => (array[0] || { wallet: 0}).wallet);
+				.then(array => (array[0] || { wallet: 0 }).wallet);
 		}
 
 	}
