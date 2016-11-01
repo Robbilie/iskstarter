@@ -232,7 +232,7 @@ input[type="text"], input[type="number"], button, textarea, .btn {
 	display: none;
 }
 
-.collapsible > input[type="checkbox"]:not(:checked) ~ .hidden-hl ~ .hidden-ctn {
+.collapsible > input[type="checkbox"]:not(:checked) ~ .hidden-ctn {
 	display: none;
 }
 
