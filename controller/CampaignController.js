@@ -53,7 +53,7 @@
 		static find (id) {
 			return DBUtil.getCollection("entities")
 				.then(collection => collection.findOne({ _id: DBUtil.to_id(id), type: "campaign" }))
-				.then(async campaign => campaign ? Promise.reject("Invalid campaign id") : Object.assign(campaign, {
+				.then(async campaign => !campaign ? Promise.reject("Invalid campaign id") : Object.assign(campaign, {
 					wallet: await WalletController.balance(campaign._id)
 				}));
 		}
