@@ -295,7 +295,7 @@ button {
 	right: 0;
 }
 
-label > span {
+label > span, .ptn {
 	cursor: pointer;
 }
 
