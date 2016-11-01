@@ -59,7 +59,7 @@
 
 		static page (options = {}, page = 1, limit = 100) {
 			return DBUtil.getCollection("entities")
-				.then(collection => collection.find(Object.assign({ type: "campaign" }, options)).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray())
+				.then(collection => collection.find(Object.assign({ type: "campaign" }, options)).sort({ "data.end": 1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray())
 				.then(campaigns => Promise.all(campaigns.map(async campaign => Object.assign(campaign, {
 					wallet: await WalletController.balance(campaign._id)
 				}))));
