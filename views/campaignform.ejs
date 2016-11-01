@@ -1,4 +1,4 @@
-<% var formData = typeof(campaign) != "undefined" ? campaign : { name: "", description: "", data: { header: "", goal: 0, start: 0, end: 0 } }; %>
+<% var formData = typeof(campaign) != "undefined" ? campaign : { name: "", description: "", data: { header: "", goal: 0 } }; %>
 <form class="hidden-ctn" method="POST" action="/campaigns/<%= formData._id ? formData._id + "/" : "" %>">
     <label>name</label>
     <br>
@@ -18,11 +18,11 @@
     <br>
     <label>start date</label>
     <br>
-    <input required type="text" name="start" placeholder="yyyy-mm-dd" value="<%= formData.data.start %>" />
+    <input required type="text" name="start" placeholder="yyyy-mm-dd" value="<%= formData.data.start ? new Date(formData.data.start).toJSON().split("T")[0] : "" %>" />
     <br>
     <label>end date</label>
     <br>
-    <input required type="text" name="end" placeholder="yyyy-mm-dd" value="<%= formData.data.end %>" />
+    <input required type="text" name="end" placeholder="yyyy-mm-dd" value="<%= formData.data.end ? new Date(formData.data.end).toJSON().split("T")[0] : "" %>" />
     <br>
     <% if(formData.data.owner) { %>
         <label>owner id</label>
