@@ -2,7 +2,7 @@
     <a href="/campaigns/<%= campaign._id %>/" class="campaign header box">
         <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
         <div class="list-content">
-            <a href="/campaigns/<%= campaign._id %>/"><h4><%= campaign.name %></h4></a>
+            <h4><%= campaign.name %></h4>
             <br>
             <span>
                 <% if(Date.now() > campaign.data.end) { %>
