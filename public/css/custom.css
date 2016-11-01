@@ -273,7 +273,7 @@ button {
 	margin-bottom: 20px;
 }
 
-.list-content * {
+.list-content > * {
 	background-color: rgba(255,255,255,.5);
 }
 
