@@ -16,7 +16,8 @@
 	const user 			= async (req) => (req.session.user ? console.log(req.session.user) || {
 		id: 		req.session.user.id,
 		name: 		req.session.user.name,
-		balance: 	await WalletController.balance(req.session.user.id)
+		balance: 	await WalletController.balance(req.session.user.id),
+		isAdmin: 	await CharacterController.isAdmin()
 	} : {});
 
 	const data 			= async (req) => ({

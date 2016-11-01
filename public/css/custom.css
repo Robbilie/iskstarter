@@ -110,12 +110,12 @@ footer {
 	margin: 20px auto;
 }
 
-.campaign-list > div {
+.campaign-list > .campaign {
 	width: 30%;
 
 }
 
-.campaign-list > div:nth-child(3n+2) {
+.campaign-list > .campaign:nth-child(3n+2) {
 	margin-left: 5%;
 	margin-right: 5%;
 }

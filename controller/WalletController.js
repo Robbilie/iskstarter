@@ -55,6 +55,12 @@
 				.then(array => (array[0] || { wallet: 0 }).wallet);
 		}
 
+		static paidOut (id) {
+			return DBUtil.getCollection("transactions")
+				.then(collection => collection.findOne({ fromName: "EVE System", toName: "ISKstarter", reason: id.toString() }))
+				.then(result => !!result);
+		}
+
 	}
 
 	module.exports = WalletController;
