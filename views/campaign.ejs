@@ -47,6 +47,7 @@
                             <br>
                         <% } %>
                     <% } %>
+                    <b><%= campaign.wallet %></b> of <%= campaign.data.goal %>
                     <div class="progress">
                         <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
                     </div>
