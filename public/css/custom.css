@@ -206,7 +206,7 @@ footer {
 	box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.61) inset;
 }
 
-input[type="text"], input[type="number"], button, textarea {
+input[type="text"], input[type="number"], button, textarea, .btn {
 	background-color: rgba(255,255,255,.5);
 	border: 1px solid white;
 	padding: 4px;
