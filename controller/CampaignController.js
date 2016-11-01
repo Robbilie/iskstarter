@@ -44,7 +44,8 @@
 				}
 			};
 			return CharacterController.isBanned(owner)
-				.then(isBanned => isBanned ? Promise.reject("You are banned from creating new campaigns") : DBUtil.getCollection("entities"))
+				.then(isBanned => isBanned ? Promise.reject("You are banned from creating new campaigns") : CampaignController.countByOwner(owner))
+				.then(num => num >= 6 ? Promise.reject("You already have 6 running campaigns"): DBUtil.getCollection("entities"))
 				.then(collection => collection.insertOne(data))
 				.then(doc => doc.result.ok ? data : Promise.reject("something went wrong"));
 		}
@@ -55,6 +56,14 @@
 				.then(async campaign => Object.assign(campaign, {
 					wallet: await WalletController.balance(campaign._id)
 				}));
+		}
+
+		static findByOwner ({ id }) {
+			return DBUtil.getCollection("entities").then(collection => collection.find({ "data.owner.id": id }).toArray());
+		}
+
+		static countByOwner ({ id}) {
+			return DBUtil.getCollection("entities").then(collection => collection.find({ "data.owner.id": id }).count());
 		}
 
 		static page (options = {}, page = 1, limit = 100) {
