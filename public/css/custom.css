@@ -7,89 +7,90 @@
 }
 
 html, body {
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    font-family: "Roboto", sans-serif;
-    text-shadow: 0 0 2px rgba(0,0,0,.25);
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	font-family: "Roboto", sans-serif;
+	text-shadow: 0 0 2px rgba(0,0,0,.25);
 }
 
 nav {
 	display: block;
-    width: 100%;
-    height: 50px;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
-    overflow: hidden;
-    position: relative;
+	width: 100%;
+	height: 67px;
+	box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+	overflow: hidden;
+	position: relative;
 }
 
-nav::after {
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    height: 100%;
-    width: 1%;
+nav::before {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	width: 1%;
+	clear: both;
 }
 
 .logo, .links {
-    display: inline-block;
-    width: 100%;
+	display: inline-block;
+	width: 100%;
 }
 
 .left-nav {
-    vertical-align: middle;
-    display: inline-block;
-    padding: 5px;
-    padding-left: 20px;
+	vertical-align: middle;
+	display: inline-block;
+	padding: 5px;
+	padding-left: 5px;
+	width: 49%;
 }
 
 .right-nav {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    padding: 5px;
-    text-align: right;
+	padding: 5px;
+	text-align: right;
+	display: inline-block;
+	vertical-align: middle;
+	width: 49%;
 }
 
 .right-nav::after {
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    width: 1px;
-    height: 100%;
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	width: 1px;
+	height: 100%;
 }
 
 .right-nav > span {
-    vertical-align: middle;
-    display: inline-block;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 .character > img {
-    position: absolute;
-    top: 0;
-    left: 100%;
-    bottom: 0;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
-    margin-left: 10px;
-    height: 100%;
+	position: absolute;
+	top: 0;
+	left: 100%;
+	bottom: 0;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+	margin-left: 10px;
+	height: 100%;
 }
 
 .character {
-    position: relative;
-    margin-right: 50px;
+	position: relative;
+	margin-right: 50px;
 	float: right;
 	text-align: right;
 }
 
 .character > span {
-    display: inline-block;
-    width: 100%;
+	display: inline-block;
+	width: 100%;
 }
 
 a {
-    color: black;
-    text-decoration: none;
+	color: black;
+	text-decoration: none;
 }
 
 footer {
@@ -146,7 +147,7 @@ footer {
 	background: #2c2d44;
 	background-image: -moz-linear-gradient(45deg, #3f3251 2%, #002025 100%);
 	background-image: -webkit-linear-gradient(45deg, #3f3251 2%, #002025 100%);
-	//background-image: linear-gradient(45deg, #3f3251 2%, #002025 100%);
+//background-image: linear-gradient(45deg, #3f3251 2%, #002025 100%);
 	background-image: linear-gradient(45deg, #773658 2%, #063d46 100%);
 }
 
@@ -264,8 +265,8 @@ button {
 }
 
 /*.campaign*/ .header-image {
-	background-size: cover;
-}
+				  background-size: cover;
+			  }
 
 .list-content {
 	position: relative;
