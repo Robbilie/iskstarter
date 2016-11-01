@@ -29,6 +29,7 @@ nav::before {
 	height: 100%;
 	width: 1%;
 	clear: both;
+	position: absolute;
 }
 
 .logo, .links {
