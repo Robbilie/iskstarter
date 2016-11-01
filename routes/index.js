@@ -11,7 +11,7 @@
 		CharacterController
 	} = require("controller/");
 
-	const { CRESTUtil, WalletUtil } = require("util/");
+	const { DBUtil, CRESTUtil, WalletUtil } = require("util/");
 
 	const user 			= async (req) => (req.session.user ? console.log(req.session.user) || {
 		id: 		req.session.user.id,
@@ -75,6 +75,27 @@
 						campaign: 	await CampaignController.find(req.params.id),
 						data: 		await data(req)
 					});
+				} catch (error) {
+					res.render("error", {
+						data: 		Object.assign(await data(req), { error })
+					});
+				}
+			})
+		.post("/campaigns/:id/",
+			async (req, res) => {
+				try {
+					await CampaignController.update(
+						DBUtil.to_id(req.params.id),
+						req.body.name,
+						req.body.description,
+						req.body.header,
+						req.body.goal - 0,
+						new Date(req.body.start).getTime(),
+						new Date(req.body.end).getTime(),
+						{ id: req.body.ownerID, name: req.body.ownerName },
+						await user(req)
+					);
+					res.redirect("/campaign/" + req.params.id + "/");
 				} catch (error) {
 					res.render("error", {
 						data: 		Object.assign(await data(req), { error })

@@ -11,24 +11,40 @@
 	class CampaignController {
 
 		static create (name, description, header, goal, start, end, owner) {
+			const data = CampaignController.sanitize(name, description, header, goal, start, end, owner);
+			return CharacterController.isBanned(owner)
+				.then(isBanned => isBanned ? Promise.reject("You are banned from creating new campaigns") : CampaignController.countByOwner(owner))
+				.then(num => num >= 6 ? Promise.reject("You already have 6 running campaigns"): DBUtil.getCollection("entities"))
+				.then(collection => collection.insertOne(data))
+				.then(doc => doc.result.ok ? data : Promise.reject("something went wrong"));
+		}
+
+		static update (_id, name, description, header, goal, start, end, owner, user) {
+			const data = CampaignController.sanitize(name, description, header, goal, start, end, owner);
+			return CharacterController.isAdmin(user)
+				.then(isAdmin => !isAdmin ? Promise.reject("You are not an admin") : DBUtil.getCollection("entities"))
+				.then(collection => collection.update({ _id }, { $set: data }));
+		}
+
+		static sanitize (name, description, header, goal, start, end, owner) {
 			if(
 				!name ||
-					name.trim() == "" ||
+				name.trim() == "" ||
 				!description ||
-					description.trim() == "" ||
+				description.trim() == "" ||
 				!header ||
-					header.trim() == "" ||
+				header.trim() == "" ||
 				!goal ||
-					goal == 0 ||
-					Number.isNaN(goal) ||
+				goal == 0 ||
+				Number.isNaN(goal) ||
 				!start ||
-					Number.isNaN(start) ||
+				Number.isNaN(start) ||
 				!end ||
-					Number.isNaN(end) ||
+				Number.isNaN(end) ||
 				!owner
 			)
 				return Promise.reject("not all fields set");
-			const data = {
+			return {
 				name: name.trim().replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
 				description: description.replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
 				type: "campaign",
@@ -43,11 +59,6 @@
 					}
 				}
 			};
-			return CharacterController.isBanned(owner)
-				.then(isBanned => isBanned ? Promise.reject("You are banned from creating new campaigns") : CampaignController.countByOwner(owner))
-				.then(num => num >= 6 ? Promise.reject("You already have 6 running campaigns"): DBUtil.getCollection("entities"))
-				.then(collection => collection.insertOne(data))
-				.then(doc => doc.result.ok ? data : Promise.reject("something went wrong"));
 		}
 
 		static find (id) {
