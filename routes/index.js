@@ -39,7 +39,7 @@
 			async (req, res) => res.render("campaigns", {
 				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }),
 				data: 		await data(req),
-				page: 1
+				page: 		1
 			}))
 		.get("/campaigns/page/:page/",
 			async (req, res) => res.render("campaigns", {
@@ -77,7 +77,7 @@
 					});
 				} catch (error) {
 					res.render("error", {
-						data: 		Object.assign(await data(req), { error })
+						data: Object.assign(await data(req), { error })
 					});
 				}
 			})
