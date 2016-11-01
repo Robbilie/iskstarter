@@ -30,18 +30,18 @@
 	module.exports = Router(m)
 		.get("/",
 			async (req, res) => res.render("index", {
-				campaigns: 	await CampaignController.page(1, 20),
+				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, 1, 20),
 				data: 		await data(req)
 			}))
 		.get("/campaigns/",
 			async (req, res) => res.render("campaigns", {
-				campaigns: 	await CampaignController.page(),
+				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, ),
 				data: 		await data(req),
 				page: 1
 			}))
 		.get("/campaigns/page/:page/",
 			async (req, res) => res.render("campaigns", {
-				campaigns: 	await CampaignController.page(req.params.page - 0),
+				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, req.params.page - 0),
 				data: 		await data(req),
 				page: 		req.params.page - 0
 			}))
