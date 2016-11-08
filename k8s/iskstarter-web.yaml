@@ -68,7 +68,7 @@ spec:
         - name: CREST_CALLBACK
           value: "/login/callback/"
         - name: REDIS_HOST
-          value: "138.201.40.82"
+          value: "10.32.0.2"
         - name: REDIS_PORT
           value: "6379"
         - name: COOKIE_NAME
