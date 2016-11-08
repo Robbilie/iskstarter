@@ -32,7 +32,8 @@
 				store: 		new RedisStore({
 					host: 	process.env.REDIS_HOST,
 					port: 	parseInt(process.env.REDIS_PORT),
-					ttl: 	parseInt(process.env.COOKIE_TTL)
+					ttl: 	parseInt(process.env.COOKIE_TTL),
+					logErrors: true
 				}),
 				cookie: 	{ maxAge: parseInt(process.env.COOKIE_TTL) },
 				secret: 	config.cookie.secret,
