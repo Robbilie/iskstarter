@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "docker build -f docker/iskstarter-node -t robbilie/eas:iskstarter . && docker push robbilie/eas:iskstarter",
     "start": "node --expose-gc --harmony_async_await app.js"
   },
   "author": "",
