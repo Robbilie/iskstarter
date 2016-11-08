@@ -60,4 +60,4 @@ spec:
       volumes:
       - name: config
         secret:
-          secretName: eas-config
+          secretName: iskstarter-config
