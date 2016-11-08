@@ -1,0 +1,63 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels:
+    app: iskstarter-wallet
+  name: iskstarter-wallet-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iskstarter-wallet
+  template:
+    metadata:
+      labels:
+        app: iskstarter-wallet
+    spec:
+      containers:
+      - name: iskstarter-wallet-pod
+        image: index.docker.io/robbilie/eas:iskstarter
+        imagePullPolicy: Always
+        ports:
+        volumeMounts:
+        - name: config
+          mountPath: "/etc/secrets"
+          readOnly: true
+        env:
+        - name: APP_NAME
+          value: "Wallet"
+        - name: HOST
+          value: "iskstarter.utils.space"
+        - name: UA
+          value: "Kubernetes ISKstarter Node.js Fetcher Test (Robert Schuh/Vincent Eneticum)"
+        - name: MONGO_URL
+          value: "mongodb://138.201.40.82:27017"
+        - name: MONGO_DB
+          value: "iskstarter"
+        - name: XML_URL
+          value: "https://api.eveonline.com"
+        - name: CREST_URL
+          value: "https://crest-tq.eveonline.com"
+        - name: IMAGE_URL
+          value: "https://imageserver.eveonline.com"
+        - name: LOGIN_URL
+          value: "https://login.eveonline.com"
+        - name: ESI_URL
+          value: "https://esi.tech.ccp.is/latest"
+        - name: TAX
+          value: "5"
+        - name: CREST_CALLBACK
+          value: "/login/callback/"
+        - name: REDIS_HOST
+          value: "138.201.40.82"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: COOKIE_NAME
+          value: "oauth.sid.v0001"
+        - name: COOKIE_TTL
+          value: "2592000000"
+      volumes:
+      - name: config
+        secret:
+          secretName: eas-config

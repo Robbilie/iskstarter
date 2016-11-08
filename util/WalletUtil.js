@@ -3,8 +3,6 @@
 
 	const request 			= require("request");
 	const { parseString } 	= require("xml2js");
-
-	const config 			= require("config/");
 	const { DBUtil } 		= require("util/");
 
 	const storage = {
@@ -14,7 +12,7 @@
 	class WalletUtil {
 
 		static loadUpdates () {
-			request(`${config.ccp.api.url}/Corp/WalletJournal.xml.aspx?keyID=${config.ccp.keyID}&vCode=${config.ccp.vCode}`, (error, response, body) => {
+			request(`${process.env.XML_URL}/Corp/WalletJournal.xml.aspx?keyID=${config.xml.keyID}&vCode=${config.xml.vCode}`, (error, response, body) => {
 				if (!error && response.statusCode == 200) {
 					parseString(body, async (parseError, result) => {
 						if(parseError || !result.eveapi) {
@@ -41,7 +39,7 @@
 										toID: 		$.ownerID1 - 0,
 										toName: 	$.ownerName1,
 										refID: 		$.refID - 0,
-										amount: 	Math.floor(($.amount - 0) * (100 - config.site.tax)) / 100,
+										amount: 	Math.floor(($.amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
 										reason: 	$.reason.replace("DESC:", "").trim(),
 										timestamp: 	new Date($.date + "Z").getTime()
 									}));

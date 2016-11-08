@@ -12,16 +12,16 @@
 
 		static getConnection (field, db) {
 			if(!storage[field])
-				storage[field] = MongoClient.connect(`mongodb://${config.database.host}:${config.database.port}/${db}`).catch(e => delete storage[field]);
+				storage[field] = MongoClient.connect(`${process.env.MONGO_URL}/${db}`).catch(e => delete storage[field]);
 			return storage[field];
 		}
 
 		static getDB () {
-			return DBUtil.getConnection("db", config.database.name);
+			return DBUtil.getConnection("db", process.env.MONGO_DB);
 		}
 
 		static getCollection (collectionName) {
-			return DBUtil.getDB().then(db => db.collection(config.database.prefix + collectionName));
+			return DBUtil.getDB().then(db => db.collection(collectionName));
 		}
 
 		static to_id (id) {

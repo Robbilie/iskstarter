@@ -1,0 +1,10 @@
+xml:
+  keyID:
+  vCode: ""
+crest:
+  clientID:
+  secretKey: ""
+cookie:
+  secret: ""
+sentry:
+  dsn: ""

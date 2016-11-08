@@ -3,7 +3,6 @@
 
 	const request 			= require("request");
 	const querystring 		= require("querystring");
-	const config 			= require("config/");
 
 	class CRESTUtil {
 
@@ -13,10 +12,10 @@
 
 		static generateLoginUrl (scopes, state) {
 			return Promise.resolve(
-				config.crest.login.url + "/oauth/authorize" +
+				process.env.LOGIN_URL + "/oauth/authorize" +
 				"?" + decodeURI(querystring.stringify({
 					response_type: 	"code",
-					redirect_uri: 	config.site.url + config.crest.callBack,
+					redirect_uri: 	`https://${process.env.HOST}${process.env.CREST_CALLBACK}`,
 					client_id: 		config.crest.clientID,
 					scope: 			scopes.join(" "),
 					state: 			state
@@ -30,10 +29,9 @@
 				request(
 					{
 						method: 		"POST",
-						localAddress: 	config.site.localIP,
-						url: 			`${config.crest.login.url}/oauth/token`,
+						url: 			`${process.env.LOGIN_URL}/oauth/token`,
 						headers: {
-							"User-Agent": config.site.userAgent,
+							"User-Agent": process.env.UA,
 							"Authorization": "Basic " + CRESTUtil.getBase64()
 						},
 						form: data
@@ -61,10 +59,9 @@
 			return new Promise((resolve, reject) => {
 				request({
 						method: 		"GET",
-						localAddress: 	config.site.localIP,
-						url: 			`${config.crest.login.url}/oauth/verify`,
+						url: 			`${process.env.LOGIN_URL}/oauth/verify`,
 						headers: {
-							"User-Agent": 		config.site.userAgent,
+							"User-Agent": 		process.env.UA,
 							"Authorization": 	"Bearer " + accessToken
 						}
 					},
