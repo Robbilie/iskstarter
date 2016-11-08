@@ -2,7 +2,6 @@
 	"use strict";
 
 	const { Router } 	= require("express");
-	const config 		= require("config/");
 	const m 			= { mergeParams: true };
 
 	const {

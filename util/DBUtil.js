@@ -2,7 +2,6 @@
 	"use strict";
 
 	const { ObjectID, MongoClient } = require("mongodb");
-	const config = require("config/");
 
 	const storage = {
 		db: undefined
