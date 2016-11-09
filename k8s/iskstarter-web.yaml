@@ -85,3 +85,5 @@ spec:
       - name: config
         secret:
           secretName: iskstarter-config
+      imagePullSecrets:
+      - name: myregistrykey
