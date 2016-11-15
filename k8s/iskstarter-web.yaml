@@ -50,7 +50,7 @@ spec:
         - name: UA
           value: "Kubernetes ISKstarter Node.js Fetcher Test (Robert Schuh/Vincent Eneticum)"
         - name: MONGO_URL
-          value: "mongodb://10.32.0.2:27017"
+          value: "mongodb://mongo:27017"
         - name: MONGO_DB
           value: "iskstarter"
         - name: XML_URL
