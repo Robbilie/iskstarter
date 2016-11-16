@@ -103,7 +103,7 @@
 		static async find (id) {
 			let entities = await DBUtil.getCollection("entities");
 
-			let campaign = entities.findOne({ _id: DBUtil.to_id(id), type: "campaign" });
+			let campaign = await entities.findOne({ _id: DBUtil.to_id(id), type: "campaign" });
 			if(!campaign)
 				return Promise.reject("Invalid campaign id");
 
