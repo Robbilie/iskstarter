@@ -6,12 +6,15 @@
 
 	global.config = require("js-yaml").safeLoad(new Buffer(require("fs").readFileSync("/etc/secrets/config.yaml"), "base64"));
 
+	const { WalletUtil } = require("util/");
+
 	if(process.env.APP_NAME == "Wallet") {
 
-		const { WalletUtil } = require("util/");
 		WalletUtil.startUpdater();
 
 	} else {
+
+		WalletUtil.updateNext();
 
 		const http 						= require("http");
 		const express 					= require("express");

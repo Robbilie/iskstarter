@@ -11,6 +11,29 @@
 
 	class WalletUtil {
 
+		static updateNext () {
+			request(`${process.env.XML_URL}/Corp/WalletJournal.xml.aspx?keyID=${config.xml.keyID}&vCode=${config.xml.vCode}`, (error, response, body) => {
+				if (!error && response.statusCode == 200) {
+					parseString(body, async(parseError, result) => {
+						if (parseError || !result.eveapi) {
+							console.log(parseError || result);
+							return setTimeout(() => WalletUtil.updateNext(), 5 * 1000);
+						} else {
+							let d = new Date(result.eveapi.cachedUntil[0] + "Z");
+							let e = new Date(result.eveapi.currentTime[0] + "Z");
+
+							storage.next = d;
+
+							setTimeout(() => WalletUtil.updateNext(), Math.max(d.getTime() - e.getTime(), 0));
+						}
+					});
+				} else {
+					console.log(error || response.statusCode || response);
+					return setTimeout(() => WalletUtil.updateNext(), 5 * 1000);
+				}
+			});
+		}
+
 		static loadUpdates () {
 			request(`${process.env.XML_URL}/Corp/WalletJournal.xml.aspx?keyID=${config.xml.keyID}&vCode=${config.xml.vCode}`, (error, response, body) => {
 				if (!error && response.statusCode == 200) {
