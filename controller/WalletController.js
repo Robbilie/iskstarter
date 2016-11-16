@@ -51,6 +51,8 @@
 				{ $project: { wallet: { $subtract: ["$walletIn", "$walletOut"] } } }
 			]).toArray();
 
+			console.log("balance", entries);
+
 			return (entries[0] || { wallet: 0 }).wallet;
 		}
 

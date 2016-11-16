@@ -140,13 +140,13 @@
 			}))
 		.get("/unapproved/",
 			async (req, res) => res.render("unapproved", {
-				campaigns: 	await CampaignController.unapproved(),
+				campaigns: 	await CampaignController.unapproved(await user(req)),
 				data: 		await data(req),
 				page: 		1
 			}))
 		.get("/unapproved/page/:page/",
 			async (req, res) => res.render("unapproved", {
-				campaigns: 	await CampaignController.unapproved({}, req.params.page - 0),
+				campaigns: 	await CampaignController.unapproved(await user(req), {}, req.params.page - 0),
 				data: 		await data(req),
 				page: 		req.params.page - 0
 			}))

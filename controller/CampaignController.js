@@ -92,7 +92,7 @@
 			return await entities.find(Object.assign({ type: "campaign", rejected: { $exists: true } }, options)).sort({ "rejected.timestamp": -1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray();
 		}
 
-		static async unapproved (options = {}, page = 1, limit = 100) {
+		static async unapproved (user, options = {}, page = 1, limit = 100) {
 			if(await CharacterController.isAdmin(user) == false)
 				return Promise.reject("You are not an admin");
 
