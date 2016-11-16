@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include head.ejs %>
+        <title>Unapproved - Page <%= page %></title>
+    </head>
+    <body>
+        <% include nav.ejs %>
+        <div class="campaign-list">
+            <% campaigns.forEach(function (campaign) { %>
+                <div class="campaign header box">
+                    <h4><a href="/campaigns/<%= campaign._id %>/" class="campaign header box"><%= campaign.name %></a></h4>
+                    <p><%= campaign.description%></p>
+                    <form method="POST" action="/campaigns/<%= campaign._id %>/reject/">
+                        <textarea required name="description"></textarea>
+                        <button>reject</button>
+                    </form>
+                    <form method="POST" action="/campaigns/<%= campaign._id %>/accept/">
+                        <button>accept</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+        <% if(page > 1) { %>
+            <a href="/unapproved/page/<%= page - 1 %>/">Previous</a>
+        <% } %>
+        <% if(campaigns.length == 100) { %>
+            <a href="/unapproved/page/<%= page + 1 %>/">Next</a>
+        <% } %>
+        <% include footer.ejs %>
+    </body>
+</html>

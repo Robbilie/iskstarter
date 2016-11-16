@@ -108,6 +108,48 @@
 					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
 				}
 			})
+		.post("/campaigns/:id/accept/",
+			async (req, res) => {
+				try {
+					await CampaignController.approve(req.params.id, await user(req));
+					res.redirect("/campaigns/" + req.params.id + "/");
+				} catch (e) {
+					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
+				}
+			})
+		.post("/campaigns/:id/reject/",
+			async (req, res) => {
+				try {
+					await CampaignController.reject(req.params.id, req.body.description, await user(req));
+					res.redirect("/campaigns/" + req.params.id + "/");
+				} catch (e) {
+					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
+				}
+			})
+		.get("/rejected/",
+			async (req, res) => res.render("rejected", {
+				campaigns: 	await CampaignController.rejected(),
+				data: 		await data(req),
+				page: 		1
+			}))
+		.get("/rejected/page/:page/",
+			async (req, res) => res.render("rejected", {
+				campaigns: 	await CampaignController.rejected({}, req.params.page - 0),
+				data: 		await data(req),
+				page: 		req.params.page - 0
+			}))
+		.get("/unapproved/",
+			async (req, res) => res.render("unapproved", {
+				campaigns: 	await CampaignController.unapproved(),
+				data: 		await data(req),
+				page: 		1
+			}))
+		.get("/unapproved/page/:page/",
+			async (req, res) => res.render("unapproved", {
+				campaigns: 	await CampaignController.unapproved({}, req.params.page - 0),
+				data: 		await data(req),
+				page: 		req.params.page - 0
+			}))
 		.get("/login/",
 			async (req, res) => res.redirect(await CRESTUtil.generateLoginUrl([], "/")))
 		.get("/login/callback/",

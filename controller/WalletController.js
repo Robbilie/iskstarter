@@ -39,26 +39,25 @@
 		}
 		*/
 
-		static balance (id) {
-			return DBUtil.getCollection("transactions")
-				.then(collection =>
-					collection.aggregate([
-						{ $match: { $or: [{ fromID: id }, { toID: id }] } },
-						{ $group: {
-							_id: "wallet",
-							walletIn: { $sum: { $cond: [{ $eq: ["$toID", id] }, "$amount", 0] } },
-							walletOut: { $sum: { $cond: [{ $eq: ["$fromID", id] }, "$amount", 0] } }
-						} },
-						{ $project: { wallet: { $subtract: ["$walletIn", "$walletOut"] } } }
-					]).toArray()
-				)
-				.then(array => (array[0] || { wallet: 0 }).wallet);
+		static async balance (id) {
+			let transactions = await DBUtil.getCollection("transactions");
+			let entries = await transactions.aggregate([
+				{ $match: { $or: [{ fromID: id }, { toID: id }] } },
+				{ $group: {
+					_id: "wallet",
+					walletIn: { $sum: { $cond: [{ $eq: ["$toID", id] }, "$amount", 0] } },
+					walletOut: { $sum: { $cond: [{ $eq: ["$fromID", id] }, "$amount", 0] } }
+				} },
+				{ $project: { wallet: { $subtract: ["$walletIn", "$walletOut"] } } }
+			]).toArray();
+
+			return (entries[0] || { wallet: 0 }).wallet;
 		}
 
-		static paidOut (id) {
-			return DBUtil.getCollection("transactions")
-				.then(collection => collection.findOne({ fromName: "EVE System", toName: "ISKstarter", reason: id.toString() }))
-				.then(result => !!result);
+		static async paidOut (id) {
+			let transactions = await DBUtil.getCollection("transactions");
+			let result = await transactions.findOne({ fromName: "EVE System", toName: "ISKstarter", reason: id.toString() });
+			return !!result;
 		}
 
 	}

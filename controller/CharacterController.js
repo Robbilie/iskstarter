@@ -8,23 +8,22 @@
 
 	class CharacterController {
 
-		static login (code) {
-			return Promise.resolve()
-				.then(() => CRESTUtil.getTokens({ grant_type: "authorization_code", code }))
-				.then(({ accessToken }) => CRESTUtil.getInfo(accessToken))
-				.then(({ id, name }) => ({ id, name }));
+		static async login (code) {
+			let { accessToken } = await CRESTUtil.getTokens({ grant_type: "authorization_code", code });
+			let { id, name } = await CRESTUtil.getInfo(accessToken);
+			return { id, name };
 		}
 
-		static isBanned ({ id }) {
-			return DBUtil.getCollection("roles")
-				.then(collection => collection.findOne({ "character.id": id, isBanned: true }))
-				.then(role => !!role);
+		static async isBanned ({ id }) {
+			let roles = await DBUtil.getCollection("roles");
+			let role = await roles.findOne({ "character.id": id, isBanned: true });
+			return !!role;
 		}
 
-		static isAdmin ({ id }) {
-			return DBUtil.getCollection("roles")
-				.then(collection => collection.findOne({ "character.id": id, isAdmin: true }))
-				.then(role => !!role);
+		static async isAdmin ({ id }) {
+			let roles = await DBUtil.getCollection("roles");
+			let role = await roles.findOne({ "character.id": id, isAdmin: true });
+			return !!role;
 		}
 
 	}

@@ -15,61 +15,67 @@
                 </label>
             </div>
         <% } %>
-        <div class="container">
-            <div class="header box">
-                <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
-                <div class="details">
-                    <% if(campaign.data.owner) { %>
-                        <div class="character">
-                            <span>creator</span>
-                            <b><%= campaign.data.owner.name %></b>
-                            <img src="https://imageserver.eveonline.com/Character/<%= campaign.data.owner.id %>_64.jpg">
-                        </div>
-                        <br>
-                    <% } %>
-                    <div class="date">
-                        <% if(Date.now() > campaign.data.end) { %>
-                            Ended <%= (new Date(campaign.data.end)).toGMTString() %>.
-                        <% } else if (Date.now() < campaign.data.start) { %>
-                            Starts <%= (new Date(campaign.data.end)).toGMTString() %>.
-                        <% } else { %>
-                            <b><%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %></b> days left.
-                        <% } %>
-                    </div>
-                    <br>
-                    <% if(campaign.data.start < Date.now() && Date.now() < campaign.data.end) { %>
-                        <label>donation key</label>
-                        <br>
-                        <input type="text" value="<%= campaign._id %>" onblur="this.value = '<%= campaign._id %>'" />
-                        <br>
-
-                        <% if (data.user.id && data.user.balance > 0) { %>
-                            <label class="collapsible">
-                                <input type="checkbox">
-                                <span class="hidden-hl btn">donate</span>
-                                <form class="hidden-ctn" method="POST" action="./donate/">
-                                    <input type="number" name="amount" class="center" value="0" max="<%= data.user.balance %>" min="0" required />
-                                    <button>donate</button>
-                                </form>
-                            </label>
+        <% if (campaign.rejected) { %>
+            <div class="create-form header box"><p class="hidden-hl center full-width-block rel">Campaign rejected:<br><%= campaign.rejected.description %></p></div>
+        <% } else if (!campaign.rejected && !campaign.approved && (data.user.id && !data.user.isAdmin)) { %>
+            <div class="create-form header box"><p class="hidden-hl center full-width-block rel">Campaign has not been approved yet.</p></div>
+        <% } else { %>
+            <div class="container">
+                <div class="header box">
+                    <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
+                    <div class="details">
+                        <% if(campaign.data.owner) { %>
+                            <div class="character">
+                                <span>creator</span>
+                                <b><%= campaign.data.owner.name %></b>
+                                <img src="https://imageserver.eveonline.com/Character/<%= campaign.data.owner.id %>_64.jpg">
+                            </div>
                             <br>
                         <% } %>
-                    <% } %>
-                    <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
-                    <div class="progress">
-                        <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
+                        <div class="date">
+                            <% if(Date.now() > campaign.data.end) { %>
+                                Ended <%= (new Date(campaign.data.end)).toGMTString() %>.
+                            <% } else if (Date.now() < campaign.data.start) { %>
+                                Starts <%= (new Date(campaign.data.end)).toGMTString() %>.
+                            <% } else { %>
+                                <b><%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %></b> days left.
+                            <% } %>
+                        </div>
+                        <br>
+                        <% if(campaign.data.start < Date.now() && Date.now() < campaign.data.end) { %>
+                            <label>donation key</label>
+                            <br>
+                            <input type="text" value="<%= campaign._id %>" onblur="this.value = '<%= campaign._id %>'" />
+                            <br>
+
+                            <% if (data.user.id && data.user.balance > 0) { %>
+                                <label class="collapsible">
+                                    <input type="checkbox">
+                                    <span class="hidden-hl btn">donate</span>
+                                    <form class="hidden-ctn" method="POST" action="./donate/">
+                                        <input type="number" name="amount" class="center" value="0" max="<%= data.user.balance %>" min="0" required />
+                                        <button>donate</button>
+                                    </form>
+                                </label>
+                                <br>
+                            <% } %>
+                        <% } %>
+                        <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
+                        <div class="progress">
+                            <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="title">
+                        <h1><%= campaign.name %></h1>
+                    </div>
+                    <div class="description">
+                        <%- campaign.description.replace(/\n/g, "<br>") %>
                     </div>
                 </div>
             </div>
-            <div class="content">
-                <div class="title">
-                    <h1><%= campaign.name %></h1>
-                </div>
-                <div class="description">
-                    <%- campaign.description.replace(/\n/g, "<br>") %>
-                </div>
-            </div>
-        </div>
+        <% } %>
         <% include footer.ejs %>
     </body>
 </html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include head.ejs %>
+        <title>Rejected - Page <%= page %></title>
+    </head>
+    <body>
+        <% include nav.ejs %>
+        <div class="campaign-list">
+            <% campaigns.forEach(function (campaign) { %>
+                <div class="campaign header box">
+                    <h4><%= campaign.name %></h4>
+                    <p><%= campaign.description%></p>
+                    <h4>Rejection Reason:</h4>
+                    <p><%= campaign.rejected.description %></p>
+                </div>
+            <% }) %>
+        </div>
+        <% if(page > 1) { %>
+            <a href="/rejected/page/<%= page - 1 %>/">Previous</a>
+        <% } %>
+        <% if(campaigns.length == 100) { %>
+            <a href="/rejected/page/<%= page + 1 %>/">Next</a>
+        <% } %>
+        <% include footer.ejs %>
+    </body>
+</html>

@@ -10,20 +10,30 @@
 
 	class CampaignController {
 
-		static create (name, description, header, goal, start, end, owner) {
+		static async create (name, description, header, goal, start, end, owner) {
 			const data = CampaignController.sanitize(name, description, header, goal, start, end, owner);
-			return CharacterController.isBanned(owner)
-				.then(isBanned => isBanned ? Promise.reject("You are banned from creating new campaigns") : CampaignController.countByOwner(owner))
-				.then(num => num >= 6 ? Promise.reject("You already have 6 running campaigns"): DBUtil.getCollection("entities"))
-				.then(collection => collection.insertOne(data))
-				.then(doc => doc.result.ok ? data : Promise.reject("something went wrong"));
+
+			if(await CharacterController.isBanned(owner))
+				return Promise.reject("You are banned from creating new campaigns");
+			if(await CampaignController.countByOwner(owner) >= 6)
+				return Promise.reject("You already have 6 running campaigns");
+
+			let entities = await DBUtil.getCollection("entities");
+			let doc = await entities.insertOne(data);
+			if(!doc.result.ok)
+				return Promise.reject("something went wrong");
+
+			return data;
 		}
 
-		static update (_id, name, description, header, goal, start, end, owner, user) {
+		static async update (_id, name, description, header, goal, start, end, owner, user) {
 			const data = CampaignController.sanitize(name, description, header, goal, start, end, owner);
-			return CharacterController.isAdmin(user)
-				.then(isAdmin => !isAdmin ? Promise.reject("You are not an admin") : DBUtil.getCollection("entities"))
-				.then(collection => collection.update({ _id }, { $set: data }));
+
+			if(await CharacterController.isAdmin(user) == false)
+				return Promise.reject("You are not an admin");
+
+			let entities = await DBUtil.getCollection("entities");
+			return await entities.update({ _id }, { $set: data });
 		}
 
 		static sanitize (name, description, header, goal, start, end, owner) {
@@ -61,76 +71,113 @@
 			};
 		}
 
-		static find (id) {
-			return DBUtil.getCollection("entities")
-				.then(collection => collection.findOne({ _id: DBUtil.to_id(id), type: "campaign" }))
-				.then(async campaign => !campaign ? Promise.reject("Invalid campaign id") : Object.assign(campaign, {
-					wallet: await WalletController.balance(campaign._id)
-				}));
+		static async approve (id, user) {
+			if(await CharacterController.isAdmin(user) == false)
+				return Promise.reject("You are not an admin");
+
+			let entities = await DBUtil.getCollection("entities");
+			return await entities.update({ _id: DBUtil.to_id(id) }, { $set: { approved: true } });
 		}
 
-		static findByOwner ({ id }) {
-			return DBUtil.getCollection("entities").then(collection => collection.find({ "data.owner.id": id }).toArray());
+		static async reject (id, description, user) {
+			if(await CharacterController.isAdmin(user) == false)
+				return Promise.reject("You are not an admin");
+
+			let entities = await DBUtil.getCollection("entities");
+			return await entities.update({ _id: DBUtil.to_id(id) }, { $set: { rejected: { description, user, timestamp: Date.now() } } });
 		}
 
-		static countByOwner ({ id}) {
-			return DBUtil.getCollection("entities").then(collection => collection.find({ "data.owner.id": id }).count());
+		static async rejected (options = {}, page = 1, limit = 100) {
+			let entities = await DBUtil.getCollection("entities");
+			return await entities.find(Object.assign({ type: "campaign", rejected: { $exists: true } }, options)).sort({ "rejected.timestamp": -1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray();
 		}
 
-		static page (options = {}, page = 1, limit = 100) {
-			return DBUtil.getCollection("entities")
-				.then(collection => collection.find(Object.assign({ type: "campaign" }, options)).sort({ "data.end": 1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray())
-				.then(campaigns => Promise.all(campaigns.map(async campaign => Object.assign(campaign, {
-					wallet: await WalletController.balance(campaign._id)
-				}))));
+		static async unapproved (options = {}, page = 1, limit = 100) {
+			if(await CharacterController.isAdmin(user) == false)
+				return Promise.reject("You are not an admin");
+
+			let entities = await DBUtil.getCollection("entities");
+			return await entities.find(Object.assign({ type: "campaign", rejected: { $exists: false }, approved: { $exists: false} }, options)).sort({ "data.start": 1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray();
 		}
 
-		static remove (id) {
-			return Promise.resolve()
-				.then(() => DBUtil.getCollection("entities"))
-				.then(collection => collection.remove({ _id: DBUtil.to_id(id) }))
-				.then(() => DBUtil.getCollection("transactions"))
-				.then(collection => collection.remove({ toID: DBUtil.to_id(id) }));
+		static async find (id) {
+			let entities = await DBUtil.getCollection("entities");
+
+			let campaign = entities.findOne({ _id: DBUtil.to_id(id), type: "campaign" });
+			if(!campaign)
+				return Promise.reject("Invalid campaign id");
+
+			return Object.assign(campaign, {
+				wallet: await WalletController.balance(campaign._id)
+			});
 		}
 
-		static donate (id, amount, owner) {
+		static async findByOwner ({ id }) {
+			let entities = await DBUtil.getCollection("entities");
+			return await entities.find({ "data.owner.id": id }).toArray();
+		}
+
+		static async countByOwner ({ id}) {
+			let entities = await DBUtil.getCollection("entities");
+			return await entities.find({ "data.owner.id": id, approved: true, "data.end": { $gt: Date.now() } }).count();
+		}
+
+		static async page (options = {}, page = 1, limit = 100) {
+			let entities = await DBUtil.getCollection("entities");
+			let campaigns = await entities.find(Object.assign({ type: "campaign", approved: true }, options)).sort({ "data.end": 1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray();
+
+			return await Promise.all(campaigns.map(async campaign => Object.assign(campaign, {
+				wallet: await WalletController.balance(campaign._id)
+			})));
+		}
+
+		static async remove (id) {
+			let entities = await DBUtil.getCollection("entities");
+			await entities.remove({ _id: DBUtil.to_id(id) });
+
+			let transactions = await DBUtil.getCollection("transactions");
+			await transactions.remove({ toID: DBUtil.to_id(id) });
+		}
+
+		static async donate (id, amount, owner) {
 			if(amount == 0)
-				return Promise.resolve();
+				return;
 			if(Number.isNaN(amount))
 				return Promise.reject("something went wrong");
 			if(amount > owner.balance)
 				return Promise.reject("not enough money");
+
 			const now = Date.now();
-			return DBUtil.getCollection("entities")
-				.then(collection => collection.findOne({
-					_id: DBUtil.to_id(id),
-					"data.start": { $lt: now },
-					"data.end": { $gt: now }
-				}))
-				.then(entity => entity ? entity : Promise.reject("no such entity"))
-				.then(async entity => {
-					let collection = await DBUtil.getCollection("transactions");
-					let data = {
-						fromID: 	owner.id,
-						fromName: 	owner.name,
-						toID: 		entity._id,
-						toName: 	entity.name,
-						refID: 		new ObjectID(),
-						amount: 	amount,
-						reason: 	"[donation]",
-						timestamp: 	now
-					};
-					let doc = await collection.insert(data);
-					if(doc.result.ok) {
-						let balance = await WalletController.balance(owner.id);
-						if(balance < 0) {
-							await collection.remove({ _id: data._id });
-							throw new Error("not enough money");
-						}
-					} else {
-						throw new Error("Something went wrong");
-					}
-				});
+
+			let entities = await DBUtil.getCollection("entities");
+			let entity = await entities.findOne({
+				_id: DBUtil.to_id(id),
+				"data.start": { $lt: now },
+				"data.end": { $gt: now }
+			});
+			if(!entity)
+				return Promise.reject("no such entity");
+
+			let transactions = await DBUtil.getCollection("transactions");
+			let data = {
+				fromID: 	owner.id,
+				fromName: 	owner.name,
+				toID: 		entity._id,
+				toName: 	entity.name,
+				refID: 		new ObjectID(),
+				amount: 	amount,
+				reason: 	"[donation]",
+				timestamp: 	now
+			};
+			let doc = await transactions.insert(data);
+			if(!doc.result.ok)
+				return Promise.reject("Something went wrong");
+
+			let balance = await WalletController.balance(owner.id);
+			if(balance < 0) {
+				await collection.remove({ _id: data._id });
+				return Promise.reject("not enough money");
+			}
 		}
 
 	}
