@@ -109,6 +109,7 @@ footer {
 	max-width: 900px;
 	width: 100%;
 	margin: 20px auto;
+	padding: 0 10px;
 }
 
 .campaign-list > .campaign {
@@ -371,4 +372,17 @@ label > span, .ptn {
 	border: 1px solid red;
 	padding: 10px;
 	background-color: rgba(255,0,0,.5);
+}
+
+@media (max-width: 600px) {
+
+	.campaign-list > .campaign {
+		width: 100%;
+	}
+
+	.campaign-list > .campaign:nth-child(3n+2) {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
 }
