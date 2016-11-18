@@ -21,10 +21,13 @@
             <% if (!campaign.rejected && !campaign.approved) { %>
                 <div class="create-form header box"><p class="hidden-hl center full-width-block rel">Campaign has not been approved yet.</p></div>
             <% } %>
-            <%if (campaign.approved || (data.user.id && data.user.isAdmin)) { %>
+            <% if (campaign.approved || (data.user.id && data.user.isAdmin)) { %>
                 <div class="container">
                     <div class="header box">
                         <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
+                        <% if (campaign.isPayed) { %>
+                            <div class="paid-out"><h1>paid out</h1></div>
+                        <% } %>
                         <div class="details">
                             <% if(campaign.data.owner) { %>
                                 <div class="character">
