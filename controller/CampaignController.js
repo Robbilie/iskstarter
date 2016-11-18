@@ -107,8 +107,11 @@
 			if(!campaign)
 				return Promise.reject("Invalid campaign id");
 
+			let io = await WalletController.in_and_out(campaign._id);
+
 			return Object.assign(campaign, {
-				wallet: await WalletController.balance(campaign._id)
+				wallet: io.walletIn,
+				payout: io.walletOut
 			});
 		}
 

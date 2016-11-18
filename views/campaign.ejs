@@ -25,7 +25,7 @@
                 <div class="container">
                     <div class="header box">
                         <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
-                        <% if (campaign.isPayed) { %>
+                        <% if (campaign.wallet == campaign.payout) { %>
                             <div class="paid-out"><h1>paid out</h1></div>
                         <% } %>
                         <div class="details">
