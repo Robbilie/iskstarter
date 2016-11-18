@@ -58,12 +58,6 @@
 			return io.walletIn - io.walletOut;
 		}
 
-		static async paidOut (id) {
-			let transactions = await DBUtil.getCollection("transactions");
-			let result = await transactions.findOne({ fromName: "EVE System", toName: "ISKstarter", reason: id.toString() });
-			return !!result;
-		}
-
 	}
 
 	module.exports = WalletController;
