@@ -10,11 +10,11 @@
 
 	if(process.env.APP_NAME == "Wallet") {
 
-		WalletUtil.startUpdater();
+		WalletUtil.load_updates();
 
 	} else {
 
-		WalletUtil.updateNext();
+		WalletUtil.load_next();
 
 		const http 						= require("http");
 		const express 					= require("express");

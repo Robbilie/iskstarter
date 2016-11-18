@@ -74,10 +74,27 @@
 			});
 		}
 
+		static async load_next () {
+			try {
+
+				let response = await WalletUtil.get_data();
+
+				storage.next = new Date(response.headers.expires);
+
+				setTimeout(() => WalletUtil.load_next(), new Date(response.headers.expires).getTime() - Date.now());
+
+			} catch (e) {
+				console.log(e);
+				setTimeout(() => WalletUtil.load_next(), 5 * 1000);
+			}
+		}
+
 		static async load_updates () {
 			try {
 
 				let response = await WalletUtil.get_data();
+
+				storage.next = new Date(response.headers.expires);
 
 				const transactionCollection = await DBUtil.getCollection("transactions");
 				const entityCollection = await DBUtil.getCollection("entities");
@@ -86,31 +103,46 @@
 
 					// create pay ins
 					if(transaction.toName == "ISKstarter") {
-						await transactionCollection.update(
-							{ refID: transaction.refID },
-							{
-								$setOnInsert: {
-									fromName: "EVE System",
-									fromID: 1,
-									toName: transaction.fromName,
-									toID: transaction.toID,
-									amount: Math.floor((transaction.amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
-								}
-							},
-							{ upsert: true }
-						);
+						await transactionCollection.update( { refID: transaction.refID }, { $setOnInsert: {
+							refID: 			transaction.refID,
+							fromName: 		"EVE System",
+							fromID: 		1,
+							toName: 		transaction.fromName,
+							toID: 			transaction.toID,
+							amount: 		Math.floor((transaction.amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
+							reason: 		"[payin]",
+							timestamp: 		transaction.timestamp
+						} }, { upsert: true });
 					}
 
 					let entity = await entityCollection.findOne({ _id: DBUtil.to_id(transaction.reason) });
 
 					// convert pay ins to donations
 					if(transaction.toName == "ISKstarter" && entity && entity.data.start < transaction.timestamp && entity.data.end > transaction.timestamp) {
-
+						await transactionCollection.update( { toRefID: transaction.refID }, { $setOnInsert: {
+							toRefID: 		transaction.refID,
+							fromName: 		transaction.fromName,
+							fromID: 		transaction.fromID,
+							toName: 		entity.name,
+							toID: 			entity._id,
+							amount: 		Math.floor((transaction.amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
+							reason: 		"[donation]",
+							timestamp: 		transaction.timestamp
+						} }, { upsert: true });
 					}
 
 					// create pay outs
 					if(transaction.fromName == "ISKstarter" && entity) {
-
+						await transactionCollection.update({ refID: transaction.refID }, { $setOnInsert: {
+							refID: 			transaction.refID,
+							fromName: 		entity.name,
+							fromID: 		entity._id,
+							toName: 		"EVE System",
+							toID: 			1,
+							amount: 		transaction.amount,
+							reason: 		"[payout]",
+							timestamp: 		transaction.timestamp
+						} }, { upsert: true });
 					}
 
 				}));
