@@ -39,7 +39,7 @@
 		}
 		*/
 
-		static async balance (id) {
+		static async in_and_out (id) {
 			let transactions = await DBUtil.getCollection("transactions");
 			let entries = await transactions.aggregate([
 				{ $match: { $or: [{ fromID: id }, { toID: id }] } },
@@ -47,11 +47,15 @@
 					_id: "wallet",
 					walletIn: { $sum: { $cond: [{ $eq: ["$toID", id] }, "$amount", 0] } },
 					walletOut: { $sum: { $cond: [{ $eq: ["$fromID", id] }, "$amount", 0] } }
-				} },
-				{ $project: { wallet: { $subtract: ["$walletIn", "$walletOut"] } } }
+				} }
 			]).toArray();
 
-			return (entries[0] || { wallet: 0 }).wallet;
+			return entries[0] || { walletIn: 0, walletOut: 0 };
+		}
+
+		static async balance (id) {
+			let io = await WalletController.in_and_out(id);
+			return io.walletIn - io.walletOut;
 		}
 
 		static async paidOut (id) {
