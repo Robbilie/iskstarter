@@ -10,9 +10,17 @@ spec:
   tls:
   - hosts:
     - iskstarter.utils.space
+    - isk-starter.com
     secretName: iskstarter-ingress-tls
   rules:
   - host: iskstarter.utils.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: iskstarter-service
+          servicePort: 80
+  - host: isk-starter.com
     http:
       paths:
       - path: /
