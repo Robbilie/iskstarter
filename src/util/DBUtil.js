@@ -9,18 +9,18 @@
 
 	class DBUtil {
 
-		static getConnection (field, db) {
+		static get_connection (field, db) {
 			if(!storage[field])
 				storage[field] = MongoClient.connect(`${process.env.MONGO_URL}/${db}`).catch(e => delete storage[field]);
 			return storage[field];
 		}
 
-		static getDB () {
-			return DBUtil.getConnection("db", process.env.MONGO_DB);
+		static get_db () {
+			return DBUtil.get_connection("db", process.env.MONGO_DB);
 		}
 
-		static getCollection (collectionName) {
-			return DBUtil.getDB().then(db => db.collection(collectionName));
+		static get_collection (collectionName) {
+			return DBUtil.get_db().then(db => db.collection(collectionName));
 		}
 
 		static to_id (id) {

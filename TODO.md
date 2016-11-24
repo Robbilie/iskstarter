@@ -1,8 +1,5 @@
 - make entity controller and move sanitize and such to it
-- make institution controller
 - deduplicate the find code
-- move campaigns / rejected / unapproved to campaigns page with sub navigation
 - add profile page with my donations and my campaigns
-- WalletUtil should fetch more rows
 - remove camelcase and use underscores
-- move shit to src directory
+- add sub navigation css

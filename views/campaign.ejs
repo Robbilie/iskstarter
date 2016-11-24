@@ -6,7 +6,7 @@
     </head>
     <body>
         <% include nav.ejs %>
-        <% if (data.user.id && data.user.isAdmin) { %>
+        <% if (data.user.id && data.user.is_admin) { %>
             <div class="create-form header box">
                 <label class="collapsible">
                     <input type="checkbox">
@@ -21,7 +21,7 @@
             <% if (!campaign.rejected && !campaign.approved) { %>
                 <div class="create-form header box"><p class="hidden-hl center full-width-block rel">Campaign has not been approved yet.</p></div>
             <% } %>
-            <% if (campaign.approved || (data.user.id && data.user.isAdmin)) { %>
+            <% if (campaign.approved || (data.user.id && data.user.is_admin)) { %>
                 <div class="container">
                     <div class="header box">
                         <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>

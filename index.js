@@ -1,7 +1,7 @@
 
 	"use strict";
 
-	process.env.NODE_PATH = __dirname;
+	process.env.NODE_PATH = `${__dirname}/src`;
 	require("module").Module._initPaths();
 
 	global.config = require("js-yaml").safeLoad(new Buffer(require("fs").readFileSync("/etc/secrets/config.yaml"), "base64"));
@@ -27,7 +27,7 @@
 			.enable("trust proxy")
 			.set("json spaces", 2)
 			.set("view engine", "ejs")
-			.use("/static", express.static(process.env.NODE_PATH + "/public"))
+			.use("/static", express.static(`${__dirname}/public`))
 			.use(bodyParser.json())
 			.use(bodyParser.urlencoded({ extended: false }))
 			.use(cookieParser(config.cookie.secret))
@@ -44,7 +44,7 @@
 				saveUninitialized: true,
 				key: 		process.env.COOKIE_NAME
 			}))
-			.use(require("routes/"));
+			.use(require(`${__dirname}/routes/`));
 
 		const server = http
 			.createServer(app)

@@ -40,7 +40,7 @@
 		*/
 
 		static async in_and_out (id) {
-			let transactions = await DBUtil.getCollection("transactions");
+			let transactions = await DBUtil.get_collection("transactions");
 			let entries = await transactions.aggregate([
 				{ $match: { $or: [{ fromID: id }, { toID: id }] } },
 				{ $group: {
@@ -56,6 +56,12 @@
 		static async balance (id) {
 			let io = await WalletController.in_and_out(id);
 			return io.walletIn - io.walletOut;
+		}
+
+		static async assign_balance(list) {
+			return await Promise.all(list.map(async (campaign) => Object.assign(campaign, {
+				wallet: await WalletController.balance(campaign._id)
+			})));
 		}
 
 	}

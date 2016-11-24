@@ -13,7 +13,7 @@
 
 		static get_data () {
 			return new Promise((resolve, reject) => {
-				request(`${process.env.XML_URL}/Corp/WalletJournal.xml.aspx?keyID=${config.xml.keyID}&vCode=${config.xml.vCode}`, (error, response, body) => {
+				request(`${process.env.XML_URL}/Corp/WalletJournal.xml.aspx?rowCount=2500&keyID=${config.xml.keyID}&vCode=${config.xml.vCode}`, (error, response, body) => {
 					if (!error && response.statusCode == 200) {
 						parseString(body, async (parseError, result) => {
 							if(parseError || !result.eveapi) {
@@ -73,8 +73,8 @@
 
 				storage.next = new Date(response.headers.expires);
 
-				const transactionCollection = await DBUtil.getCollection("transactions");
-				const entityCollection = await DBUtil.getCollection("entities");
+				const transactionCollection = await DBUtil.get_collection("transactions");
+				const entityCollection = await DBUtil.get_collection("entities");
 
 				await Promise.all(response.obj.map(async transaction => {
 

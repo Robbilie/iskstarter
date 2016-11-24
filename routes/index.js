@@ -16,7 +16,7 @@
 		id: 		req.session.user.id,
 		name: 		req.session.user.name,
 		balance: 	await WalletController.balance(req.session.user.id),
-		isAdmin: 	await CharacterController.isAdmin(req.session.user)
+		is_admin: 	await CharacterController.is_admin(req.session.user)
 	} : {});
 
 	const data 			= async (req) => ({

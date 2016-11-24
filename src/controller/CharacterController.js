@@ -14,15 +14,15 @@
 			return { id, name };
 		}
 
-		static async isBanned ({ id }) {
-			let roles = await DBUtil.getCollection("roles");
-			let role = await roles.findOne({ "character.id": id, isBanned: true });
+		static async is_banned ({ id }) {
+			let roles = await DBUtil.get_collection("roles");
+			let role = await roles.findOne({ "character.id": id, is_banned: true });
 			return !!role;
 		}
 
-		static async isAdmin ({ id }) {
-			let roles = await DBUtil.getCollection("roles");
-			let role = await roles.findOne({ "character.id": id, isAdmin: true });
+		static async is_admin ({ id }) {
+			let roles = await DBUtil.get_collection("roles");
+			let role = await roles.findOne({ "character.id": id, is_admin: true });
 			return !!role;
 		}
 
