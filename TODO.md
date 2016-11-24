@@ -5,3 +5,4 @@
 - add profile page with my donations and my campaigns
 - WalletUtil should fetch more rows
 - remove camelcase and use underscores
+- move shit to src directory
