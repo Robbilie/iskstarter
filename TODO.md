@@ -1,6 +1,5 @@
-- Total Donated
-- Admin Page
-- upcoming campaigns
-- past campaigns
-- profile page
- - your campaigns
+- make entity controller and move sanitize and such to it
+- make institution controller
+- deduplicate the find code
+- move campaigns / rejected / unapproved to campaigns page with sub navigation
+- add profile page with my donations and my campaigns
