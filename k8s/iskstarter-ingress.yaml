@@ -14,7 +14,22 @@ spec:
     - www.isk-starter.com
     secretName: iskstarter-ingress-tls
   rules:
-  - http:
+  - host: iskstarter.utils.space
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: iskstarter-service
+          servicePort: 80
+  - host: isk-starter.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: iskstarter-service
+          servicePort: 80
+  - host: www.isk-starter.com
+    http:
       paths:
       - path: /
         backend:
