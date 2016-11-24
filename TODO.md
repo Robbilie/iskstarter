@@ -3,3 +3,5 @@
 - deduplicate the find code
 - move campaigns / rejected / unapproved to campaigns page with sub navigation
 - add profile page with my donations and my campaigns
+- WalletUtil should fetch more rows
+- remove camelcase and use underscores
