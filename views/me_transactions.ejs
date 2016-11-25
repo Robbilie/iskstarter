@@ -12,7 +12,7 @@
         </div>
         <div class="list">
             <% transactions.forEach(function (transaction) { %>
-                <div class="header box">
+                <div class="transaction header box">
                     <pre><%= JSON.stringify(transaction, null, 2) %></pre>
                 </div>
             <% }) %>

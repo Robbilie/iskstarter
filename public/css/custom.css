@@ -124,6 +124,13 @@ footer {
 
 }
 
+.transaction {
+	width: 100%;
+	min-height: inherit;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
 .center {
 	text-align: center;
 }
