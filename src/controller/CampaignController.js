@@ -8,6 +8,7 @@
 		CharacterController
 	} 	= require("controller/");
 	const { ObjectID } 			= require("mongodb");
+	const valid_url 			= require("valid-url");
 
 	class CampaignController extends EntityController {
 
@@ -37,6 +38,7 @@
 			if(
 				!header ||
 				header.trim() == "" ||
+				!valid_url.is_web_uri(header) ||
 				!goal ||
 				goal == 0 ||
 				Number.isNaN(goal) ||
@@ -45,7 +47,7 @@
 				!end ||
 				Number.isNaN(end)
 			)
-				throw "not all fields set";
+				throw "not all fields set/valid";
 
 			return Object.assign(res, {
 				data: {

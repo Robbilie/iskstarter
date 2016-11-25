@@ -24,6 +24,7 @@
     "raven": "^0.12.1",
     "request": "^2.75.0",
     "sanitize-html": "^1.13.0",
+    "valid-url": "^1.0.9",
     "xml2js": "^0.4.17"
   }
 }
