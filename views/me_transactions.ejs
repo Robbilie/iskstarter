@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include head.ejs %>
+        <title>Your Profile - <%= data.user.name %></title>
+    </head>
+    <body>
+        <% include nav.ejs %>
+        <div class="sub-nav campaign-list">
+            <div><a href="/me/campaigns/">your campaigns</a></div>
+            <div class="nav-hl"><a href="/me/dontations/">your transactions</a></div>
+        </div>
+        <% include footer.ejs %>
+    </body>
+</html>

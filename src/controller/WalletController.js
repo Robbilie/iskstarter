@@ -39,6 +39,16 @@
 		}
 		*/
 
+		static async transactions (id, { sort = { timestamp: -1 }, page = 1, limit = 50 }) {
+			let transactions = await DBUtil.get_collection("transactions");
+			return await transactions
+				.find({ $or: [{ from_id: id }, { to_id: id }] })
+				.sort(sort)
+				.skip(Math.max(page - 1, 0) * limit)
+				.limit(limit)
+				.toArray();
+		}
+
 		static async in_and_out (id) {
 			let transactions = await DBUtil.get_collection("transactions");
 			let entries = await transactions.aggregate([

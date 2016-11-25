@@ -165,6 +165,32 @@
 					res.redirect(`/?error=${e.message || e}`);
 				}
 			})
+		.get("/me/campaigns/",
+			async (req, res) => {
+				try {
+					if (!(await logged_in(req)))
+						throw new Error("not logged in");
+					res.render("me_campaigns", {
+						data: await data(req)
+					});
+				} catch (e) {
+					console.log(e);
+					res.redirect(`/?error=${e.message || e}`);
+				}
+			})
+		.get("/me/transactions/",
+			async (req, res) => {
+				try {
+					if (!(await logged_in(req)))
+						throw new Error("not logged in");
+					res.render("me_transactions", {
+						data: await data(req)
+					});
+				} catch (e) {
+					console.log(e);
+					res.redirect(`/?error=${e.message || e}`);
+				}
+			})
 		.get("/disclaimer/",
 			async (req, res) => res.render("disclaimer", {
 				data: await data(req)

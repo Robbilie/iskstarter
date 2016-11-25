@@ -20,7 +20,7 @@
 				throw "You already have 6 running campaigns";
 
 			let entities = await DBUtil.get_collection("entities");
-			let doc = await entities.insertOne(data);
+			let doc = await entities.insertOne(Object.assign(data, { created: Date.now() }));
 			if(!doc.result.ok)
 				throw "something went wrong";
 
@@ -85,6 +85,10 @@
 				Object.assign({ sort: { "data.end": 1 } }, config)
 			);
 			return await WalletController.assign_balance(campaigns);
+		}
+
+		static find_by_owner ({ id }, options = {}, config = {}) {
+			return super.find_by_owner("campaign", id, options, config);
 		}
 
 		static async findOne (_id) {

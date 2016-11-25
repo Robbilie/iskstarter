@@ -52,14 +52,17 @@
 			await transactions.remove({ to_id });
 		}
 
-		static async find_by_owner ({ id }) {
-			let entities = await DBUtil.get_collection("entities");
-			return await entities.find({ "data.owner.id": id }).toArray();
+		static async find_by_owner (type, { id }, options = {}, config = {}) {
+			return this.find(
+				type,
+				Object.assign({ "owner.id": id }, options),
+				Object.assign({ sort: { "created": -1 } }, config)
+			);
 		}
 
 		static async count_by_owner ({ id}) {
 			let entities = await DBUtil.get_collection("entities");
-			return await entities.find({ "data.owner.id": id, approved: true, "data.end": { $gt: Date.now() } }).count();
+			return await entities.find({ "owner.id": id, approved: true, "data.end": { $gt: Date.now() } }).count();
 		}
 
 		static async update (_id, $set, options) {
