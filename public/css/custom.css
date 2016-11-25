@@ -402,12 +402,12 @@ label > span, .ptn {
 	font-size: 50px;
 }
 
-.campaign-nav > div {
+.sub-nav > div {
 	flex-grow: 1;
 	text-align: center;
 	padding: 5px;
 }
 
-.campaign-nav > .nav-hl {
+.sub-nav > .nav-hl {
 	border-bottom: 2px solid rgba(0,0,0,.5);
 }

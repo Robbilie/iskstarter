@@ -2,10 +2,15 @@
 <html>
     <head>
         <% include head.ejs %>
-        <title>Your Profile</title>
+        <title>Your Profile - <%= data.user.name %></title>
     </head>
     <body>
     <% include nav.ejs %>
+    <div class="sub-nav campaign-list">
+        <div class="nav-hl"><a href="/me/campaigns/">your campaigns</a></div>
+        <div><a href="/me/dontations/">your donations</a></div>
+    </div>
+    <div><pre>coming soon</pre></div>
     <% include footer.ejs %>
     </body>
 </html>
