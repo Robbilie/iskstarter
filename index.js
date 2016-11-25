@@ -63,7 +63,8 @@
 				directives: {
 					defaultSrc: ["'self'"],
 					scriptSrc: ["'unsafe-inline'", '*.google-analytics.com'],
-					styleSrc: ["'unsafe-inline'"],
+					styleSrc: ["'self'"],
+					imgSrc: ["*"],
 					connectSrc: ["'none'"],
 					fontSrc: ["fonts.googleapis.com"],
 					objectSrc: ["'none'"],
