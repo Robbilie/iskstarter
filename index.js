@@ -67,9 +67,9 @@
 					imgSrc: ['*.google-analytics.com'],
 					connectSrc: ["'none'"],
 					fontSrc: ["fonts.googleapis.com"],
-					objectSrc: [],
-					mediaSrc: [],
-					frameSrc: []
+					objectSrc: ["'none'"],
+					mediaSrc: ["'none'"],
+					frameSrc: ["'none'"]
 				}
 			}))
 			.use(require(`${__dirname}/routes/`));
