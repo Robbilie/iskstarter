@@ -65,14 +65,14 @@
 			return super.update(_id, { reject: { description, user: { id, name }, timestamp: Date.now() } }, { is_admin: { id, name } });
 		}
 
-		static rejected (options, config) {
+		static rejected (options = {}, config = {}) {
 			return this.find(
 				Object.assign({ rejected: { $exists: true } }, options),
 				Object.assign({ sort: { "rejected.timestamp": -1 } }, config)
 			);
 		}
 
-		static unapproved (options, config, user) {
+		static unapproved (options = {}, config = {}, user) {
 			return this.find(
 				Object.assign({ rejected: { $exists: false }, approved: { $exists: false} }, options),
 				Object.assign({ is_admin: user, sort: { "data.start": 1 } }, config)
@@ -82,7 +82,7 @@
 		static async page (options = {}, config = {}) {
 			let campaigns = await this.find(
 				Object.assign({ approved: true }, options),
-				config
+				Object.assign({ sort: { "data.end": 1 } }, config)
 			);
 			return await WalletController.assign_balance(campaigns);
 		}

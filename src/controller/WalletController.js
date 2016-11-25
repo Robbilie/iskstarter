@@ -58,7 +58,7 @@
 			return io.wallet_in - io.wallet_out;
 		}
 
-		static async assign_balance (list) {
+		static async assign_balance (list = []) {
 			return await Promise.all(list.map(async (campaign) => Object.assign(campaign, {
 				wallet: await WalletController.balance(campaign._id)
 			})));

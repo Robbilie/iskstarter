@@ -37,7 +37,7 @@
 
 		static async find (type, options = {}, { sort = { "data.end": 1 }, page = 1, limit = 18 }) {
 			let collection = await DBUtil.get_collection("entities");
-			let entities = await collection
+			return await collection
 				.find(Object.assign({ type }, options))
 				.sort(sort)
 				.skip(Math.max(page - 1, 0) * limit)
