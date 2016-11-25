@@ -2,6 +2,7 @@
 	"use strict";
 
 	const { DBUtil } = require("util/");
+	const { CharacterController } = require("controller/");
 
 	class EntityController {
 
