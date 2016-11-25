@@ -35,6 +35,7 @@
 		const bodyParser 				= require("body-parser");
 		const expressSession 			= require("express-session");
 		const RedisStore 				= require("connect-redis")(expressSession);
+		const helmet 					= require("helmet");
 
 		const app = express()
 			.enable("trust proxy")
@@ -56,6 +57,18 @@
 				resave: 	true,
 				saveUninitialized: true,
 				key: 		process.env.COOKIE_NAME
+			}))
+			.use(helmet())
+			.use(helmet.contentSecurityPolicy({
+				defaultSrc: ["'self'"],
+				scriptSrc: ['*.google-analytics.com'],
+				styleSrc: ["'unsafe-inline'"],
+				imgSrc: ['*.google-analytics.com'],
+				connectSrc: ["'none'"],
+				fontSrc: ["fonts.googleapis.com"],
+				objectSrc: [],
+				mediaSrc: [],
+				frameSrc: []
 			}))
 			.use(require(`${__dirname}/routes/`));
 
