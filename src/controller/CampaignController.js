@@ -64,7 +64,7 @@
 		}
 
 		static reject (_id, description, { id, name }) {
-			return super.update(_id, { reject: { description, user: { id, name }, timestamp: Date.now() } }, { is_admin: { id, name } });
+			return super.update(_id, { rejected: { description, user: { id, name }, timestamp: Date.now() } }, { is_admin: { id, name } });
 		}
 
 		static rejected (options = {}, config = {}) {
