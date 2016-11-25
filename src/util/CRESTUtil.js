@@ -79,39 +79,6 @@
 			});
 		}
 
-		/*
-		static getEndpoint (options) {
-			return new Promise((resolve, reject) => {
-				var params = {
-					method: 		options.method || "GET",
-					localAddress: 	config.site.localIP,
-					url: 			`${config.crest.api.url}${options.path}`,
-					headers: {
-						"User-Agent": 		config.site.userAgent,
-						"Content-Type": 	options.contentType || "application/json",
-					}
-				};
-				if(options.accessToken)
-					params.headers["Authorization"] = "Bearer " + options.accessToken;
-				if(options.data)
-					params.json = options.data;
-				if(options.data)
-					params.headers["Content-Length"] = options.data.length;
-				if(options.accept)
-					params.headers["Accept"] = options.accept;
-				request(params, (err, _, body) => {
-					if(err)
-						return reject(err);
-					try {
-						var res = JSON.parse(body);
-						return resolve(res);
-					} catch (e) {
-						return reject(e);
-					}
-				}).on("error", e => reject(e));
-			});
-		}
-		*/
-
 	}
+
 	module.exports = CRESTUtil;
