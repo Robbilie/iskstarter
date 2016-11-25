@@ -6,7 +6,7 @@
     </head>
     <body>
         <% include nav.ejs %>
-        <div class="campaign-nav">
+        <div class="campaign-nav campaign-list">
             <div><a href="/campaigns/">running campaigns</a></div>
             <div><a href="/rejected/">rejected campaigns</a></div>
             <% if (data.user.id && data.user.is_admin) { %>
