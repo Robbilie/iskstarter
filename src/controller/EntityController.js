@@ -11,8 +11,6 @@
 				name.trim() == "" ||
 				!description ||
 				description.trim() == "" ||
-				!header ||
-				header.trim() == "" ||
 				!owner
 			)
 				throw "not all fields set";
