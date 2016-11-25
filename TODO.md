@@ -5,3 +5,6 @@
 - add sub navigation css
 
 - FIX DB
+- rename fields
+- fix wrong to_id
+- move owner to top level

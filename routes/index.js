@@ -31,20 +31,14 @@
 	module.exports = Router(m)
 		.get("/",
 			async (req, res) => res.render("index", {
-				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, 1, 9),
+				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: 1, limit: 9 }),
 				data: 		await data(req)
 			}))
 		.get("/campaigns/",
 			async (req, res) => res.render("campaigns", {
-				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }),
+				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: req.query.page - 0 || 1 }),
 				data: 		await data(req),
-				page: 		1
-			}))
-		.get("/campaigns/page/:page/",
-			async (req, res) => res.render("campaigns", {
-				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, req.params.page - 0),
-				data: 		await data(req),
-				page: 		req.params.page - 0
+				page: 		req.query.page || 1
 			}))
 		.post("/campaigns/",
 			async (req, res) => {
@@ -55,23 +49,23 @@
 					let campaign = await CampaignController.create(
 						req.body.name,
 						req.body.description,
+						await user(req),
 						req.body.header,
 						req.body.goal - 0,
 						new Date(req.body.start).getTime(),
-						new Date(req.body.end).getTime(),
-						await user(req)
+						new Date(req.body.end).getTime()
 					);
 					console.log(campaign);
-					res.redirect("/campaigns/" + campaign._id + "/");
+					res.redirect(`/campaigns/${campaign._id}/`);
 				} catch (e) {
-					res.redirect("/campaigns/?error=" + (e.message || e));
+					res.redirect(`/campaigns/?error=${e.message || e}`);
 				}
 			})
 		.get("/campaigns/:id/",
 			async (req, res) => {
 				try {
 					res.render("campaign", {
-						campaign: 	await CampaignController.find(req.params.id),
+						campaign: 	await CampaignController.findOne(DBUtil.to_id(req.params.id)),
 						data: 		await data(req)
 					});
 				} catch (error) {
@@ -87,68 +81,56 @@
 						DBUtil.to_id(req.params.id),
 						req.body.name,
 						req.body.description,
+						{ id: req.body.ownerID, name: req.body.ownerName },
 						req.body.header,
 						req.body.goal - 0,
 						new Date(req.body.start).getTime(),
 						new Date(req.body.end).getTime(),
-						{ id: req.body.ownerID, name: req.body.ownerName },
 						await user(req)
 					);
-					res.redirect("/campaigns/" + req.params.id + "/");
+					res.redirect(`/campaigns/${req.params.id}/`);
 				} catch (e) {
-					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
+					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
 		.post("/campaigns/:id/donate/",
 			async (req, res) => {
 				try {
-					await CampaignController.donate(req.params.id, Math.max(req.body.amount - 0, 0), await user(req));
-					res.redirect("/campaigns/" + req.params.id + "/");
+					await CampaignController.donate(DBUtil.to_id(req.params.id), Math.max(req.body.amount - 0, 0), await user(req));
+					res.redirect(`/campaigns/${req.params.id}/`);
 				} catch (e) {
-					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
+					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
 		.post("/campaigns/:id/accept/",
 			async (req, res) => {
 				try {
-					await CampaignController.approve(req.params.id, await user(req));
-					res.redirect("/campaigns/" + req.params.id + "/");
+					await CampaignController.approve(DBUtil.to_id(req.params.id), await user(req));
+					res.redirect(`/campaigns/${req.params.id}/`);
 				} catch (e) {
-					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
+					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
 		.post("/campaigns/:id/reject/",
 			async (req, res) => {
 				try {
-					await CampaignController.reject(req.params.id, req.body.description, await user(req));
-					res.redirect("/campaigns/" + req.params.id + "/");
+					await CampaignController.reject(DBUtil.to_id(req.params.id), req.body.description, await user(req));
+					res.redirect(`/campaigns/${req.params.id}/`);
 				} catch (e) {
-					res.redirect("/campaigns/" + req.params.id + "/?error=" + (e.message || e));
+					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
 		.get("/rejected/",
 			async (req, res) => res.render("rejected", {
-				campaigns: 	await CampaignController.rejected(),
+				campaigns: 	await CampaignController.rejected({}, { page: req.query.page - 0 || 1 }),
 				data: 		await data(req),
-				page: 		1
-			}))
-		.get("/rejected/page/:page/",
-			async (req, res) => res.render("rejected", {
-				campaigns: 	await CampaignController.rejected({}, req.params.page - 0),
-				data: 		await data(req),
-				page: 		req.params.page - 0
+				page: 		req.query.page || 1
 			}))
 		.get("/unapproved/",
 			async (req, res) => res.render("unapproved", {
-				campaigns: 	await CampaignController.unapproved(await user(req)),
+				campaigns: 	await CampaignController.unapproved({}, { page: req.query.page - 0 || 1 }, await user(req)),
 				data: 		await data(req),
-				page: 		1
-			}))
-		.get("/unapproved/page/:page/",
-			async (req, res) => res.render("unapproved", {
-				campaigns: 	await CampaignController.unapproved(await user(req), {}, req.params.page - 0),
-				data: 		await data(req),
-				page: 		req.params.page - 0
+				page: 		req.query.page || 1
 			}))
 		.get("/login/",
 			async (req, res) => res.redirect(await CRESTUtil.generateLoginUrl([], "/")))

@@ -6,6 +6,13 @@
     </head>
     <body>
         <% include nav.ejs %>
+        <div class="campaign-nav">
+            <div><a href="/campaigns/">running campaigns</a></div>
+            <div class="nav-hl"><a href="/rejected/">rejected campaigns</a></div>
+            <% if (data.user.id && data.user.is_admin) { %>
+                <div><a href="/unapproved/">unapproved campaigns</a></div>
+            <% } %>
+        </div>
         <div class="campaign-list">
             <% campaigns.forEach(function (campaign) { %>
                 <div class="campaign header box">
@@ -17,10 +24,10 @@
             <% }) %>
         </div>
         <% if(page > 1) { %>
-            <a href="/rejected/page/<%= page - 1 %>/">Previous</a>
+            <a href="/rejected/?page=<%= page - 1 %>">Previous</a>
         <% } %>
         <% if(campaigns.length == 100) { %>
-            <a href="/rejected/page/<%= page + 1 %>/">Next</a>
+            <a href="/rejected/?page=<%= page + 1 %>">Next</a>
         <% } %>
         <% include footer.ejs %>
     </body>

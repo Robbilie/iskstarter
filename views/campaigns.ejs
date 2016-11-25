@@ -16,7 +16,7 @@
             </div>
         <% } %>
         <div class="campaign-nav">
-            <div><a href="/campaigns/">running campaigns</a></div>
+            <div class="nav-hl"><a href="/campaigns/">running campaigns</a></div>
             <div><a href="/rejected/">rejected campaigns</a></div>
             <% if (data.user.id && data.user.is_admin) { %>
                 <div><a href="/unapproved/">unapproved campaigns</a></div>
@@ -26,10 +26,10 @@
             <% include campaignlist.ejs %>
         </div>
         <% if(page > 1) { %>
-            <a href="/campaigns/page/<%= page - 1 %>/">Previous</a>
+            <a href="/campaigns/?page=<%= page - 1 %>">Previous</a>
         <% } %>
         <% if(campaigns.length == 100) { %>
-            <a href="/campaigns/page/<%= page + 1 %>/">Next</a>
+            <a href="/campaigns/?page=<%= page + 1 %>">Next</a>
         <% } %>
         <% include footer.ejs %>
     </body>

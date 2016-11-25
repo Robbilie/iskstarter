@@ -25,11 +25,11 @@
 
 								let obj = (result.eveapi.result[0].rowset[0].row || [])
 									.map(({ $ }) => ({
-										fromID: 	$.ownerID1 - 0,
-										fromName: 	$.ownerName1,
-										toID: 		$.ownerID2 - 0,
-										toName: 	$.ownerName2,
-										refID: 		$.refID - 0,
+										from_id: 	$.ownerID1 - 0,
+										from_name: 	$.ownerName1,
+										to_id: 		$.ownerID2 - 0,
+										to_name: 	$.ownerName2,
+										ref_id: 	$.refID - 0,
 										amount: 	$.amount - 0,
 										reason: 	$.reason.replace("DESC:", "").trim(),
 										timestamp: 	new Date($.date + "Z").getTime()
@@ -76,49 +76,49 @@
 				const transactionCollection = await DBUtil.get_collection("transactions");
 				const entityCollection = await DBUtil.get_collection("entities");
 
-				await Promise.all(response.obj.map(async transaction => {
+				await Promise.all(response.obj.map(async ({ from_id, from_name, to_id, to_name, ref_id, to_ref_id = ref_id, amount, reason, timestamp }) => {
 
 					// create pay ins
-					if(transaction.toName == "ISKstarter") {
-						await transactionCollection.update( { refID: transaction.refID }, { $setOnInsert: {
-							refID: 			transaction.refID,
-							fromName: 		"EVE System",
-							fromID: 		1,
-							toName: 		transaction.fromName,
-							toID: 			transaction.toID,
-							amount: 		Math.floor((transaction.amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
+					if(to_name == "ISKstarter") {
+						await transactionCollection.update({ ref_id }, { $setOnInsert: {
+							ref_id,
+							from_name: 		"EVE System",
+							from_id: 		1,
+							to_name: 		from_name,
+							to_id: 			from_id,
+							amount: 		Math.floor((amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
 							reason: 		"[payin]",
-							timestamp: 		transaction.timestamp
+							timestamp
 						} }, { upsert: true });
 					}
 
-					let entity = await entityCollection.findOne({ _id: DBUtil.to_id(transaction.reason) });
+					let entity = await entityCollection.findOne({ _id: DBUtil.to_id(reason) });
 
 					// convert pay ins to donations
-					if(transaction.toName == "ISKstarter" && entity && entity.data.start < transaction.timestamp && entity.data.end > transaction.timestamp) {
-						await transactionCollection.update( { toRefID: transaction.refID }, { $setOnInsert: {
-							toRefID: 		transaction.refID,
-							fromName: 		transaction.fromName,
-							fromID: 		transaction.fromID,
-							toName: 		entity.name,
-							toID: 			entity._id,
-							amount: 		Math.floor((transaction.amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
+					if(to_name == "ISKstarter" && entity && entity.data.start < timestamp && entity.data.end > timestamp) {
+						await transactionCollection.update({ to_ref_id }, { $setOnInsert: {
+							to_ref_id,
+							from_name,
+							from_id,
+							to_name: 		entity.name,
+							to_id: 			entity._id,
+							amount: 		Math.floor((amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
 							reason: 		"[donation]",
-							timestamp: 		transaction.timestamp
+							timestamp
 						} }, { upsert: true });
 					}
 
 					// create pay outs
-					if(transaction.fromName == "ISKstarter" && entity) {
-						await transactionCollection.update({ refID: transaction.refID }, { $setOnInsert: {
-							refID: 			transaction.refID,
-							fromName: 		entity.name,
-							fromID: 		entity._id,
-							toName: 		"EVE System",
-							toID: 			1,
-							amount: 		transaction.amount,
+					if(from_name == "ISKstarter" && entity) {
+						await transactionCollection.update({ ref_id }, { $setOnInsert: {
+							ref_id,
+							from_name: 		entity.name,
+							from_id: 		entity._id,
+							to_name: 		"EVE System",
+							to_id: 			1,
+							amount,
 							reason: 		"[payout]",
-							timestamp: 		transaction.timestamp
+							timestamp
 						} }, { upsert: true });
 					}
 

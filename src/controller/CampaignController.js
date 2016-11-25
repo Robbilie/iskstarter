@@ -12,11 +12,11 @@
 	class CampaignController extends EntityController {
 
 		static async create (name, description, header, goal, start, end, owner) {
-			const data = CampaignController.sanitize(name, description, header, goal, start, end, owner);
+			let data = CampaignController.sanitize(name, description, owner, header, goal, start, end);
 
 			if(await CharacterController.is_banned(owner))
 				throw "You are banned from creating new campaigns";
-			if(await CampaignController.countByOwner(owner) >= 6)
+			if(await CampaignController.count_by_owner(owner) >= 6)
 				throw "You already have 6 running campaigns";
 
 			let entities = await DBUtil.get_collection("entities");
@@ -27,22 +27,14 @@
 			return data;
 		}
 
-		static async update (_id, name, description, header, goal, start, end, owner, user) {
-			const data = CampaignController.sanitize(name, description, header, goal, start, end, owner);
-
-			if(await CharacterController.is_admin(user) == false)
-				throw "You are not an admin";
-
-			let entities = await DBUtil.get_collection("entities");
-			return await entities.update({ _id }, { $set: data });
+		static update (_id, name, description, owner, header, goal, start, end, user) {
+			return super.update(_id, CampaignController.sanitize(name, description, owner, header, goal, start, end), { is_admin: user });
 		}
 
-		static sanitize (name, description, header, goal, start, end, owner) {
+		static sanitize (name, description, owner, header, goal, start, end) {
+			let res = super.sanitize("campaign", name, description, owner);
+
 			if(
-				!name ||
-				name.trim() == "" ||
-				!description ||
-				description.trim() == "" ||
 				!header ||
 				header.trim() == "" ||
 				!goal ||
@@ -51,99 +43,66 @@
 				!start ||
 				Number.isNaN(start) ||
 				!end ||
-				Number.isNaN(end) ||
-				!owner
+				Number.isNaN(end)
 			)
 				throw "not all fields set";
-			return {
-				name: name.trim().replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
-				description: description.replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
-				type: "campaign",
+
+			return Object.assign(res, {
 				data: {
 					header,
 					goal,
 					start,
-					end,
-					owner: {
-						id: 	owner.id,
-						name: 	owner.name
-					}
+					end
 				}
-			};
+			});
 		}
 
-		static async approve (id, user) {
-			if(await CharacterController.is_admin(user) == false)
-				throw "You are not an admin";
-
-			let entities = await DBUtil.get_collection("entities");
-			return await entities.update({ _id: DBUtil.to_id(id) }, { $set: { approved: true } });
+		static approve (_id, user) {
+			return super.update(_id, { approved: true }, { is_admin: user });
 		}
 
-		static async reject (id, description, user) {
-			if(await CharacterController.is_admin(user) == false)
-				throw "You are not an admin";
-
-			let entities = await DBUtil.get_collection("entities");
-			return await entities.update({ _id: DBUtil.to_id(id) }, { $set: { rejected: { description, user, timestamp: Date.now() } } });
+		static reject (_id, description, user) {
+			return super.update(_id, { reject: { description, user, timestamp: Date.now() } }, { is_admin: user });
 		}
 
-		static async rejected (options = {}, page = 1, limit = 100) {
-			let entities = await DBUtil.get_collection("entities");
-			return await entities.find(Object.assign({ type: "campaign", rejected: { $exists: true } }, options)).sort({ "rejected.timestamp": -1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray();
+		static rejected (options, config) {
+			return this.find(
+				Object.assign({ rejected: { $exists: true } }, options),
+				Object.assign({ sort: { "rejected.timestamp": -1 } }, config)
+			);
 		}
 
-		static async unapproved (user, options = {}, page = 1, limit = 100) {
-			if(await CharacterController.is_admin(user) == false)
-				throw "You are not an admin";
-
-			let entities = await DBUtil.get_collection("entities");
-			return await entities.find(Object.assign({ type: "campaign", rejected: { $exists: false }, approved: { $exists: false} }, options)).sort({ "data.start": 1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray();
+		static unapproved (options, config, user) {
+			return this.find(
+				Object.assign({ rejected: { $exists: false }, approved: { $exists: false} }, options),
+				Object.assign({ is_admin: user, sort: { "data.start": 1 } }, config)
+			);
 		}
 
-		static async find (id) {
-			let entities = await DBUtil.get_collection("entities");
+		static async page (options = {}, config = {}) {
+			let campaigns = await this.find(
+				Object.assign({ approved: true }, options),
+				config
+			);
+			return await WalletController.assign_balance(campaigns);
+		}
 
-			let campaign = await entities.findOne({ _id: DBUtil.to_id(id), type: "campaign" });
-			if(!campaign)
-				throw "Invalid campaign id";
+		static async findOne (_id) {
+			let campaign = await super.findOne(_id, "campaign");
 
 			let io = await WalletController.in_and_out(campaign._id);
 
 			return Object.assign(campaign, {
-				wallet: io.walletIn,
-				payout: io.walletOut
+				wallet: io.wallet_in,
+				payout: io.wallet_out
 			});
 		}
 
-		static async findByOwner ({ id }) {
-			let entities = await DBUtil.get_collection("entities");
-			return await entities.find({ "data.owner.id": id }).toArray();
+		static find (options, config) {
+			return super.find("campaign", options, config);
 		}
 
-		static async countByOwner ({ id}) {
-			let entities = await DBUtil.get_collection("entities");
-			return await entities.find({ "data.owner.id": id, approved: true, "data.end": { $gt: Date.now() } }).count();
-		}
-
-		static async page (options = {}, page = 1, limit = 100) {
-			let entities = await DBUtil.get_collection("entities");
-			let campaigns = await entities.find(Object.assign({ type: "campaign", approved: true }, options)).sort({ "data.end": 1 }).skip(Math.max(page - 1, 0) * limit).limit(limit).toArray();
-
-			return await Promise.all(campaigns.map(async campaign => Object.assign(campaign, {
-				wallet: await WalletController.balance(campaign._id)
-			})));
-		}
-
-		static async remove (id) {
-			let entities = await DBUtil.get_collection("entities");
-			await entities.remove({ _id: DBUtil.to_id(id) });
-
-			let transactions = await DBUtil.get_collection("transactions");
-			await transactions.remove({ toID: DBUtil.to_id(id) });
-		}
-
-		static async donate (id, amount, owner) {
+		static async donate (_id, amount, owner) {
 			if(amount == 0)
 				return;
 			if(Number.isNaN(amount))
@@ -155,7 +114,7 @@
 
 			let entities = await DBUtil.get_collection("entities");
 			let entity = await entities.findOne({
-				_id: DBUtil.to_id(id),
+				_id,
 				"data.start": { $lt: now },
 				"data.end": { $gt: now }
 			});
@@ -164,15 +123,16 @@
 
 			let transactions = await DBUtil.get_collection("transactions");
 			let data = {
-				fromID: 	owner.id,
-				fromName: 	owner.name,
-				toID: 		entity._id,
-				toName: 	entity.name,
-				refID: 		new ObjectID(),
+				from_id: 	owner.id,
+				from_name: 	owner.name,
+				to_id: 		entity._id,
+				to_name: 	entity.name,
+				ref_id: 	new ObjectID(),
 				amount: 	amount,
 				reason: 	"[donation]",
 				timestamp: 	now
 			};
+
 			let doc = await transactions.insert(data);
 			if(!doc.result.ok)
 				throw "Something went wrong";
