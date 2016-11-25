@@ -50,7 +50,7 @@
 			await entities.remove({ _id });
 
 			let transactions = await DBUtil.get_collection("transactions");
-			await transactions.remove({ toID: _id });
+			await transactions.remove({ to_id });
 		}
 
 		static async find_by_owner ({ id }) {
