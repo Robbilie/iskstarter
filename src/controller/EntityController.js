@@ -20,7 +20,10 @@
 				name: 			name.trim().replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
 				description: 	description.replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
 				type,
-				owner
+				owner: {
+					id: 	owner.id,
+					name: 	owner.name
+				}
 			};
 		}
 

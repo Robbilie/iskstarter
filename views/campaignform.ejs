@@ -24,14 +24,14 @@
     <br>
     <input required type="text" name="end" placeholder="yyyy-mm-dd" value="<%= formData.data.end ? new Date(formData.data.end).toJSON().split("T")[0] : "" %>" />
     <br>
-    <% if(formData.data.owner) { %>
+    <% if(formData.owner) { %>
         <label>owner id</label>
         <br>
-        <input required type="text" name="ownerID" value="<%= formData.data.owner.id %>" />
+        <input required type="text" name="owner_id" value="<%= formData.owner.id %>" />
         <br>
         <label>owner name</label>
         <br>
-        <input required type="text" name="ownerName" value="<%= formData.data.owner.name %>" />
+        <input required type="text" name="owner_name" value="<%= formData.owner.name %>" />
         <br>
     <% } %>
     <button>submit</button>

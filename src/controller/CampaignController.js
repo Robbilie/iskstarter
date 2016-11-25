@@ -11,7 +11,7 @@
 
 	class CampaignController extends EntityController {
 
-		static async create (name, description, header, goal, start, end, owner) {
+		static async create (name, description, owner, header, goal, start, end) {
 			let data = CampaignController.sanitize(name, description, owner, header, goal, start, end);
 
 			if(await CharacterController.is_banned(owner))
@@ -28,7 +28,7 @@
 		}
 
 		static update (_id, name, description, owner, header, goal, start, end, user) {
-			return super.update(_id, CampaignController.sanitize(name, description, owner, header, goal, start, end), { is_admin: user });
+			return super.update(_id, this.sanitize(name, description, owner, header, goal, start, end), { is_admin: user });
 		}
 
 		static sanitize (name, description, owner, header, goal, start, end) {

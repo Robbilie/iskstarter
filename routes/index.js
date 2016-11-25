@@ -81,7 +81,7 @@
 						DBUtil.to_id(req.params.id),
 						req.body.name,
 						req.body.description,
-						{ id: req.body.ownerID, name: req.body.ownerName },
+						{ id: req.body.owner_id - 0, name: req.body.owner_name },
 						req.body.header,
 						req.body.goal - 0,
 						new Date(req.body.start).getTime(),
