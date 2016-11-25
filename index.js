@@ -60,15 +60,17 @@
 			}))
 			.use(helmet())
 			.use(helmet.contentSecurityPolicy({
-				defaultSrc: ["'self'"],
-				scriptSrc: ['*.google-analytics.com'],
-				styleSrc: ["'unsafe-inline'"],
-				imgSrc: ['*.google-analytics.com'],
-				connectSrc: ["'none'"],
-				fontSrc: ["fonts.googleapis.com"],
-				objectSrc: [],
-				mediaSrc: [],
-				frameSrc: []
+				directives: {
+					defaultSrc: ["'self'"],
+					scriptSrc: ['*.google-analytics.com'],
+					styleSrc: ["'unsafe-inline'"],
+					imgSrc: ['*.google-analytics.com'],
+					connectSrc: ["'none'"],
+					fontSrc: ["fonts.googleapis.com"],
+					objectSrc: [],
+					mediaSrc: [],
+					frameSrc: []
+				}
 			}))
 			.use(require(`${__dirname}/routes/`));
 
