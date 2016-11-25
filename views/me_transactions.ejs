@@ -12,8 +12,8 @@
         </div>
         <div class="list">
             <% transactions.forEach(function (transaction) { %>
-                <div class="transaction header box">
-                    <pre><%= JSON.stringify(transaction, null, 2) %></pre>
+                <div class="transaction header box container">
+                    <p><%= JSON.stringify(transaction, null, 2) %></p>
                 </div>
             <% }) %>
         </div>

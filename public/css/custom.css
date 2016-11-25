@@ -127,8 +127,12 @@ footer {
 .transaction {
 	width: 100%;
 	min-height: inherit !important;
-	padding-left: 20px;
 	margin-bottom: 20px;
+}
+
+.transaction > p {
+	font-family: monospace;
+	white-space: pre;
 }
 
 .center {
