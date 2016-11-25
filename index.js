@@ -62,7 +62,7 @@
 			.use(helmet.contentSecurityPolicy({
 				directives: {
 					defaultSrc: ["'self'"],
-					scriptSrc: ["'unsafe-inline'", '*.google-analytics.com'],
+					scriptSrc: ["'self'", '*.google-analytics.com'],
 					styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
 					imgSrc: ["*"],
 					connectSrc: ["'none'"],
