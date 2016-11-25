@@ -22,7 +22,7 @@
 	const data 			= async (req) => ({
 		user: 		await user(req),
 		error: 		req.query.error || "",
-		total: 		(await WalletController.in_and_out(1)).walletOut,
+		total: 		(await WalletController.in_and_out(1)).wallet_out,
 		next: 		await WalletUtil.next()
 	});
 
