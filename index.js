@@ -4,7 +4,20 @@
 	process.env.NODE_PATH = `${__dirname}/src`;
 	require("module").Module._initPaths();
 
+	// import the k8s secrets into a global variable
 	global.config = require("js-yaml").safeLoad(new Buffer(require("fs").readFileSync("/etc/secrets/config.yaml"), "base64"));
+
+	// setup sentry if dsn is set
+	global.err = {};
+	if(config.sentry.dsn && config.sentry.dsn != "") {
+		const { Client } = require("raven");
+		let client = new Client(config.sentry.dsn);
+		client.patchGlobal();
+		client.setUserContext({
+			app: process.env.APP_NAME
+		});
+		err.raven = client;
+	}
 
 	const { WalletUtil } = require("util/");
 
