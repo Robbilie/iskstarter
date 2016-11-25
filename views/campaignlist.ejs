@@ -13,12 +13,14 @@
                     <b><%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %></b> days left.
                 <% } %>
             </span>
-            <br>
-            <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
-            <br>
-            <div class="progress">
-                <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
-            </div>
+            <% if(campaign.wallet) { %>
+                <br>
+                <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
+                <br>
+                <div class="progress">
+                    <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
+                </div>
+            <% } %>
         </div>
     </a>
 <% }) %>

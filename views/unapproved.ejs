@@ -6,14 +6,14 @@
     </head>
     <body>
         <% include nav.ejs %>
-        <div class="sub-nav campaign-list">
+        <div class="sub-nav list">
             <div><a href="/campaigns/">running campaigns</a></div>
             <div><a href="/rejected/">rejected campaigns</a></div>
             <% if (data.user.id && data.user.is_admin) { %>
                 <div class="nav-hl"><a href="/unapproved/">unapproved campaigns</a></div>
             <% } %>
         </div>
-        <div class="campaign-list">
+        <div class="list">
             <% campaigns.forEach(function (campaign) { %>
                 <div class="campaign header box">
                     <h4><a href="/campaigns/<%= campaign._id %>/" class="campaign header box"><%= campaign.name %></a></h4>
@@ -31,7 +31,7 @@
         <% if(page > 1) { %>
             <a href="/unapproved/?page=<%= page - 1 %>">Previous</a>
         <% } %>
-        <% if(campaigns.length == 100) { %>
+        <% if(campaigns.length == 18) { %>
             <a href="/unapproved/?page=<%= page + 1 %>">Next</a>
         <% } %>
         <% include footer.ejs %>

@@ -26,7 +26,7 @@
 		next: 		await WalletUtil.next()
 	});
 
-	const logged_in 		= async (req) => !!(await user(req)).id;
+	const logged_in 		= (req) => req.session && req.session.user && req.session.user.id;
 
 	module.exports = Router(m)
 		.get("/",
@@ -44,7 +44,7 @@
 			async (req, res) => {
 				console.log(req.body);
 				try {
-					if (!(await logged_in(req)))
+					if (!logged_in(req))
 						throw new Error("not logged in");
 					let campaign = await CampaignController.create(
 						req.body.name,
@@ -155,7 +155,7 @@
 		.get("/me/",
 			async (req, res) => {
 				try {
-					if (!(await logged_in(req)))
+					if (!logged_in(req))
 						throw new Error("not logged in");
 					res.render("me", {
 						data: await data(req)
@@ -168,10 +168,12 @@
 		.get("/me/campaigns/",
 			async (req, res) => {
 				try {
-					if (!(await logged_in(req)))
+					if (!logged_in(req))
 						throw new Error("not logged in");
 					res.render("me_campaigns", {
-						data: await data(req)
+						campaigns: 	await CampaignController.find_by_owner(await user(req), {}, { page: req.query.page - 0 || 1 }),
+						data: 		await data(req),
+						page: 		req.query.page || 1
 					});
 				} catch (e) {
 					console.log(e);
@@ -181,10 +183,12 @@
 		.get("/me/transactions/",
 			async (req, res) => {
 				try {
-					if (!(await logged_in(req)))
+					if (!logged_in(req))
 						throw new Error("not logged in");
 					res.render("me_transactions", {
-						data: await data(req)
+						transactions: 	await WalletController.transactions(req.session.user.id, {}, { page: req.query.page - 0 || 1 }),
+						data: 			await data(req),
+						page: 			req.query.page || 1
 					});
 				} catch (e) {
 					console.log(e);

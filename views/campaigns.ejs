@@ -15,20 +15,20 @@
                 </label>
             </div>
         <% } %>
-        <div class="sub-nav campaign-list">
+        <div class="sub-nav list">
             <div class="nav-hl"><a href="/campaigns/">running campaigns</a></div>
             <div><a href="/rejected/">rejected campaigns</a></div>
             <% if (data.user.id && data.user.is_admin) { %>
                 <div><a href="/unapproved/">unapproved campaigns</a></div>
             <% } %>
         </div>
-        <div class="campaign-list">
+        <div class="list">
             <% include campaignlist.ejs %>
         </div>
         <% if(page > 1) { %>
             <a href="/campaigns/?page=<%= page - 1 %>">Previous</a>
         <% } %>
-        <% if(campaigns.length == 100) { %>
+        <% if(campaigns.length == 18) { %>
             <a href="/campaigns/?page=<%= page + 1 %>">Next</a>
         <% } %>
         <% include footer.ejs %>

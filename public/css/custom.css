@@ -97,7 +97,7 @@ footer {
 	padding: 20px;
 }
 
-.campaign-list {
+.list {
 	display: flex;
 	flex-wrap: wrap;
 	max-width: 900px;
@@ -106,14 +106,22 @@ footer {
 	padding: 0 10px;
 }
 
-.campaign-list > .campaign {
-	width: 30%;
+.list > .campaign {
+	width: 100%;
 
 }
 
-.campaign-list > .campaign:nth-child(3n+2) {
-	margin-left: 5%;
-	margin-right: 5%;
+@media (min-width: 600px) {
+
+	.list > .campaign {
+		width: 30%;
+	}
+
+	.list > .campaign:nth-child(3n+2) {
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+
 }
 
 .center {
@@ -365,19 +373,6 @@ label > span, .ptn {
 	border: 1px solid red;
 	padding: 10px;
 	background-color: rgba(255,0,0,.5);
-}
-
-@media (max-width: 600px) {
-
-	.campaign-list > .campaign {
-		width: 100%;
-	}
-
-	.campaign-list > .campaign:nth-child(3n+2) {
-		margin-left: 0;
-		margin-right: 0;
-	}
-
 }
 
 .paid-out {

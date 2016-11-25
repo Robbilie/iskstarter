@@ -6,10 +6,44 @@
     </head>
     <body>
         <% include nav.ejs %>
-        <div class="sub-nav campaign-list">
+        <div class="sub-nav list">
             <div><a href="/me/campaigns/">your campaigns</a></div>
-            <div class="nav-hl"><a href="/me/dontations/">your transactions</a></div>
+            <div class="nav-hl"><a href="/me/transactions/">your transactions</a></div>
         </div>
+        <div class="list">
+            <% campaigns.forEach(function (campaign) { %>
+                <a href="/campaigns/<%= campaign._id %>/" class="campaign header box">
+                    <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
+                    <div class="list-content">
+                        <h4><%= campaign.name %></h4>
+                        <br>
+                        <span>
+                            <% if(Date.now() > campaign.data.end) { %>
+                            Ended <%= (new Date(campaign.data.end)).toGMTString() %>.
+                            <% } else if (Date.now() < campaign.data.start) { %>
+                            Starts <%= (new Date(campaign.data.end)).toGMTString() %>.
+                            <% } else { %>
+                            <b><%= Math.floor((campaign.data.end - Date.now()) / 1000 / 60 / 60 / 24) %></b> days left.
+                            <% } %>
+                        </span>
+                        <% if(campaign.wallet) { %>
+                        <br>
+                        <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
+                        <br>
+                        <div class="progress">
+                            <div class="percentage" style="width: <%= Math.min(100, (campaign.wallet / campaign.data.goal) * 100) %>%;"></div>
+                        </div>
+                        <% } %>
+                    </div>
+                </a>
+            <% }) %>
+        </div>
+        <% if(page > 1) { %>
+            <a href="/me/transactions/?page=<%= page - 1 %>">Previous</a>
+        <% } %>
+        <% if(transactions.length == 18) { %>
+            <a href="/me/transactions/?page=<%= page + 1 %>">Next</a>
+        <% } %>
         <% include footer.ejs %>
     </body>
 </html>

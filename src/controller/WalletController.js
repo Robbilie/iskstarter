@@ -39,10 +39,10 @@
 		}
 		*/
 
-		static async transactions (id, { sort = { timestamp: -1 }, page = 1, limit = 50 }) {
+		static async transactions (id, options = {}, { sort = { timestamp: -1 }, page = 1, limit = 50 }) {
 			let transactions = await DBUtil.get_collection("transactions");
 			return await transactions
-				.find({ $or: [{ from_id: id }, { to_id: id }] })
+				.find(Object.assign({ $or: [{ from_id: id }, { to_id: id }] }, options))
 				.sort(sort)
 				.skip(Math.max(page - 1, 0) * limit)
 				.limit(limit)
