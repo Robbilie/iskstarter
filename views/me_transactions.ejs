@@ -17,12 +17,14 @@
                 </div>
             <% }) %>
         </div>
-        <% if(page > 1) { %>
-            <a href="/me/transactions/?page=<%= page - 1 %>">Previous</a>
-        <% } %>
-        <% if(transactions.length == 18) { %>
-            <a href="/me/transactions/?page=<%= page + 1 %>">Next</a>
-        <% } %>
+        <div class="sub-nav list">
+            <% if(page > 1) { %>
+                <a href="/me/transactions/?page=<%= page - 1 %>">previous</a>
+            <% } %>
+            <% if(transactions.length == 18) { %>
+                <a href="/me/transactions/?page=<%= page + 1 %>">next</a>
+            <% } %>
+        </div>
         <% include footer.ejs %>
     </body>
 </html>

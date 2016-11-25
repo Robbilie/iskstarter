@@ -126,7 +126,7 @@ footer {
 
 .transaction {
 	width: 100%;
-	min-height: inherit;
+	min-height: inherit !important;
 	padding-left: 20px;
 	margin-bottom: 20px;
 }
@@ -404,7 +404,7 @@ label > span, .ptn {
 	font-size: 50px;
 }
 
-.sub-nav > div {
+.sub-nav > div, .sub-nav > a {
 	flex-grow: 1;
 	text-align: center;
 	padding: 5px;
