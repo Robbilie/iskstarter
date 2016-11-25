@@ -3,6 +3,7 @@
 
 	const { DBUtil } = require("util/");
 	const { CharacterController } = require("controller/");
+	const sanitize_html = require("sanitize-html");
 
 	class EntityController {
 
@@ -16,8 +17,8 @@
 			)
 				throw "not all fields set";
 			return {
-				name: 			name.trim().replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
-				description: 	description.replace(/script|SCRIPT|iframe|IFRAME|[\w]+="|[\w]+='/g, ""),
+				name: 			sanitize_html(name.trim()),
+				description: 	sanitize_html(description),
 				type,
 				owner: {
 					id: 	owner.id,
