@@ -19,10 +19,12 @@
                     <h4><a href="/campaigns/<%= campaign._id %>/" class="campaign header box"><%= campaign.name %></a></h4>
                     <p><%= campaign.description%></p>
                     <form method="POST" action="/campaigns/<%= campaign._id %>/reject/">
+                        <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                         <textarea required name="description"></textarea>
                         <button>reject</button>
                     </form>
                     <form method="POST" action="/campaigns/<%= campaign._id %>/accept/">
+                        <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                         <button>accept</button>
                     </form>
                 </div>

@@ -1,5 +1,6 @@
 <% var formData = typeof(campaign) != "undefined" ? campaign : { name: "", description: "", data: { header: "", goal: 0 } }; %>
 <form class="hidden-ctn" method="POST" action="/campaigns/<%= formData._id ? formData._id + "/" : "" %>">
+    <input type="hidden" name="_csrf" value="<%= csrf_token %>">
     <label>name</label>
     <br>
     <input required type="text" name="name" value="<%= formData.name %>" />

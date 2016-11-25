@@ -1,8 +1,10 @@
 
 	"use strict";
 
-	const { Router } 	= require("express");
-	const m 			= { mergeParams: true };
+	const { Router } 		= require("express");
+	const m 				= { mergeParams: true };
+	const csrf 				= require("csurf");
+	const csrfProtection 	= csrf({ cookie: true });
 
 	const {
 		WalletController,
@@ -34,13 +36,14 @@
 				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: 1, limit: 9 }),
 				data: 		await data(req)
 			}))
-		.get("/campaigns/",
+		.get("/campaigns/", csrfProtection,
 			async (req, res) => res.render("campaigns", {
 				campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: req.query.page - 0 || 1 }),
 				data: 		await data(req),
-				page: 		req.query.page || 1
+				page: 		req.query.page || 1,
+				csrf_token: req.csrfToken()
 			}))
-		.post("/campaigns/",
+		.post("/campaigns/", csrfProtection,
 			async (req, res) => {
 				console.log(req.body);
 				try {
@@ -62,12 +65,13 @@
 					res.redirect(`/campaigns/?error=${e.message || e}`);
 				}
 			})
-		.get("/campaigns/:id/",
+		.get("/campaigns/:id/", csrfProtection,
 			async (req, res) => {
 				try {
 					res.render("campaign", {
 						campaign: 	await CampaignController.findOne(DBUtil.to_id(req.params.id)),
-						data: 		await data(req)
+						data: 		await data(req),
+						csrf_token: req.csrfToken()
 					});
 				} catch (error) {
 					console.log(error);
@@ -76,7 +80,7 @@
 					});
 				}
 			})
-		.post("/campaigns/:id/",
+		.post("/campaigns/:id/", csrfProtection,
 			async (req, res) => {
 				try {
 					await CampaignController.update(
@@ -96,7 +100,7 @@
 					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
-		.post("/campaigns/:id/donate/",
+		.post("/campaigns/:id/donate/", csrfProtection,
 			async (req, res) => {
 				try {
 					await CampaignController.donate(DBUtil.to_id(req.params.id), Math.max(req.body.amount - 0, 0), await user(req));
@@ -106,7 +110,7 @@
 					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
-		.post("/campaigns/:id/accept/",
+		.post("/campaigns/:id/accept/", csrfProtection,
 			async (req, res) => {
 				try {
 					await CampaignController.approve(DBUtil.to_id(req.params.id), await user(req));
@@ -116,7 +120,7 @@
 					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
-		.post("/campaigns/:id/reject/",
+		.post("/campaigns/:id/reject/", csrfProtection,
 			async (req, res) => {
 				try {
 					await CampaignController.reject(DBUtil.to_id(req.params.id), req.body.description, await user(req));
@@ -132,11 +136,12 @@
 				data: 		await data(req),
 				page: 		req.query.page || 1
 			}))
-		.get("/unapproved/",
+		.get("/unapproved/", csrfProtection,
 			async (req, res) => res.render("unapproved", {
 				campaigns: 	await CampaignController.unapproved({}, { page: req.query.page - 0 || 1 }, await user(req)),
 				data: 		await data(req),
-				page: 		req.query.page || 1
+				page: 		req.query.page || 1,
+				csrf_token: req.csrfToken()
 			}))
 		.get("/login/",
 			async (req, res) => res.redirect(await CRESTUtil.generateLoginUrl([], "/")))
