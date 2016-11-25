@@ -58,6 +58,7 @@
 					console.log(campaign);
 					res.redirect(`/campaigns/${campaign._id}/`);
 				} catch (e) {
+					console.log(e);
 					res.redirect(`/campaigns/?error=${e.message || e}`);
 				}
 			})
@@ -69,6 +70,7 @@
 						data: 		await data(req)
 					});
 				} catch (error) {
+					console.log(error);
 					res.render("error", {
 						data: Object.assign(await data(req), { error })
 					});
@@ -90,6 +92,7 @@
 					);
 					res.redirect(`/campaigns/${req.params.id}/`);
 				} catch (e) {
+					console.log(e);
 					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
@@ -99,6 +102,7 @@
 					await CampaignController.donate(DBUtil.to_id(req.params.id), Math.max(req.body.amount - 0, 0), await user(req));
 					res.redirect(`/campaigns/${req.params.id}/`);
 				} catch (e) {
+					console.log(e);
 					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
@@ -108,6 +112,7 @@
 					await CampaignController.approve(DBUtil.to_id(req.params.id), await user(req));
 					res.redirect(`/campaigns/${req.params.id}/`);
 				} catch (e) {
+					console.log(e);
 					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
@@ -117,6 +122,7 @@
 					await CampaignController.reject(DBUtil.to_id(req.params.id), req.body.description, await user(req));
 					res.redirect(`/campaigns/${req.params.id}/`);
 				} catch (e) {
+					console.log(e);
 					res.redirect(`/campaigns/${req.params.id}/?error=${e.message || e}`);
 				}
 			})
@@ -140,6 +146,7 @@
 					req.session.user = await CharacterController.login(req.query.code);
 					res.redirect("/");
 				} catch (e) {
+					console.log(e);
 					res.redirect("/?error=" + (e.message || e));
 				}
 			})
