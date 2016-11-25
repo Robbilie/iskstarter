@@ -29,11 +29,11 @@
                             <div class="paid-out"><h1>paid out</h1></div>
                         <% } %>
                         <div class="details">
-                            <% if(campaign.data.owner) { %>
+                            <% if(campaign.owner) { %>
                                 <div class="character">
                                     <span>creator</span>
-                                    <b><%= campaign.data.owner.name %></b>
-                                    <img src="https://imageserver.eveonline.com/Character/<%= campaign.data.owner.id %>_64.jpg">
+                                    <b><%= campaign.owner.name %></b>
+                                    <img src="https://imageserver.eveonline.com/Character/<%= campaign.owner.id %>_64.jpg">
                                 </div>
                                 <br>
                             <% } %>
