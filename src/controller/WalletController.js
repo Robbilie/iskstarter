@@ -14,11 +14,11 @@
 						{ $project: {
 							transaction: [
 								{
-									id: "$toName",
+									id: "$to_name",
 									amount: "$amount"
 								},
 								{
-									id: "$fromName",
+									id: "$from_name",
 									amount: { $subtract: [0, "$amount"] }
 								}
 							]
@@ -42,11 +42,11 @@
 		static async in_and_out (id) {
 			let transactions = await DBUtil.get_collection("transactions");
 			let entries = await transactions.aggregate([
-				{ $match: { $or: [{ fromID: id }, { toID: id }] } },
+				{ $match: { $or: [{ from_id: id }, { to_id: id }] } },
 				{ $group: {
 					_id: "wallet",
-					wallet_in: { $sum: { $cond: [{ $eq: ["$toID", id] }, "$amount", 0] } },
-					wallet_out: { $sum: { $cond: [{ $eq: ["$fromID", id] }, "$amount", 0] } }
+					wallet_in: { $sum: { $cond: [{ $eq: ["$to_id", id] }, "$amount", 0] } },
+					wallet_out: { $sum: { $cond: [{ $eq: ["$from_id", id] }, "$amount", 0] } }
 				} }
 			]).toArray();
 
