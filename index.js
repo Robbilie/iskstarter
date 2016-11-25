@@ -66,7 +66,7 @@
 					styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
 					imgSrc: ["*"],
 					connectSrc: ["'none'"],
-					fontSrc: ["fonts.googleapis.com"],
+					fontSrc: ["fonts.googleapis.com", "fonts.gstatic.com"],
 					objectSrc: ["'none'"],
 					mediaSrc: ["'none'"],
 					frameSrc: ["'none'"]
