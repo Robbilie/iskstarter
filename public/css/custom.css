@@ -40,8 +40,7 @@ nav::before {
 .left-nav {
 	vertical-align: middle;
 	display: inline-block;
-	padding: 5px;
-	padding-left: 20px;
+	padding: 5px 5px 5px 20px;
 	width: 50%;
 }
 
@@ -98,11 +97,6 @@ footer {
 	padding: 20px;
 }
 
-.debug {
-	border: 2px solid red;
-	display: none;
-}
-
 .campaign-list {
 	display: flex;
 	flex-wrap: wrap;
@@ -134,8 +128,7 @@ footer {
 .container {
 	width: 100%;
 	max-width: 1000px;
-	margin: auto;
-	margin-top: 20px;
+	margin: 20px auto auto;
 }
 
 .container.box * {

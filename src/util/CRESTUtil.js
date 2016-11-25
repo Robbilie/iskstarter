@@ -39,17 +39,13 @@
 					(err, _, body) => {
 						if(err)
 							return reject(err);
-						try {
-							let res 			= JSON.parse(body);
-							if(res.error)
-								throw new Error(res.error);
-							let accessToken 	= res.access_token;
-							let refreshToken 	= res.refresh_token;
-							let accessUntil		= new Date().getTime() + (res.expires_in * 1000);
-							return resolve({ accessToken: accessToken, refreshToken: refreshToken, accessUntil: accessUntil });
-						} catch (e) {
-							return reject(e);
-						}
+						let res 			= JSON.parse(body);
+						if(res.error)
+							return reject(res.error);
+						let accessToken 	= res.access_token;
+						let refreshToken 	= res.refresh_token;
+						let accessUntil		= new Date().getTime() + (res.expires_in * 1000);
+						return resolve({ accessToken: accessToken, refreshToken: refreshToken, accessUntil: accessUntil });
 					}
 				).on("error", e => reject(e));
 			});
@@ -68,21 +64,17 @@
 					(err, _, body) => {
 						if(err)
 							return reject(err);
-						try {
-							var res = JSON.parse(body);
-							if(res.error)
-								throw new Error(res.error);
-							console.log("#### VERIFY ####", JSON.stringify(res));
-							return resolve({
-								id: 		res.CharacterID,
-								name: 		res.CharacterName,
-								scopes: 	res.Scopes ? res.Scopes.split(" ") : [],
-								tokenType: 	res.TokenType,
-								ownerHash: 	res.CharacterOwnerHash
-							});
-						} catch (e) {
-							return reject(e);
-						}
+						let res = JSON.parse(body);
+						if(res.error)
+							return reject(res.error);
+						console.log("#### VERIFY ####", JSON.stringify(res));
+						return resolve({
+							id: 		res.CharacterID,
+							name: 		res.CharacterName,
+							scopes: 	res.Scopes ? res.Scopes.split(" ") : [],
+							tokenType: 	res.TokenType,
+							ownerHash: 	res.CharacterOwnerHash
+						});
 					}).on("error", e => reject(e));
 			});
 		}
