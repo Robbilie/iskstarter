@@ -433,6 +433,6 @@ label > span, .ptn {
 	right: 24px;
 	top: 24px;
 	font-weight: bold;
-	box-shadow: none;
+	box-shadow: none !important;
 	font-size: 1.2em;
 }
