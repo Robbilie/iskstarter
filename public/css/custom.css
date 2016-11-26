@@ -318,7 +318,7 @@ form {
 	right: 0;
 }
 
-label > span, .ptn {
+label > span, .ptn, a {
 	cursor: pointer;
 }
 
