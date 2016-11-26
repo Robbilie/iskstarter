@@ -13,7 +13,17 @@
         <div class="list">
             <% transactions.forEach(function (transaction) { %>
                 <div class="transaction header box container">
-                    <p><%= JSON.stringify(transaction, null, 2) %></p>
+                    <% if (transaction.reason == "[donation]") { %>
+                        <h4>donation to <%= transaction.to_name %></h4>
+                        <span>- <%= transaction.amount.toLocaleString() %> ISK</span>
+                    <% } else if (transaction.reason == "[payin]") { %>
+                        <h4>you deposited ISK</h4>
+                        <span>+ <%= transaction.amount.toLocaleString() %> ISK</span>
+                        <span>Reference ID: <%= transaction.ref_id %></span>
+                    <% } else if (transaction.reason == "[payout]") { %>
+                        <!-- # this should only appear on entity transaction pages # -->
+                    <% } %>
+                    <!--<p><%= JSON.stringify(transaction, null, 2) %></p>-->
                 </div>
             <% }) %>
         </div>

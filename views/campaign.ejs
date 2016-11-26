@@ -56,7 +56,7 @@
                                 <% if (data.user.id && data.user.balance > 0) { %>
                                     <label class="collapsible">
                                         <input type="checkbox">
-                                        <span class="hidden-hl btn">donate</span>
+                                        <span class="center hidden-hl btn">donate from your virtual wallet</span>
                                         <form class="hidden-ctn" method="POST" action="./donate/">
                                             <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                                             <input type="number" name="amount" class="center" value="0" max="<%= data.user.balance %>" min="0" required />

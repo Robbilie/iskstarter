@@ -290,9 +290,9 @@ form {
 	margin-bottom: 20px;
 }
 
-/*.campaign*/ .header-image {
-				  background-size: cover;
-			  }
+.header-image {
+	background-size: cover;
+}
 
 .list-content {
 	position: relative;
@@ -300,8 +300,9 @@ form {
 	margin-bottom: 20px;
 }
 
-.list-content > span, .list-content h4 {
+.list-content > span, .list-content h4, .list-content > p {
 	background-color: rgba(255,255,255,.75);
+	padding: 0 2px;
 }
 
 .list-content h4 {
@@ -414,6 +415,6 @@ label > span, .ptn {
 	padding: 5px;
 }
 
-.sub-nav > .nav-hl {
+.nav-hl {
 	border-bottom: 2px solid rgba(0,0,0,.5);
 }
