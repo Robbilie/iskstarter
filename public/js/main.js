@@ -6,12 +6,12 @@
 ga('create', 'UA-87986189-1', 'auto');
 ga('send', 'pageview');
 
-document.body.onload = function () {
+window.onload = function () {
 	var donation_key = document.getElementById("donation_key");
 	if (donation_key) {
 		var value = donation_key.value;
-		donation_key.addEventListener("blur", function () {
+		donation_key.onblur = function () {
 			donation_key.value = value;
-		});
+		};
 	}
 };
