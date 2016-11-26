@@ -50,7 +50,7 @@
                             <% if(campaign.data.start < Date.now() && Date.now() < campaign.data.end) { %>
                                 <label>donation key</label>
                                 <br>
-                                <input type="text" value="<%= campaign._id %>" onblur="this.value = '<%= campaign._id %>'" />
+                                <input id="donation_key" type="text" value="<%= campaign._id %>" />
                                 <br>
 
                                 <% if (data.user.id && data.user.balance > 0) { %>

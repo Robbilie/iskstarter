@@ -7,7 +7,7 @@ ga('create', 'UA-87986189-1', 'auto');
 ga('send', 'pageview');
 
 document.body.onload = function () {
-	var donation_key = document.getElementById("donationkey");
+	var donation_key = document.getElementById("donation_key");
 	if (donation_key) {
 		var value = donation_key.value;
 		donation_key.addEventListener("blur", function () {
