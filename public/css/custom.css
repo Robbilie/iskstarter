@@ -418,3 +418,21 @@ label > span, .ptn {
 .nav-hl {
 	border-bottom: 2px solid rgba(0,0,0,.5);
 }
+
+.green {
+	color: darkgreen;
+}
+
+.red {
+	color: darkred;
+}
+
+.transaction-amount {
+	padding: 4px;
+	position: absolute;
+	right: 24px;
+	top: 24px;
+	font-weight: bold;
+	box-shadow: none;
+	font-size: 1.2em;
+}

@@ -15,11 +15,10 @@
                 <div class="transaction header box container">
                     <% if (transaction.reason == "[donation]") { %>
                         <h4>donation to <%= transaction.to_name %></h4>
-                        <span>- <%= transaction.amount.toLocaleString() %> ISK</span>
+                        <span class="transaction-amount red">- <%= transaction.amount.toLocaleString() %> ISK</span>
                     <% } else if (transaction.reason == "[payin]") { %>
-                        <h4>you deposited ISK</h4>
-                        <span>+ <%= transaction.amount.toLocaleString() %> ISK</span>
-                        <span>Reference ID: <%= transaction.ref_id %></span>
+                        <h4>you deposited ISK [Reference ID: <%= transaction.ref_id %>]</h4>
+                        <span class="transaction-amount green">+ <%= transaction.amount.toLocaleString() %> ISK</span>
                     <% } else if (transaction.reason == "[payout]") { %>
                         <!-- # this should only appear on entity transaction pages # -->
                     <% } %>
