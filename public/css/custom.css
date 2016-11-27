@@ -74,6 +74,7 @@ nav::before {
 	width: 50%;
 }
 
+/*
 .right-nav::after {
 	content: "";
 	display: inline-block;
@@ -81,6 +82,7 @@ nav::before {
 	width: 1px;
 	height: 100%;
 }
+*/
 
 .right-nav > span {
 	vertical-align: middle;
