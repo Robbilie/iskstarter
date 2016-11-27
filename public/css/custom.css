@@ -32,6 +32,26 @@ nav::before {
 	position: absolute;
 }
 
+.logo {
+	text-align: center;
+	padding: 6px 6px 0 6px;
+	display: block !important;
+}
+
+.logo img {
+	height: 36px;
+	display: block;
+	margin: auto;
+}
+
+@media (min-width: 800px) {
+
+	.logo {
+		position: absolute;
+	}
+
+}
+
 .logo, .links {
 	display: inline-block;
 	width: 100%;
@@ -435,4 +455,9 @@ label > span, .ptn, a {
 	font-weight: bold;
 	box-shadow: none !important;
 	font-size: 1.2em;
+}
+
+#logo {
+	height: 30px;
+	margin-bottom: -5px;
 }
