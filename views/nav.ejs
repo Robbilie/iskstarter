@@ -1,8 +1,4 @@
-<nav><span class="logo">
-            <a href="/">
-                <img id="logo" src="/static/img/hires/IskStarterBLUEhorz.png" alt="ISKstarter">
-            </a>
-        </span><div class="left-nav">
+<nav><div class="left-nav">
         <!--<span class="logo">
             <a href="/">
                 <img id="logo" src="/static/img/hires/IskStarterBLUEhorz.png" alt="ISKstarter">
@@ -20,4 +16,8 @@
         <% } else { %>
             <a href="/login/">log in</a>
         <% } %>
-    </div><% if(data.error != "") { %><div class="error"><%= data.error %></div><% } %></nav>
+    </div><span class="logo">
+            <a href="/">
+                <img id="logo" src="/static/img/hires/IskStarterBLUEhorz.png" alt="ISKstarter">
+            </a>
+        </span><% if(data.error != "") { %><div class="error"><%= data.error %></div><% } %></nav>
