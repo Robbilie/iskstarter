@@ -36,6 +36,8 @@ nav::before {
 	text-align: center;
 	padding: 6px 6px 0 6px;
 	display: block !important;
+    position: absolute;
+    top: 0;
 }
 
 .logo img {
@@ -44,10 +46,10 @@ nav::before {
 	margin: auto;
 }
 
-@media (min-width: 800px) {
+@media (max-width: 800px) {
 
-	.logo {
-		position: absolute;
+	nav {
+		padding-top: 42px;
 	}
 
 }
