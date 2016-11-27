@@ -64,6 +64,7 @@ nav::before {
 	display: inline-block;
 	padding: 5px 5px 5px 20px;
 	width: 50%;
+    position: relative;
 }
 
 .right-nav {
@@ -72,6 +73,7 @@ nav::before {
 	display: inline-block;
 	vertical-align: middle;
 	width: 50%;
+    position: relative;
 }
 
 /*
