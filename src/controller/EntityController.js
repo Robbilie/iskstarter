@@ -36,6 +36,9 @@
 		}
 
 		static async find (type, options = {}, { sort = { "data.end": 1 }, page = 1, limit = 18 }) {
+
+			await this.security_check(options);
+
 			let collection = await DBUtil.get_collection("entities");
 			return await collection
 				.find(Object.assign({ type }, options))
@@ -68,16 +71,22 @@
 
 		static async update (_id, $set, options) {
 
-			if(options.is_banned)
-				if(await CharacterController.is_banned(options.is_banned) == true)
-					throw "You are banned";
-
-			if(options.is_admin)
-				if(await CharacterController.is_admin(options.is_admin) == false)
-					throw "You are not an admin";
+			await this.security_check(options);
 
 			let entities = await DBUtil.get_collection("entities");
 			return await entities.update({ _id }, { $set });
+		}
+
+		static async security_check (options = {}) {
+
+			if(options.is_banned)
+				if(await CharacterController.is_banned(options.is_banned) == true)
+			throw "You are banned";
+
+			if(options.is_admin)
+				if(await CharacterController.is_admin(options.is_admin) == false)
+			throw "You are not an admin";
+
 		}
 
 	}
