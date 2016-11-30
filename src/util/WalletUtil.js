@@ -86,7 +86,7 @@
 							from_id: 		1,
 							to_name: 		from_name,
 							to_id: 			from_id,
-							amount: 		Math.floor((amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
+							amount,
 							reason: 		"[payin]",
 							timestamp
 						} }, { upsert: true });
@@ -102,7 +102,7 @@
 							from_id,
 							to_name: 		entity.name,
 							to_id: 			entity._id,
-							amount: 		Math.floor((amount - 0) * (100 - parseFloat(process.env.TAX))) / 100,
+							amount,
 							reason: 		"[donation]",
 							timestamp
 						} }, { upsert: true });
