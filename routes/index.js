@@ -54,7 +54,7 @@
 		.get("/artwork/", (req, res) =>
 			res.render("artwork", render_data(req))
 		)
-		.route("/login", Router(m)
+		.use("/login", Router(m)
 			.get("/", async (req, res) =>
 				res.redirect(await CRESTUtil.generateLoginUrl([], req.session.returnTo || "/"))
 			)
@@ -69,7 +69,7 @@
 			})
 		)
 		.get("/logout/", (req, res) => !(delete req.session.character) || res.redirect("/"))
-		.route("/me", ensureLoggedIn("/login/"), Router(m)
+		.use("/me", ensureLoggedIn("/login/"), Router(m)
 			.get("/", (req, res) => res.render("me", render_data(req)))
 			.get("/campaigns/", async (req, res) =>
 				res.render("me_campaigns", render_data(req, {
@@ -84,7 +84,7 @@
 				}))
 			)
 		)
-		.route("/campaigns", csrfProtection, Router(m)
+		.use("/campaigns", csrfProtection, Router(m)
 			.get("/", async (req, res) =>
 				res.render("campaigns", render_data(req, {
 					campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: req.query.page - 0 || 1 }),
@@ -110,7 +110,7 @@
 					res.redirect(`/campaigns/?error=${e.message || e}`);
 				}
 			})
-			.route("/:id", Router(m)
+			.use("/:id", Router(m)
 				.get("/", async (req, res) => {
 					try {
 						res.render("campaign", render_data(req, {
