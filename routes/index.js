@@ -18,7 +18,8 @@
 	const m 					= { mergeParams: true };
 
 	const is_authenticated 		= () => (req, res, next) => {
-		req.isAuthenticated 	= !!req.session.character;
+		const isAuthenticated 	= !!req.session.character;
+		req.isAuthenticated 	= () => isAuthenticated;
 		return next();
 	};
 
