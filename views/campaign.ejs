@@ -68,7 +68,8 @@
                             <% } %>
                             <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
                             <% if (data.user.id && data.user.is_admin) { %>
-                                <span>To be payed out: <%= (campaign.wallet * (100 - tax)).toLocaleString() %> ISK</span>
+                                <br>
+                                <span>To be payed out: <%= (campaign.wallet * ((100 - tax) / 100)).toLocaleString() %> ISK</span>
                             <% } %>
                             <div class="progress">
                                 <% if(campaign.wallet != 0) { %>
