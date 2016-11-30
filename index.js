@@ -17,6 +17,9 @@
 			app: process.env.APP_NAME
 		});
 		err.raven = client;
+		process.on("unhandledRejection", function (reason) {
+			err.raven.captureException(reason);
+		});
 	}
 
 	const { WalletUtil } = require("util/");

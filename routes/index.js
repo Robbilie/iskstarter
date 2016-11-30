@@ -25,7 +25,7 @@
 
 	const assign_data 			= () => async (req, res, next) => {
 		if(req.isAuthenticated)
-			req.character 		= Object.assign({},req.session.character, {
+			req.character 		= Object.assign({}, req.session.character, {
 				balance: 		await WalletController.balance(req.session.character.id),
 				is_admin: 		await CharacterController.is_admin(req.session.character)
 			});
