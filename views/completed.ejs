@@ -10,7 +10,7 @@
             <div><a href="/campaigns/">running campaigns</a></div>
             <div class="nav-hl"><a href="/completed/">completed campaigns</a></div>
             <div><a href="/rejected/">rejected campaigns</a></div>
-            <% if (data.user.id && data.user.is_admin) { %>
+            <% if (character && character.is_admin) { %>
                 <div><a href="/unapproved/">unapproved campaigns</a></div>
             <% } %>
         </div>
