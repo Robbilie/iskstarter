@@ -19,6 +19,7 @@
                 <div class="list-content campaign header box">
                     <h4><a href="/campaigns/<%= campaign._id %>/" class="nav-hl"><%= campaign.name %></a></h4>
                     <p><%= campaign.description%></p>
+                    <p>Creator: <%= campaign.owner.name %></p>
                     <form method="POST" action="/campaigns/<%= campaign._id %>/reject/">
                         <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                         <textarea required name="description"></textarea>
