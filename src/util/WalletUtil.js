@@ -80,7 +80,7 @@
 
 					// create pay ins
 					if(to_name == "ISKstarter") {
-						await transactionCollection.update({ ref_id }, { $setOnInsert: {
+						await transactionCollection.update({ ref_id }, { $set: {
 							ref_id,
 							from_name: 		"EVE System",
 							from_id: 		1,
@@ -96,7 +96,7 @@
 
 					// convert pay ins to donations
 					if(to_name == "ISKstarter" && entity && entity.data.start < timestamp && entity.data.end > timestamp) {
-						await transactionCollection.update({ to_ref_id }, { $setOnInsert: {
+						await transactionCollection.update({ to_ref_id }, { $set: {
 							to_ref_id,
 							from_name,
 							from_id,
@@ -110,7 +110,7 @@
 
 					// create pay outs
 					if(from_name == "ISKstarter" && entity) {
-						await transactionCollection.update({ ref_id }, { $setOnInsert: {
+						await transactionCollection.update({ ref_id }, { $set: {
 							ref_id,
 							from_name: 		entity.name,
 							from_id: 		entity._id,
