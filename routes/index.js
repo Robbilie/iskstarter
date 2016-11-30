@@ -71,6 +71,7 @@
 					res.render("campaign", {
 						campaign: 	await CampaignController.findOne(DBUtil.to_id(req.params.id)),
 						data: 		await data(req),
+						tax: 		parseFloat(process.env.TAX),
 						csrf_token: req.csrfToken()
 					});
 				} catch (error) {

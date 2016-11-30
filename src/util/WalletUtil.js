@@ -116,9 +116,10 @@
 							from_id: 		entity._id,
 							to_name: 		"EVE System",
 							to_id: 			1,
-							amount,
 							reason: 		"[payout]",
 							timestamp
+						}, $setOnInsert: {
+							amount:			(amount / ((100 - parseFloat(process.env.TAX)) / 100)) // set on insert only if we change the tax rate at some point
 						} }, { upsert: true });
 					}
 
