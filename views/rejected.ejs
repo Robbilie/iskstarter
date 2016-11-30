@@ -8,6 +8,7 @@
         <% include nav.ejs %>
         <div class="sub-nav list">
             <div><a href="/campaigns/">running campaigns</a></div>
+            <div><a href="/completed/">completed campaigns</a></div>
             <div class="nav-hl"><a href="/rejected/">rejected campaigns</a></div>
             <% if (data.user.id && data.user.is_admin) { %>
                 <div><a href="/unapproved/">unapproved campaigns</a></div>

@@ -74,6 +74,13 @@
 			);
 		}
 
+		static completed (options = {}, config = {}) {
+			return this.find(
+				Object.assign({ approved: true, "data.end": { $lt: Date.now() } }, options),
+				Object.assign({ sort: { "data.end": -1 } }, config)
+			);
+		}
+
 		static unapproved (options = {}, config = {}, user) {
 			return this.find(
 				Object.assign({ rejected: { $exists: false }, approved: { $exists: false} }, options),

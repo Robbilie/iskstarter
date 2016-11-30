@@ -8,6 +8,7 @@
         <% include nav.ejs %>
         <div class="sub-nav list">
             <div><a href="/campaigns/">running campaigns</a></div>
+            <div><a href="/completed/">completed campaigns</a></div>
             <div><a href="/rejected/">rejected campaigns</a></div>
             <% if (data.user.id && data.user.is_admin) { %>
                 <div class="nav-hl"><a href="/unapproved/">unapproved campaigns</a></div>
@@ -15,8 +16,8 @@
         </div>
         <div class="list">
             <% campaigns.forEach(function (campaign) { %>
-                <div class="campaign header box">
-                    <h4><a href="/campaigns/<%= campaign._id %>/" class="campaign header box"><%= campaign.name %></a></h4>
+                <div class="list-content campaign header box">
+                    <h4><a href="/campaigns/<%= campaign._id %>/" class="nav-hl"><%= campaign.name %></a></h4>
                     <p><%= campaign.description%></p>
                     <form method="POST" action="/campaigns/<%= campaign._id %>/reject/">
                         <input type="hidden" name="_csrf" value="<%= csrf_token %>">

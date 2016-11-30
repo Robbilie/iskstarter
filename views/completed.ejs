@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include head.ejs %>
+        <title>Completed - Page <%= page %></title>
+    </head>
+    <body>
+        <% include nav.ejs %>
+        <div class="sub-nav list">
+            <div><a href="/campaigns/">running campaigns</a></div>
+            <div class="nav-hl"><a href="/completed/">completed campaigns</a></div>
+            <div><a href="/rejected/">rejected campaigns</a></div>
+            <% if (data.user.id && data.user.is_admin) { %>
+                <div><a href="/unapproved/">unapproved campaigns</a></div>
+            <% } %>
+        </div>
+        <div class="list">
+            <% include campaignlist.ejs %>
+        </div>
+        <div class="sub-nav list">
+            <% if(page > 1) { %>
+                <a href="/completed/?page=<%= page - 1 %>">previous</a>
+            <% } %>
+            <% if(campaigns.length == 18) { %>
+                <a href="/completed/?page=<%= page + 1 %>">next</a>
+            <% } %>
+        </div>
+        <% include footer.ejs %>
+    </body>
+</html>

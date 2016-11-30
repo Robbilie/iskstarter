@@ -137,6 +137,12 @@
 				data: 		await data(req),
 				page: 		req.query.page || 1
 			}))
+		.get("/completed/",
+			async (req, res) => res.render("completed", {
+				campaigns: 	await CampaignController.completed({}, { page: req.query.page - 0 || 1 }),
+				data: 		await data(req),
+				page: 		req.query.page || 1
+			}))
 		.get("/unapproved/", csrfProtection,
 			async (req, res) => res.render("unapproved", {
 				campaigns: 	await CampaignController.unapproved({}, { page: req.query.page - 0 || 1 }, await user(req)),
