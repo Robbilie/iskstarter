@@ -100,7 +100,7 @@
 
 			return Object.assign(campaign, {
 				wallet: io.wallet_in,
-				payout: io.wallet_out
+				payout: (io.wallet_out / ((100 - parseFloat(process.env.TAX)) / 100))
 			});
 		}
 
