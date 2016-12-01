@@ -63,6 +63,8 @@ spec:
           value: "https://login.eveonline.com"
         - name: ESI_URL
           value: "https://esi.tech.ccp.is/latest"
+        - name: WEBHOOK_URL
+          value: "https://hooks.slack.com/services/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"
         - name: TAX
           value: "5"
         - name: CREST_CALLBACK
