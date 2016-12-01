@@ -9,6 +9,7 @@
 	} 	= require("controller/");
 	const { ObjectID } 			= require("mongodb");
 	const valid_url 			= require("valid-url");
+	const request 				= require("request");
 
 	class CampaignController extends EntityController {
 
@@ -24,6 +25,21 @@
 			let doc = await entities.insertOne(Object.assign(data, { created: Date.now() }));
 			if(!doc.result.ok)
 				throw "something went wrong";
+
+			request({
+				method: "POST",
+				uri: process.env.WEBHOOK_URL,
+				json: {
+					text: `New Campaign Created by '${owner.name}'`,
+					attachments: [
+						{
+							title: name,
+							title_link: `https://isk-starter.com/unapproved/`,
+							text: `${description}\n\nGoal: ${goal.toLocaleString()} ISK`
+						}
+					]
+				}
+			});
 
 			return data;
 		}
