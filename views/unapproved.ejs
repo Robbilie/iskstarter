@@ -10,7 +10,7 @@
             <div><a href="/campaigns/">running campaigns</a></div>
             <div><a href="/completed/">completed campaigns</a></div>
             <div><a href="/rejected/">rejected campaigns</a></div>
-            <% if (data.user.id && data.user.is_admin) { %>
+            <% if (character && character.is_admin) { %>
                 <div class="nav-hl"><a href="/unapproved/">unapproved campaigns</a></div>
             <% } %>
         </div>
@@ -19,6 +19,7 @@
                 <div class="list-content campaign header box">
                     <h4><a href="/campaigns/<%= campaign._id %>/" class="nav-hl"><%= campaign.name %></a></h4>
                     <p><%= campaign.description%></p>
+                    <p>Creator: <%= campaign.owner.name %></p>
                     <form method="POST" action="/campaigns/<%= campaign._id %>/reject/">
                         <input type="hidden" name="_csrf" value="<%= csrf_token %>">
                         <textarea required name="description"></textarea>

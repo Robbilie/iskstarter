@@ -6,7 +6,7 @@
     </head>
     <body>
         <% include nav.ejs %>
-        <% if (data.user.id) { %>
+        <% if (character) { %>
             <div class="create-form header box">
                 <label class="collapsible">
                     <input type="checkbox">
@@ -19,7 +19,7 @@
             <div class="nav-hl"><a href="/campaigns/">running campaigns</a></div>
             <div><a href="/completed/">completed campaigns</a></div>
             <div><a href="/rejected/">rejected campaigns</a></div>
-            <% if (data.user.id && data.user.is_admin) { %>
+            <% if (character && character.is_admin) { %>
                 <div><a href="/unapproved/">unapproved campaigns</a></div>
             <% } %>
         </div>

@@ -8,16 +8,16 @@
                 <img id="logo" src="/static/img/hires/IskStarterBLUEhorz.png" alt="ISKstarter">
             </a>
         </span>-->
-        <span class="links"><a href="/">home</a><span> | </span><a href="/campaigns/">campaigns</a><% if (data.user.id) { %><span> | </span><a href="/me/">profile</a><span> | </span><a href="/logout/">log out</a><% } %></span>
-        <span class="total-donated"><%= data.total.toLocaleString() %> ISK total deposited</span>
+        <span class="links"><a href="/">home</a><span> | </span><a href="/campaigns/">campaigns</a><% if (character) { %><span> | </span><a href="/me/">profile</a><span> | </span><a href="/logout/">log out</a><% } %></span>
+        <span class="total-deposited"><%= total_deposits.toLocaleString() %> ISK total deposited</span>
     </div><div class="right-nav">
-        <% if (data.user.id) { %>
+        <% if (character) { %>
             <div class="character">
-                <b><%= data.user.name %></b>
-                <span class="balance"><%= data.user.balance.toLocaleString() %> ISK</span>
-                <img src="https://imageserver.eveonline.com/Character/<%= data.user.id %>_64.jpg">
+                <b><%= character.name %></b>
+                <span class="balance"><%= character.balance.toLocaleString() %> ISK</span>
+                <img src="https://imageserver.eveonline.com/Character/<%= character.id %>_64.jpg">
             </div>
         <% } else { %>
             <a href="/login/">log in</a>
         <% } %>
-    </div><% if(data.error != "") { %><div class="error"><%= data.error %></div><% } %></nav>
+    </div><% if(error != "") { %><div class="error"><%= error %></div><% } %></nav>

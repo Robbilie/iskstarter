@@ -6,7 +6,7 @@
     </head>
     <body>
         <% include nav.ejs %>
-        <% if (data.user.id && data.user.is_admin) { %>
+        <% if (character && character.is_admin) { %>
             <div class="create-form header box">
                 <label class="collapsible">
                     <input type="checkbox">
@@ -21,7 +21,7 @@
             <% if (!campaign.rejected && !campaign.approved) { %>
                 <div class="create-form header box"><p class="hidden-hl center full-width-block rel">Campaign has not been approved yet.</p></div>
             <% } %>
-            <% if (campaign.approved || (data.user.id && data.user.is_admin)) { %>
+            <% if (campaign.approved || (character && character.is_admin)) { %>
                 <div class="container">
                     <div class="header box">
                         <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
@@ -53,13 +53,13 @@
                                 <input id="donation_key" type="text" value="<%= campaign._id %>" />
                                 <br>
 
-                                <% if (data.user.id && data.user.balance > 0) { %>
+                                <% if (character && character.balance > 0) { %>
                                     <label class="collapsible">
                                         <input type="checkbox">
                                         <span class="center hidden-hl btn">donate from your virtual wallet</span>
                                         <form class="hidden-ctn" method="POST" action="./donate/">
                                             <input type="hidden" name="_csrf" value="<%= csrf_token %>">
-                                            <input type="number" name="amount" class="center" value="0" max="<%= data.user.balance %>" min="0" required />
+                                            <input type="number" name="amount" class="center" value="0" max="<%= character.balance %>" min="0" required />
                                             <button>donate</button>
                                         </form>
                                     </label>
@@ -67,7 +67,7 @@
                                 <% } %>
                             <% } %>
                             <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
-                            <% if (data.user.id && data.user.is_admin) { %>
+                            <% if (character && character.is_admin) { %>
                                 <br>
                                 <span>To be payed out: <%= (campaign.wallet * ((100 - tax) / 100)).toLocaleString() %> ISK</span>
                             <% } %>

@@ -2,18 +2,18 @@
 <html>
     <head>
         <% include head.ejs %>
-        <title>Your Profile - <%= data.user.name %></title>
+        <title>Your Profile - <%= character.name %></title>
     </head>
     <body>
-    <% include nav.ejs %>
-    <div class="sub-nav list">
-        <div><a href="/me/campaigns/">your campaigns</a></div>
-        <div><a href="/me/transactions/">your transactions</a></div>
-    </div>
-    <div class="container box">
-        <h4>your profile</h4>
-        <p>here on your profile you can see your present and past campaigns as well as your transactions.</p>
-    </div>
-    <% include footer.ejs %>
+        <% include nav.ejs %>
+        <div class="sub-nav list">
+            <div><a href="/me/campaigns/">your campaigns</a></div>
+            <div><a href="/me/transactions/">your transactions</a></div>
+        </div>
+        <div class="container box">
+            <h4>your profile</h4>
+            <p>here on your profile you can see your present and past campaigns as well as your transactions.</p>
+        </div>
+        <% include footer.ejs %>
     </body>
 </html>

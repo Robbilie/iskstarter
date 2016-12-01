@@ -44,8 +44,8 @@
 			return data;
 		}
 
-		static update (_id, name, description, owner, header, goal, start, end, user) {
-			return super.update(_id, this.sanitize(name, description, owner, header, goal, start, end), { is_admin: user });
+		static update (_id, name, description, owner, header, goal, start, end, character) {
+			return super.update(_id, this.sanitize(name, description, owner, header, goal, start, end), { is_admin: character });
 		}
 
 		static sanitize (name, description, owner, header, goal, start, end) {
@@ -75,12 +75,12 @@
 			});
 		}
 
-		static approve (_id, user) {
-			return super.update(_id, { approved: true }, { is_admin: user });
+		static approve (_id, character) {
+			return super.update(_id, { approved: true }, { is_admin: character });
 		}
 
 		static reject (_id, description, { id, name }) {
-			return super.update(_id, { rejected: { description, user: { id, name }, timestamp: Date.now() } }, { is_admin: { id, name } });
+			return super.update(_id, { rejected: { description, character: { id, name }, timestamp: Date.now() } }, { is_admin: { id, name } });
 		}
 
 		static rejected (options = {}, config = {}) {
@@ -97,10 +97,10 @@
 			);
 		}
 
-		static unapproved (options = {}, config = {}, user) {
+		static unapproved (options = {}, config = {}, character) {
 			return this.find(
 				Object.assign({ rejected: { $exists: false }, approved: { $exists: false} }, options),
-				Object.assign({ is_admin: user, sort: { "data.start": 1 } }, config)
+				Object.assign({ is_admin: character, sort: { "data.start": 1 } }, config)
 			);
 		}
 
