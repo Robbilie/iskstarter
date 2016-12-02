@@ -174,7 +174,14 @@ footer {
 	width: 100%;
 	max-width: 1000px;
 	margin: 20px auto auto;
-    padding: 0 10px;
+}
+
+.container.box:not(.header) {
+	padding: 10px;
+}
+
+.container:not(.box) {
+	padding: 0 10px;
 }
 
 .container.box * {
@@ -184,6 +191,7 @@ footer {
 .header {
 	position: relative;
 	min-height: 400px;
+	padding: 10px !important;
 }
 
 .rel {
@@ -242,12 +250,11 @@ footer {
 	width: 100%;
 	max-width: 350px;
 	float: right;
-	margin: 10px;
 	padding: 10px;
 	background-color: rgba(255,255,255,.75);
 	position: relative;
 	border: 1px solid rgba(255,255,255,1);
-	box-shadow: 0 0 10px 0 rgba(0,0,0,1);
+	box-shadow: 0 0 10px 0 rgba(0,0,0,.75);
 }
 
 .progress {
@@ -377,13 +384,13 @@ label > span, .ptn, a {
 }
 
 .container h4 {
-	margin: 20px;
+	margin: 10px;
 	background-color: rgba(255,255,255,.4);
 	padding: 10px;
 }
 
 .container p {
-	margin: 20px;
+	margin: 10px;
 	background-color: rgba(255,255,255,.4);
 	padding: 10px;
 }
@@ -391,7 +398,7 @@ label > span, .ptn, a {
 .container ul {
 	background-color: rgba(255,255,255,.4);
 	padding: 10px;
-	margin: 20px;
+	margin: 10px;
 	list-style: none;
 }
 
