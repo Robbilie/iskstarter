@@ -119,7 +119,7 @@
 							reason: 		"[payout]",
 							timestamp
 						}, $setOnInsert: {
-							amount:			(amount / ((100 - parseFloat(process.env.TAX)) / 100)) // set on insert only if we change the tax rate at some point
+							amount:			-(amount / ((100 - parseFloat(process.env.TAX)) / 100)) // set on insert only if we change the tax rate at some point, also negate
 						} }, { upsert: true });
 					}
 
