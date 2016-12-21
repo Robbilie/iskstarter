@@ -35,7 +35,7 @@
 			return entity;
 		}
 
-		static async find (type, options = {}, { sort = { "data.end": 1 }, page = 1, limit = 18 }) {
+		static async find (type, options = {}, { sort = { "data.end": 1 }, page = 1, limit = 18 } = {}) {
 
 			await this.security_check(options);
 
@@ -64,7 +64,7 @@
 			);
 		}
 
-		static async count_by_owner ({ id}) {
+		static async count_by_owner ({ id }) {
 			let entities = await DBUtil.get_collection("entities");
 			return await entities.find({ "owner.id": id, approved: true, "data.end": { $gt: Date.now() } }).count();
 		}

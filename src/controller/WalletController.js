@@ -5,7 +5,7 @@
 
 	class WalletController {
 
-		static async all (options = {}, { sort = { timestamp: -1 }, page = 1, limit = 100 }) {
+		static async all (options = {}, { sort = { timestamp: -1 }, page = 1, limit = 100 } = {}) {
 			let transactions = await DBUtil.get_collection("transactions");
 			return await transactions
 				.find(options)
@@ -46,7 +46,7 @@
 				*/
 		}
 
-		static async transactions (id, options = {}, { sort = { timestamp: -1 }, page = 1, limit = 50 }) {
+		static async transactions (id, options = {}, { sort = { timestamp: -1 }, page = 1, limit = 50 } = {}) {
 			let transactions = await DBUtil.get_collection("transactions");
 			return await transactions
 				.find(Object.assign({ $or: [{ from_id: id }, { to_id: id }] }, options))
