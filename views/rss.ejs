@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ISKstarter</title>
+        <link>https://isk-starter.com/</link>
+        <description>Welcome to ISKstarter, the place to go when you want to support your favorite EVE Online related entities. The page is really simple to use, just browse the campaigns, pick the ones you like, copy the donation key from the page and transfer ISK to the in-game corporation <a target="_blank" href="https://gate.eveonline.com/Corporation/ISKstarter">ISKstarter</a> with the donation key as the reason. Alternatively, you can just transfer ISK to said corporation and it will be added to your balance here and you can donate to campaigns directly when logged in.</description>
+        <atom:link href="https://isk-starter.com/feed/" rel="self" type="application/rss+xml" />
+        <% transactions.forEach(function (donation) { %>
+        <item>
+            <title><%= donation.from_name %> donated <%= donation.amount.toLocaleString() %> to <%= donation.to_name %></title>
+            <description><![CDATA[<%= donation.from_name %> donated <%= donation.amount.toLocaleString() %> to <%= donation.to_name %>]]></description>
+            <pubDate><%- Date(donation.timestamp) %></pubDate>
+            <link>https://isk-starter.com/campaigns/<%= donation.to_id %>/</link>
+            <guid isPermaLink="true">https://isk-starter.com/campaigns/<%= donation.to_id %></guid>
+        </item>
+        <% }) %>
+    </channel>
+</rss>

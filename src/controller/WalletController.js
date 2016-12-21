@@ -5,8 +5,15 @@
 
 	class WalletController {
 
-		/*
-		static all () {
+		static async all (options = {}, { sort = { timestamp: -1 }, page = 1, limit = 100 }) {
+			let transactions = await DBUtil.get_collection("transactions");
+			return await transactions
+				.find(options)
+				.sort(sort)
+				.skip(Math.max(page - 1, 0) * limit)
+				.limit(limit)
+				.toArray();
+			/*
 			return DBUtil.getCollection("transactions")
 				.then(collection =>
 					collection.aggregate([
@@ -36,8 +43,8 @@
 						} }
 					]).toArray()
 				);
+				*/
 		}
-		*/
 
 		static async transactions (id, options = {}, { sort = { timestamp: -1 }, page = 1, limit = 50 }) {
 			let transactions = await DBUtil.get_collection("transactions");

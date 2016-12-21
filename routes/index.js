@@ -49,6 +49,11 @@
 				campaigns: await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: 1, limit: 9 })
 			}))
 		)
+		.get("/feed/", async (req, res) =>
+			res.render("rss", render_data(req, {
+				transactions: 	await WalletController.all({ reason: "[donation]" })
+			}))
+		)
 		.get("/disclaimer/", (req, res) =>
 			res.render("disclaimer", render_data(req))
 		)
