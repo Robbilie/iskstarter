@@ -1,4 +1,3 @@
-
 	"use strict";
 
 	const { DBUtil } 			= require("util/");
@@ -112,8 +111,8 @@
 			return await WalletController.assign_balance(campaigns);
 		}
 
-		static find_by_owner ({ id }, options = {}, config = {}) {
-			return super.find_by_owner("campaign", id, options, config);
+		static find_by_owner (owner, options = {}, config = {}) {
+			return super.find_by_owner("campaign", owner, options, config);
 		}
 
 		static async findOne (_id) {
