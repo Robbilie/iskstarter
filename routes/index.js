@@ -50,7 +50,7 @@
 			}))
 		)
 		.get("/feed/", async (req, res) =>
-			res.set("Content-Type", "text/xml").render("rss", render_data(req, {
+			res.set("Content-Type", "application/rss+xml; charset=UTF-8").render("rss", render_data(req, {
 				transactions: 	await WalletController.all({ reason: "[donation]" })
 			}))
 		)
