@@ -21,7 +21,7 @@ metadata:
     app: iskstarter-web
   name: iskstarter-web-dep
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app: iskstarter-web
