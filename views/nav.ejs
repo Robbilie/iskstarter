@@ -12,11 +12,11 @@
         <span class="total-deposited"><%= total_deposits.toLocaleString() %> ISK total deposited</span>
     </div><div class="right-nav">
         <% if (character) { %>
-            <div class="character">
+            <a href="/me/" class="character">
                 <b><%= character.name %></b>
                 <span class="balance"><%= character.balance.toLocaleString() %> ISK</span>
                 <img src="https://imageserver.eveonline.com/Character/<%= character.id %>_64.jpg">
-            </div>
+            </a>
         <% } else { %>
             <a href="/login/">log in</a>
         <% } %>
