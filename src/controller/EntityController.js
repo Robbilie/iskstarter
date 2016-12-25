@@ -39,6 +39,7 @@
 
 			await this.security_check(options);
 
+			console.log(arguments);
 			let collection = await DBUtil.get_collection("entities");
 			return await collection
 				.find(Object.assign({ type }, options))
