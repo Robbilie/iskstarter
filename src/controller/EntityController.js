@@ -39,7 +39,6 @@
 
 			await this.security_check(options);
 
-			console.log(arguments);
 			let collection = await DBUtil.get_collection("entities");
 			return await collection
 				.find(Object.assign({ type }, options))
@@ -58,7 +57,7 @@
 		}
 
 		static async find_by_owner (type, { id }, options = {}, config = {}) {
-			return this.find(
+			return EntityController.find(
 				type,
 				Object.assign({ "owner.id": id }, options),
 				Object.assign({ sort: { "created": -1 } }, config)
