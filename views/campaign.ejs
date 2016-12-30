@@ -25,7 +25,7 @@
                 <div class="container">
                     <div class="header inset-box">
                         <div class="header-image" style="background-image: url(<%= campaign.data.header %>)"></div>
-                        <% if (Date.now() > campaign.data.end && campaign.wallet != 0 && campaign.wallet == campaign.payout) { %>
+                        <% if (Date.now() > campaign.data.end && campaign.wallet != 0 && Math.round(campaign.wallet * 100) <= Math.round(campaign.payout * 100)) { %>
                             <div class="paid-out"><h1>paid out</h1></div>
                         <% } %>
                         <div class="details">
@@ -66,10 +66,10 @@
                                     <br>
                                 <% } %>
                             <% } %>
-                            <span><b><%= campaign.wallet.toLocaleString() %> ISK</b> of <%= campaign.data.goal.toLocaleString() %> ISK</span>
+                            <span><b><%= campaign.wallet.toLocaleString("en-US", { maximumFractionDigits: 2 }) %> ISK</b> of <%= campaign.data.goal.toLocaleString("en-US", { maximumFractionDigits: 2 }) %> ISK</span>
                             <% if (character && character.is_admin) { %>
                                 <br>
-                                <span>To be payed out: <%= (campaign.wallet * ((100 - tax) / 100)).toLocaleString() %> ISK</span>
+                                <span>To be payed out: <%= (campaign.wallet * ((100 - tax) / 100)).toLocaleString("en-US", { maximumFractionDigits: 2 }) %> ISK</span>
                             <% } %>
                             <div class="progress">
                                 <% if(campaign.wallet != 0) { %>

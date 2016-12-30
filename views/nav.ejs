@@ -9,12 +9,12 @@
             </a>
         </span>-->
         <span class="links"><a href="/">home</a><span> | </span><a href="/campaigns/">campaigns</a><% if (character) { %><span> | </span><a href="/me/">profile</a><span> | </span><a href="/logout/">log out</a><% } %></span>
-        <span class="total-deposited"><%= total_deposits.toLocaleString() %> ISK total deposited</span>
+        <span class="total-deposited"><%= total_deposits.toLocaleString("en-US", { maximumFractionDigits: 2 }) %> ISK total deposited</span>
     </div><div class="right-nav">
         <% if (character) { %>
             <a href="/me/" class="character">
                 <b><%= character.name %></b>
-                <span class="balance"><%= character.balance.toLocaleString() %> ISK</span>
+                <span class="balance"><%= character.balance.toLocaleString("en-US", { maximumFractionDigits: 2 }) %> ISK</span>
                 <img src="https://imageserver.eveonline.com/Character/<%= character.id %>_64.jpg">
             </a>
         <% } else { %>

@@ -7,8 +7,8 @@
         <atom:link href="https://isk-starter.com/feed/" rel="self" type="application/rss+xml" />
         <% transactions.forEach(function (donation) { %>
         <item>
-            <title><%= donation.from_name %> donated <%= donation.amount.toLocaleString() %> ISK to <%= donation.to_name %></title>
-            <description><![CDATA[<%= donation.from_name %> donated <%= donation.amount.toLocaleString() %> ISK to <%= donation.to_name %>]]></description>
+            <title><%= donation.from_name %> donated <%= donation.amount.toLocaleString("en-US", { maximumFractionDigits: 2 }) %> ISK to <%= donation.to_name %></title>
+            <description><![CDATA[<%= donation.from_name %> donated <%= donation.amount.toLocaleString("en-US", { maximumFractionDigits: 2 }) %> ISK to <%= donation.to_name %>]]></description>
             <pubDate><%- new Date(donation.timestamp) %></pubDate>
             <link>https://isk-starter.com/campaigns/<%= donation.to_id %>/</link>
             <guid isPermaLink="true">https://isk-starter.com/campaigns/<%= donation.to_id %></guid>

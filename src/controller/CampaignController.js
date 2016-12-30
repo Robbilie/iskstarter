@@ -34,7 +34,7 @@
 						{
 							title: name,
 							title_link: `https://isk-starter.com/unapproved/`,
-							text: `${description}\n\nGoal: ${goal.toLocaleString()} ISK`
+							text: `${description}\n\nGoal: ${goal.toLocaleString("en-US", { maximumFractionDigits: 2 })} ISK`
 						}
 					]
 				}
