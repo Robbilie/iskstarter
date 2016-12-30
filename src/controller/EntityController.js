@@ -57,7 +57,7 @@
 		}
 
 		static async find_by_owner (type, { id }, options = {}, config = {}) {
-			return this.find(
+			return EntityController.find(
 				type,
 				Object.assign({ "owner.id": id }, options),
 				Object.assign({ sort: { "created": -1 } }, config)
