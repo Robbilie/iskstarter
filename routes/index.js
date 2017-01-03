@@ -49,6 +49,15 @@
 				campaigns: await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: 1, limit: 9 })
 			}))
 		)
+		.use("/api", Router(m)
+			.get("/", async (req, res) =>
+				res.json({
+					total_deposits: 		req.total_deposits,
+					total_deposits_str: 	req.total_deposits.toLocaleString("en-US", { maximumFractionDigits: 2 }),
+					campaigns: 				await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { limit: 0 })
+				})
+			)
+		)
 		.get("/feed/", async (req, res) =>
 			res.set("Content-Type", "application/rss+xml; charset=UTF-8").render("rss", render_data(req, {
 				transactions: 	await WalletController.all({ reason: "[donation]" })
