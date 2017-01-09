@@ -92,7 +92,10 @@
 						} }, { upsert: true });
 					}
 
-					let entity = await entityCollection.findOne({ _id: DBUtil.to_id(reason) });
+					let entity;
+					try {
+						entity = await entityCollection.findOne({ _id: DBUtil.to_id(reason) });
+					} catch (e) {}
 
 					// convert pay ins to donations
 					if(to_name == "ISKstarter" && entity && entity.data.start < timestamp && entity.data.end > timestamp) {
