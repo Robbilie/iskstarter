@@ -61,6 +61,12 @@ spec:
           value: "oauth.sid.v0001"
         - name: COOKIE_TTL
           value: "2592000000"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 4001
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
       volumes:
       - name: config
         secret:
