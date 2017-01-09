@@ -27,6 +27,8 @@ spec:
         env:
         - name: APP_NAME
           value: "Wallet"
+        - name: APP_PORT
+          value: "4001"
         - name: HOST
           value: "iskstarter.utils.space"
         - name: UA
