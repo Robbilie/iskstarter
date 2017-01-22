@@ -279,7 +279,12 @@ input[type="text"], input[type="number"], button, textarea, .btn {
 	border: 1px solid white;
 	padding: 4px;
 	width: 100%;
+	max-width: 100%;
 	display: block;
+}
+
+textarea {
+	min-height: 200px;
 }
 
 .collapsible {
