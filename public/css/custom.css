@@ -271,7 +271,7 @@ footer {
 	position: relative;
 	background-color: #2199d2;
 	border: 1px solid #2c7ea5;
-	box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.61) inset;
+	box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.6) inset;
 }
 
 input[type="text"], input[type="number"], button, textarea, .btn {
@@ -480,4 +480,40 @@ label > span, .ptn, a {
 	font-weight: bold;
 	box-shadow: none !important;
 	font-size: 1.2em;
+}
+
+.entity-nav {
+	height: 40px;
+	background-color: #2c7ea5;
+	text-align: center;
+	color: white;
+}
+
+.entity-nav-box {
+	height: 100%;
+	width: 25%;
+	display: inline-block;
+	position: relative;
+	vertical-align: text-bottom;
+	text-align: center;
+}
+
+.entity-nav-box.hl::after {
+	background-color: #2199d2;
+	box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.6) inset;
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 4px;
+	border: 1px solid white;
+	border-bottom: none;
+}
+
+.entity-nav-box > h5 {
+	vertical-align: top;
+	height: 100%;
+	line-height: 45px;
+	margin: 0;
 }

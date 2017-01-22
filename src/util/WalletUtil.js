@@ -4,9 +4,12 @@
 	const request 			= require("request");
 	const { parseString } 	= require("xml2js");
 	const { DBUtil } 		= require("util/");
+	const http 				= require("http");
 
 	const storage = {
-		next: new Date()
+		next: new Date(),
+		heartbeat: undefined,
+		server: undefined
 	};
 
 	class WalletUtil {
@@ -69,6 +72,19 @@
 		static async load_updates () {
 			try {
 
+				storage.heartbeat = Date.now();
+
+				if(!storage.server)
+					storage.server = http.createServer((req, res) => {
+						switch (req.url) {
+							case "/ping":
+								res.writeHead(200); break;
+							case "/healthcheck":
+								res.writeHead(storage.heartbeat > Date.now() - (60 * 60 * 1000) ? 200 : 500); break;
+						}
+						res.end();
+					}).listen(parseInt(process.env.APP_PORT));
+
 				let response = await WalletUtil.get_data();
 
 				storage.next = new Date(response.headers.expires);
@@ -92,7 +108,10 @@
 						} }, { upsert: true });
 					}
 
-					let entity = await entityCollection.findOne({ _id: DBUtil.to_id(reason) });
+					let entity;
+					try {
+						entity = await entityCollection.findOne({ _id: DBUtil.to_id(reason) });
+					} catch (e) {}
 
 					// convert pay ins to donations
 					if(to_name == "ISKstarter" && entity && entity.data.start < timestamp && entity.data.end > timestamp) {
@@ -124,6 +143,8 @@
 					}
 
 				}));
+
+				storage.heartbeat = Date.now();
 
 				setTimeout(() => WalletUtil.load_updates(), new Date(response.headers.expires).getTime() - Date.now());
 
