@@ -75,7 +75,7 @@
 			)
 			.get("/callback/", async (req, res) => {
 				try {
-					let [csrf, path] = req.query.code.split("|");
+					let [csrf, path] = req.query.state.split("|");
 					if (!csrf || !path)
 						throw "Missing data";
 					if (csrf != req.cookies._csrf)
