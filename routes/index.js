@@ -73,15 +73,10 @@
 			.get("/", csrfProtection, async (req, res) =>
 				res.redirect(await CRESTUtil.generateLoginUrl([], req.csrfToken() + "|" + (req.session.returnTo || "/")))
 			)
-			.get("/callback/", async (req, res) => {
+			.get("/callback/", (req, res, next) => { (req.query || {})._csrf = ((req.query || {}).state || "").split("|")[0]; next(); }, csrfProtection, async (req, res) => {
 				try {
-					let [csrf, path] = req.query.state.split("|");
-					if (!csrf || !path)
-						throw "Missing data";
-					if (csrf != req.cookies._csrf)
-						throw "Invalid csrf data";
 					req.session.character = await CharacterController.login(req.query.code);
-					res.redirect(path || "/");
+					res.redirect(req.query.state.split("|")[1] || "/");
 				} catch (e) {
 					console.log(e);
 					res.redirect("/?error=" + (e.message || e));
