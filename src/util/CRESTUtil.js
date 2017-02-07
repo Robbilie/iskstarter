@@ -39,7 +39,12 @@
 					(err, _, body) => {
 						if(err)
 							return reject(err);
-						let res 			= JSON.parse(body);
+						let res;
+						try {
+							res 			= JSON.parse(body);
+						} catch (e) {
+							return reject(e);
+						}
 						if(res.error)
 							return reject(res.error);
 						let accessToken 	= res.access_token;

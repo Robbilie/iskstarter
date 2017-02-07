@@ -70,13 +70,18 @@
 			res.render("artwork", render_data(req))
 		)
 		.use("/login", Router(m)
-			.get("/", async (req, res) =>
-				res.redirect(await CRESTUtil.generateLoginUrl([], req.session.returnTo || "/"))
+			.get("/", csrfProtection, async (req, res) =>
+				res.redirect(await CRESTUtil.generateLoginUrl([], req.csrfToken() + "|" + (req.session.returnTo || "/")))
 			)
 			.get("/callback/", async (req, res) => {
 				try {
+					let [csrf, path] = req.query.code.split("|");
+					if (!csrf || !path)
+						throw "Missing data";
+					if (csrf != req.cookies._csrf)
+						throw "Invalid csrf data";
 					req.session.character = await CharacterController.login(req.query.code);
-					res.redirect(req.query.state || "/");
+					res.redirect(path || "/");
 				} catch (e) {
 					console.log(e);
 					res.redirect("/?error=" + (e.message || e));
