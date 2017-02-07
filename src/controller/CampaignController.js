@@ -12,13 +12,16 @@
 
 	class CampaignController extends EntityController {
 
-		static async create (name, description, owner, header, goal, start, end) {
-			let data = CampaignController.sanitize(name, description, owner, header, goal, start, end);
+		static async create (name, description, owner, header, goal, start, end, ip) {
+			let data = CampaignController.sanitize(name, description, owner, header, goal, start, end, ip);
 
 			if(await CharacterController.is_banned(owner))
 				throw "You are banned from creating new campaigns";
 			if(await CampaignController.count_by_owner(owner) >= 6)
 				throw "You already have 6 running campaigns";
+
+			if(end < Date.now())
+				throw "Campaigns in the past are useless";
 
 			let entities = await DBUtil.get_collection("entities");
 			let doc = await entities.insertOne(Object.assign(data, { created: Date.now() }));
@@ -47,8 +50,8 @@
 			return super.update(_id, this.sanitize(name, description, owner, header, goal, start, end), { is_admin: character });
 		}
 
-		static sanitize (name, description, owner, header, goal, start, end) {
-			let res = super.sanitize("campaign", name, description, owner);
+		static sanitize (name, description, owner, header, goal, start, end, ip) {
+			let res = super.sanitize("campaign", name, description, owner, ip);
 
 			if(
 				!header ||

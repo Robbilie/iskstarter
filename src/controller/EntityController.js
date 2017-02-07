@@ -7,7 +7,7 @@
 
 	class EntityController {
 
-		static sanitize (type, name, description, owner) {
+		static sanitize (type, name, description, owner, ip) {
 			if(
 				!name ||
 				name.trim() == "" ||
@@ -23,7 +23,8 @@
 				owner: {
 					id: 	owner.id,
 					name: 	owner.name
-				}
+				},
+				ip
 			};
 		}
 
@@ -66,7 +67,7 @@
 
 		static async count_by_owner ({ id }) {
 			let entities = await DBUtil.get_collection("entities");
-			return await entities.find({ "owner.id": id, approved: true, "data.end": { $gt: Date.now() } }).count();
+			return await entities.find({ "owner.id": id, "data.end": { $gt: Date.now() } }).count();
 		}
 
 		static async update (_id, $set, options) {

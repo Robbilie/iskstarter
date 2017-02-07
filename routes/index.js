@@ -116,7 +116,8 @@
 						req.body.header,
 						parseFloat(req.body.goal),
 						new Date(req.body.start).getTime(),
-						new Date(req.body.end).getTime()
+						new Date(req.body.end).getTime(),
+						req.ip
 					);
 					console.log(campaign);
 					res.redirect(`/campaigns/${campaign._id}/`);
