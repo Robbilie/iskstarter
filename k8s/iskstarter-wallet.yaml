@@ -48,7 +48,7 @@ spec:
         - name: ESI_URL
           value: "https://esi.tech.ccp.is/latest"
         - name: WEBHOOK_URL
-          value: "https://hooks.slack.com/services/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"
+          value: "https://hooks.slack.com/services/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"
         - name: TAX
           value: "5"
         - name: CREST_CALLBACK
