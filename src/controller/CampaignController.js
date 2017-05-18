@@ -170,7 +170,7 @@
 
 			let balance = await WalletController.balance(owner.id);
 			if(balance < 0) {
-				await collection.remove({ _id: data._id });
+				await transactions.remove({ _id: data._id });
 				throw "not enough money";
 			}
 		}
