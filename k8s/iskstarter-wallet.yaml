@@ -71,5 +71,7 @@ spec:
       - name: config
         secret:
           secretName: iskstarter-config
+      nodeSelector:
+        kubernetes.io/hostname: "menkar"
       imagePullSecrets:
       - name: myregistrykey
