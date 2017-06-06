@@ -55,10 +55,10 @@
 
 			if(
 				!header ||
-				header.trim() == "" ||
+				header.trim() === "" ||
 				!valid_url.is_web_uri(header) ||
 				!goal ||
-				goal == 0 ||
+				goal === 0 ||
 				Number.isNaN(goal) ||
 				!start ||
 				Number.isNaN(start) ||
@@ -134,7 +134,7 @@
 		}
 
 		static async donate (_id, amount, owner) {
-			if(amount == 0)
+			if(amount === 0)
 				return;
 			if(Number.isNaN(amount))
 				throw "something went wrong";

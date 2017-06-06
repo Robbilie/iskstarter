@@ -24,7 +24,7 @@
 		}
 
 		static to_id (id) {
-			return id.constructor.name == "String" ? new ObjectID(id) : id;
+			return id.constructor.name === "String" ? new ObjectID(id) : id;
 		}
 
 	}

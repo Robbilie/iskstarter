@@ -17,7 +17,7 @@
 		static get_data () {
 			return new Promise((resolve, reject) => {
 				request(`${process.env.XML_URL}/Corp/WalletJournal.xml.aspx?rowCount=2500&keyID=${config.xml.keyID}&vCode=${config.xml.vCode}`, (error, response, body) => {
-					if (!error && response.statusCode == 200) {
+					if (!error && response.statusCode === 200) {
 						parseString(body, async (parseError, result) => {
 							if(parseError || !result.eveapi) {
 								console.log(parseError || result);
@@ -95,7 +95,7 @@
 				await Promise.all(response.obj.map(async ({ from_id, from_name, to_id, to_name, ref_id, to_ref_id = ref_id, amount, reason, timestamp }) => {
 
 					// create pay ins
-					if(to_name == "ISKstarter") {
+					if(to_name === "ISKstarter") {
 						await transactionCollection.update({ ref_id }, { $set: {
 							ref_id,
 							from_name: 		"EVE System",
@@ -114,7 +114,7 @@
 					} catch (e) {}
 
 					// convert pay ins to donations
-					if(to_name == "ISKstarter" && entity && entity.data.start < timestamp && entity.data.end > timestamp) {
+					if(to_name === "ISKstarter" && entity && entity.data.start < timestamp && entity.data.end > timestamp) {
 						await transactionCollection.update({ to_ref_id }, { $set: {
 							to_ref_id,
 							from_name,
@@ -128,7 +128,7 @@
 					}
 
 					// create pay outs
-					if(from_name == "ISKstarter" && entity) {
+					if(from_name === "ISKstarter" && entity) {
 						await transactionCollection.update({ ref_id }, { $set: {
 							ref_id,
 							from_name: 		entity.name,

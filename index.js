@@ -9,7 +9,7 @@
 
 	// setup sentry if dsn is set
 	global.err = {};
-	if(config.sentry.dsn && config.sentry.dsn != "") {
+	if(config.sentry.dsn && config.sentry.dsn !== "") {
 		const { Client } = require("raven");
 		let client = new Client(config.sentry.dsn);
 		client.patchGlobal();
@@ -24,7 +24,7 @@
 
 	const { WalletUtil } = require("util/");
 
-	if(process.env.APP_NAME == "Wallet") {
+	if(process.env.APP_NAME === "Wallet") {
 
 		WalletUtil.load_updates();
 

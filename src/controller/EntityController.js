@@ -10,9 +10,9 @@
 		static sanitize (type, name, description, owner, ip) {
 			if(
 				!name ||
-				name.trim() == "" ||
+				name.trim() === "" ||
 				!description ||
-				description.trim() == "" ||
+				description.trim() === "" ||
 				!owner
 			)
 				throw "not all fields set";
@@ -81,11 +81,11 @@
 		static async security_check (options = {}) {
 
 			if(options.is_banned)
-				if(await CharacterController.is_banned(options.is_banned) == true)
+				if(await CharacterController.is_banned(options.is_banned) === true)
 			throw "You are banned";
 
 			if(options.is_admin)
-				if(await CharacterController.is_admin(options.is_admin) == false)
+				if(await CharacterController.is_admin(options.is_admin) === false)
 			throw "You are not an admin";
 
 		}
