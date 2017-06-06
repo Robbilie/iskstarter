@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "docker build -t robbilie/eas:iskstarter . && docker push robbilie/eas:iskstarter",
-    "start": "node --expose-gc --trace-warnings --harmony_async_await index.js"
+    "start": "node --trace-warnings index.js"
   },
   "author": "",
   "license": "ISC",
