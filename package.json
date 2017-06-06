@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "docker build -f docker/iskstarter-node -t robbilie/eas:iskstarter . && docker push robbilie/eas:iskstarter",
+    "test": "docker build -t robbilie/eas:iskstarter . && docker push robbilie/eas:iskstarter",
     "start": "node --expose-gc --trace-warnings --harmony_async_await index.js"
   },
   "author": "",
