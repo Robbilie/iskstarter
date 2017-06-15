@@ -46,7 +46,9 @@
 		// normal router
 		.get("/", async (req, res) =>
 			res.render("index", render_data(req, {
-				campaigns: await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: 1, limit: 9 })
+				campaigns: await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: 1, limit: 9 }),
+				keyID: config.xml.keyID,
+				vCode: config.xml.vCode
 			}))
 		)
 		.use("/api", Router(m)

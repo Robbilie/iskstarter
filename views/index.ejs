@@ -22,10 +22,12 @@
                     <li>Due to the limits of the EVE API, ISK transfers update only every 30 minutes. You can see when the next update will happen at the bottom of the page.</li>
                     <li>There are no refunds, neither for donations you already made nor for balance on your virtual wallet. We only pay out campaigns for the moment. Campaigns that do not reach the initially set goal will receive the funds donated to the campaign since we do not provide refunds at the moment.</li>
                     <li>ISK is held by Nashh Kadavr of EVE-NT as a third party. Chribba will be provided with access to fully audit the page on a monthly basis.</li>
-                    <li>You want to take a look at the transaction api? here is the API Key we use:
-                        <br>
-                        <span class="break-all">[ keyID: 5632583, vCode: Fr9TbKIZnFveRB1hu7qSzcQo4pFHqtuHYs8rvvecld6D0bHJFBqGNZV0amNNyE0z ]</span>
-                    </li>
+                    <% if (keyID && vCode) { %>
+                        <li>You want to take a look at the transaction api? here is the API Key we use:
+                            <br>
+                            <span class="break-all">[ keyID: <%= keyID %>, vCode: <%= vCode %> ]</span>
+                        </li>
+                    <% } %>
                     <li>For questions please contact <a target="_blank" href="https://gate.eveonline.com/Profile/Nashh%20Kadavr">Nashh Kadavr</a> or <a target="_blank" href="https://gate.eveonline.com/Profile/Bam%20Stroker">Bam Stroker</a>. For technical questions please contact <a target="_blank" href="https://gate.eveonline.com/Profile/Vincent%20Eneticum">Vincent Eneticum</a>.</li>
                     <li>Campaign payouts may be delayed if there appear suspicious transactions or if requested by ccp.</li>
                 </ul>
