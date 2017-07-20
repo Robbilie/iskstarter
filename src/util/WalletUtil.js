@@ -72,7 +72,7 @@
 		static async load_updates () {
 			try {
 
-				storage.heartbeat = Date.now();
+				//storage.heartbeat = Date.now();
 
 				if(!storage.server)
 					storage.server = http.createServer((req, res) => {
