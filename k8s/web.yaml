@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: iskstarter-web-pod
-        image: index.docker.io/robbilie/eas:iskstarter
+        image: robbilie/iskstarter
         imagePullPolicy: Always
         ports:
         - containerPort: 4001
