@@ -61,12 +61,18 @@ spec:
           value: "oauth.sid.v0001"
         - name: COOKIE_TTL
           value: "2592000000"
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 4001
+          initialDelaySeconds: 60
+          timeoutSeconds: 60
         livenessProbe:
           httpGet:
-            path: /
+            path: /healthcheck
             port: 4001
-          initialDelaySeconds: 30
-          timeoutSeconds: 30
+          initialDelaySeconds: 60
+          timeoutSeconds: 60
       volumes:
       - name: config
         secret:
