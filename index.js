@@ -22,6 +22,10 @@
 		});
 	}
 
+	process.on("unhandledRejection", function (reason) {
+		console.log("unhandledRejection", reason);
+	});
+
 	const { WalletUtil } = require("util/");
 
 	if(process.env.APP_NAME === "Wallet") {
