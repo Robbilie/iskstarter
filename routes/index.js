@@ -32,6 +32,7 @@
 		req.error 				= req.query.error || "";
 		req.api_update 			= await WalletUtil.next();
 		req.total_deposits 		= (await WalletController.in_and_out(1)).wallet_out;
+		req.page 				= req.query.page - 0 || 1;
 		return next();
 	};
 
@@ -90,22 +91,22 @@
 			.get("/", (req, res) => res.render("me", render_data(req)))
 			.get("/campaigns/", async (req, res) =>
 				res.render("me_campaigns", render_data(req, {
-					campaigns: 	await CampaignController.find_by_owner(req.character, {}, { page: req.query.page - 0 || 1 }),
-					page: 		req.query.page || 1
+					campaigns: 	await CampaignController.find_by_owner(req.character, {}, { page: req.page }),
+					page: 		req.page
 				}))
 			)
 			.get("/transactions/", async (req, res) =>
 				res.render("me_transactions", render_data(req, {
-					transactions: 	await WalletController.transactions(req.character.id, {}, { page: req.query.page - 0 || 1 }),
-					page: 			req.query.page || 1
+					transactions: 	await WalletController.transactions(req.character.id, {}, { page: req.page }),
+					page: 			req.page
 				}))
 			)
 		)
 		.use("/campaigns", csrfProtection, Router(m)
 			.get("/", async (req, res) =>
 				res.render("campaigns", render_data(req, {
-					campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: req.query.page - 0 || 1 }),
-					page: 		req.query.page || 1,
+					campaigns: 	await CampaignController.page({ "data.start": { $lt: Date.now() }, "data.end": { $gt: Date.now() } }, { page: req.page }),
+					page: 		req.page,
 					csrf_token: req.csrfToken()
 				}))
 			)
@@ -191,20 +192,20 @@
 		)
 		.get("/completed/", async (req, res) =>
 			res.render("completed", render_data(req, {
-				campaigns: 	await CampaignController.completed({}, { page: req.query.page - 0 || 1 }),
-				page: 		req.query.page || 1
+				campaigns: 	await CampaignController.completed({}, { page: req.page }),
+				page: 		req.page
 			}))
 		)
 		.get("/rejected/", async (req, res) =>
 			res.render("rejected", render_data(req, {
-				campaigns: 	await CampaignController.rejected({}, { page: req.query.page - 0 || 1 }),
-				page: 		req.query.page || 1
+				campaigns: 	await CampaignController.rejected({}, { page: req.page }),
+				page: 		req.page
 			}))
 		)
 		.get("/unapproved/", ensureLoggedIn("/login/"), ensureIsAdmin(), csrfProtection, async (req, res) =>
 			res.render("unapproved", render_data(req, {
-				campaigns: 	await CampaignController.unapproved({}, { page: req.query.page - 0 || 1 }),
-				page: 		req.query.page || 1,
+				campaigns: 	await CampaignController.unapproved({}, { page: req.page }),
+				page: 		req.page,
 				csrf_token: req.csrfToken()
 			}))
 		);
