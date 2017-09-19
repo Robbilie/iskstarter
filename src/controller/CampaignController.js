@@ -31,7 +31,7 @@
 
 			request({
 				method: "POST",
-				uri: process.env.WEBHOOK_URL,
+				uri: config.webhook.url,
 				json: {
 					text: `New Campaign Created by '${owner.name}'`,
 					attachments: [

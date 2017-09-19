@@ -8,3 +8,5 @@ cookie:
   secret: ""
 sentry:
   dsn: ""
+webhook:
+  url: ""
