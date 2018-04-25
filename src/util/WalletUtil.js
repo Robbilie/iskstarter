@@ -1,10 +1,19 @@
 
 	"use strict";
 
-	const request 			= require("request");
-	const { parseString } 	= require("xml2js");
-	const { DBUtil } 		= require("util/");
-	const http 				= require("http");
+	const request 				= require("request-promise-native");
+	const { parseString } 		= require("xml2js");
+	const { DBUtil, CRESTUtil } = require("util/");
+	const http 					= require("http");
+
+	Object.defineProperty(Array.prototype, 'chunk', {
+		value: function(chunkSize) {
+			let R = [];
+			for (let i = 0; i < this.length; i += chunkSize)
+				R.push(this.slice(i, i + chunkSize));
+			return R;
+		}
+	});
 
 	const storage = {
 		next: new Date(),
@@ -12,9 +21,52 @@
 		server: undefined
 	};
 
+	const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+
 	class WalletUtil {
 
-		static get_data () {
+		static async idsToNames (ids) {
+			const chunks = ids.chunk(1000);
+			const responses = await Promise.all(chunks.map(body =>
+				request({
+					method: "POST",
+					body,
+					json: true,
+					uri: `${process.env.ESI_URL}/latest/universe/names/`,
+				})
+			));
+			return [].concat(...responses).reduce((p, c) => Object.assign(p, { [c.id]: c.name }), {});
+		}
+
+		static async get_data () {
+
+			const { accessToken } = await CRESTUtil.getTokens({ grant_type: "refresh_token", refresh_token: REFRESH_TOKEN });
+
+			const res = await request(`${process.env.ESI_URL}/latest/corporations/${process.env.CORPORATION_ID}/wallets/1/journal/?token=${accessToken}`);
+
+			const ids = Array.from(new Set(res.reduce((p, c) => [...p, c.first_party_id, c.second_party_id], [])));
+
+			const idToName = await WalletUtil.idsToNames(ids);
+
+			const obj = res.map(entry => ({
+				from_id: entry.first_party_id,
+				from_name: idToName[entry.first_party_id],
+				to_id: entry.second_party_id,
+				to_name: idToName[entry.second_party_id],
+				ref_id: entry.ref_id,
+				amount: entry.amount,
+				reason: entry.reason.replace("DESC:", "").trim(),
+				timestamp: new Date(entry.date + "Z").getTime(),
+			}));
+
+			return ({
+				headers: {
+					expires: new Date(Date.now() + 3600).toString(),
+				},
+				obj,
+			});
+
+			/*
 			return new Promise((resolve, reject) => {
 				request(`${process.env.XML_URL}/Corp/WalletJournal.xml.aspx?rowCount=2500&keyID=${config.xml.keyID}&vCode=${config.xml.vCode}`, (error, response, body) => {
 					if (!error && response.statusCode === 200) {
@@ -52,6 +104,7 @@
 					}
 				});
 			});
+			*/
 		}
 
 		static async load_next () {

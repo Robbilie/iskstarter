@@ -75,6 +75,10 @@ spec:
           value: "oauth.sid.v0001"
         - name: COOKIE_TTL
           value: "2592000000"
+        - name: REFRESH_TOKEN
+          value: "CqnO2MFh6jH4pKQVm2m7-cIOeBAn_PIjXQw-aBnauXU1"
+        - name: CORPORATION_ID
+          value: "98479854"
         readinessProbe:
           httpGet:
             path: /

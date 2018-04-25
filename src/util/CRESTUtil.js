@@ -47,10 +47,10 @@
 						}
 						if(res.error)
 							return reject(res.error);
-						let accessToken 	= res.access_token;
-						let refreshToken 	= res.refresh_token;
-						let accessUntil		= new Date().getTime() + (res.expires_in * 1000);
-						return resolve({ accessToken: accessToken, refreshToken: refreshToken, accessUntil: accessUntil });
+						const accessToken 	= res.access_token;
+						const refreshToken 	= res.refresh_token;
+						const accessUntil	= new Date().getTime() + (res.expires_in * 1000);
+						return resolve({ accessToken, refreshToken, accessUntil });
 					}
 				).on("error", e => reject(e));
 			});
