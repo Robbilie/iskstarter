@@ -50,7 +50,7 @@
 
 			const idToName = await WalletUtil.idsToNames(ids);
 
-			const obj = obj.map(entry => ({
+			const obj = data.map(entry => ({
 				from_id: entry.first_party_id,
 				from_name: idToName[entry.first_party_id],
 				to_id: entry.second_party_id,
