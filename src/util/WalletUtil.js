@@ -43,9 +43,10 @@
 			const { accessToken } = await CRESTUtil.getTokens({ grant_type: "refresh_token", refresh_token: REFRESH_TOKEN });
 
 			const res = await request(`${process.env.ESI_URL}/corporations/${process.env.CORPORATION_ID}/wallets/1/journal/?token=${accessToken}`);
-			console.log(res);
 
-			const ids = Array.from(new Set(res.reduce((p, c) => [...p, c.first_party_id, c.second_party_id], [])));
+			const data = JSON.parse(res);
+
+			const ids = Array.from(new Set(data.reduce((p, c) => [...p, c.first_party_id, c.second_party_id], [])));
 
 			const idToName = await WalletUtil.idsToNames(ids);
 
