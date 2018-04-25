@@ -61,12 +61,16 @@
 				timestamp: new Date(entry.date + "Z").getTime(),
 			}));
 
-			return ({
+			const out = {
 				headers: {
 					expires: new Date(Date.now() + 3600).toString(),
 				},
 				obj,
-			});
+			};
+
+			console.log(out);
+
+			return out;
 
 			/*
 			return new Promise((resolve, reject) => {
