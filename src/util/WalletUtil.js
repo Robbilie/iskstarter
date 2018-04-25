@@ -32,7 +32,7 @@
 					method: "POST",
 					body,
 					json: true,
-					uri: `${process.env.ESI_URL}/latest/universe/names/`,
+					uri: `${process.env.ESI_URL}/universe/names/`,
 				})
 			));
 			return [].concat(...responses).reduce((p, c) => Object.assign(p, { [c.id]: c.name }), {});
@@ -42,7 +42,7 @@
 
 			const { accessToken } = await CRESTUtil.getTokens({ grant_type: "refresh_token", refresh_token: REFRESH_TOKEN });
 
-			const res = await request(`${process.env.ESI_URL}/latest/corporations/${process.env.CORPORATION_ID}/wallets/1/journal/?token=${accessToken}`);
+			const res = await request(`${process.env.ESI_URL}/corporations/${process.env.CORPORATION_ID}/wallets/1/journal/?token=${accessToken}`);
 
 			const ids = Array.from(new Set(res.reduce((p, c) => [...p, c.first_party_id, c.second_party_id], [])));
 
