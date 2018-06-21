@@ -57,7 +57,7 @@
 				to_name: idToName[entry.second_party_id],
 				ref_id: entry.ref_id,
 				amount: entry.amount,
-				reason: entry.reason.replace("DESC:", "").trim(),
+				reason: (entry.reason || "").replace("DESC:", "").trim(),
 				timestamp: new Date(entry.date + "Z").getTime(),
 			}));
 
