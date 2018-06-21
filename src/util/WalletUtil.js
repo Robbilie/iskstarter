@@ -58,7 +58,7 @@
 				ref_id: entry.ref_id,
 				amount: entry.amount,
 				reason: (entry.reason || "").replace("DESC:", "").trim(),
-				timestamp: new Date(entry.date + "Z").getTime(),
+				timestamp: new Date(entry.date).getTime(),
 			}));
 
 			const out = {
