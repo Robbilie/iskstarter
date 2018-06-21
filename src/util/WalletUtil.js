@@ -55,7 +55,7 @@
 				from_name: idToName[entry.first_party_id],
 				to_id: entry.second_party_id,
 				to_name: idToName[entry.second_party_id],
-				ref_id: entry.ref_id,
+				ref_id: entry.id,
 				amount: entry.amount,
 				reason: (entry.reason || "").replace("DESC:", "").trim(),
 				timestamp: new Date(entry.date).getTime(),
