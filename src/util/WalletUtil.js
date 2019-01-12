@@ -63,7 +63,7 @@
 
 			const out = {
 				headers: {
-					expires: new Date(Date.now() + 3600).toString(),
+					expires: new Date(Date.now() + (3600 * 1000)).toString(),
 				},
 				obj,
 			};
